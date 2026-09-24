@@ -88,8 +88,11 @@ bin/cargar-datos.sh
 ```
 
 Genera los dos millones de documentos tributarios sintéticos del curso y los deja
-cargados. **Demora unos cinco minutos** y se hace **una sola vez**: después quedan
-guardados aunque apagues el ambiente.
+cargados. **Se hace una sola vez**: después quedan guardados aunque apagues el ambiente.
+
+Demora **unos dos minutos**, más lo que tome compilar el programa Scala del laboratorio
+09 la primera vez, que baja sbt y sus dependencias y se puede ir a cinco o diez minutos
+más. Eso también queda hecho para siempre.
 
 Son los mismos datos del curso, con la misma semilla, así que **los números que te van a
 salir son los mismos que salieron en clase**.
