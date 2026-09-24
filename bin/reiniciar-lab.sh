@@ -68,10 +68,10 @@ else:
         print(f"  borrada {DB}.{tabla}")
     print(f"  {len(objetivo)} tabla(s) borradas de {DB}")
 
-if LAB == "todos":
-    # Y los directorios que quedaron huerfanos de borrados anteriores: sin
-    # tabla registrada nadie los nombra, pero siguen ahi y hacen fallar la
-    # creacion de una tabla Hive con el mismo nombre.
+# Y los directorios que quedaron huerfanos de borrados anteriores: sin tabla
+# registrada nadie los nombra, pero siguen ahi y hacen fallar la creacion de una
+# tabla Hive con el mismo nombre. Es lo que pasa al repetir el laboratorio 07.
+if True:
     from py4j.java_gateway import java_import
     jvm = spark.sparkContext._jvm
     java_import(jvm, "org.apache.hadoop.fs.Path")
@@ -80,9 +80,18 @@ if LAB == "todos":
     fs = base.getFileSystem(conf)
     if fs.exists(base):
         vivas = {f["tableName"] for f in spark.sql(f"SHOW TABLES IN {DB}").collect()}
+        n = LAB.zfill(2)
+        def del_lab(nombre):
+            if LAB == "todos":
+                return True
+            return (nombre.endswith(f"lab{n}") or f"lab{n}_" in nombre
+                    or (n == "17" and nombre == "dte_un_anio_fragmentado")
+                    or (n == "04" and nombre in ("documentos_sin_particion", "documentos_por_mes"))
+                    or (n == "07" and nombre.startswith("documentos_hive"))
+                    or (n == "13" and nombre == "documentos_lab13"))
         for estado in fs.listStatus(base):
             nombre = estado.getPath().getName()
-            if nombre not in vivas:
+            if nombre not in vivas and del_lab(nombre):
                 fs.delete(estado.getPath(), True)
                 print(f"  borrado el directorio huerfano de {nombre}")
 PY

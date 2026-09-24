@@ -183,13 +183,21 @@ bin/reiniciar-lab.sh 03      # borra las tablas del laboratorio 03
 bin/reiniciar-lab.sh todos   # borra todas las tablas tuyas
 ```
 
-Tres necesitan además otra cosa:
+Cuatro necesitan además otra cosa:
 
 | Lab | Antes de repetirlo |
 |---|---|
+| **07** | **obligatorio**: `bin/reiniciar-lab.sh 07` |
 | 10 | `bin/reiniciar-lab.sh 10` repone la tabla compartida |
 | 16 | `bin/origen-lab16.sh --reset` deja el origen como al principio |
 | 17 | `bin/reponer-fragmentada.sh` vuelve a fragmentar la tabla del paso 4 |
+
+> **El 07 es el único que no se puede repetir solo volviendo a correr el cuaderno.**
+> Empieza creando una tabla Hive, y Hive se niega a crear una tabla donde ya hay una
+> carpeta: `DROP TABLE` borra la tabla del catálogo pero deja sus archivos. Si lo intentas
+> sin reiniciar, la celda 0.4 falla con *the associated location already exists* y de ahí
+> en adelante no funciona nada. `bin/reiniciar-lab.sh 07` borra la tabla y también su
+> carpeta, en ese orden.
 
 **El laboratorio 16 tiene un paso a mitad de camino.** Entre el paso 2 y el paso 4 hay que
 mover el origen, que en clase lo hacía el instructor. Aquí lo haces tú, desde una terminal,
