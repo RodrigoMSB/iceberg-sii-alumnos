@@ -146,6 +146,12 @@ services:
       - ./conf/core-site.xml:/opt/spark/conf/core-site.xml:ro
       - ./laboratorios:/home/mi_espacio/laboratorios
       - trabajo:/home/mi_espacio/trabajo
+      # Los datos generados y el jar del laboratorio 09 van en volumenes: si
+      # vivieran en el contenedor se perderian cada vez que cambia el compose,
+      # por ejemplo al activar el perfil 'sql'.
+      - datos:/opt/datos
+      - datos-bodega:/opt/datos-bodega
+      - herramientas:/opt/herramientas
     ports:
       - "127.0.0.1:${JUPYTER_PORT:-8888}:8888"
     depends_on:
@@ -261,3 +267,6 @@ volumes:
   nn-data:
   dn-data:
   trabajo:
+  datos:
+  datos-bodega:
+  herramientas:

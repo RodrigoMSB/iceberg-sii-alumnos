@@ -79,7 +79,7 @@ fi
 if [ "${REHACER}" = "si" ] || ! docker exec iceberg-jupyter test -f /opt/datos-bodega/bodega.json 2>/dev/null; then
   paso "generando diez millones de documentos. Demora entre veinte y cuarenta minutos."
   echo "    Va imprimiendo su avance; puedes dejarlo corriendo y volver."
-  docker exec -w /opt iceberg-jupyter env PYTHONPATH=/opt/datagen \
+  docker exec -w /opt iceberg-jupyter env PYTHONPATH=/opt/herramientas/datagen \
     python3 -m datagen --bodega --salida /opt/datos-bodega/
   ok "datos de la bodega generados"
 else

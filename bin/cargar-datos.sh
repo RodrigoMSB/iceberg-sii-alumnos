@@ -39,9 +39,10 @@ REHACER="no"
 if [ "${REHACER}" = "si" ] || ! docker exec iceberg-jupyter test -f /opt/datos/manifiesto.json 2>/dev/null; then
   paso "generando los datos (un minuto y medio, mas o menos)"
   docker exec iceberg-jupyter mkdir -p /opt/datos
-  docker cp datagen iceberg-jupyter:/opt/datagen >/dev/null
+  docker exec iceberg-jupyter mkdir -p /opt/herramientas
+  docker cp datagen iceberg-jupyter:/opt/herramientas/datagen >/dev/null
   docker exec iceberg-jupyter python3 -m pip install --quiet pyarrow 2>/dev/null || true
-  docker exec -w /opt iceberg-jupyter env PYTHONPATH=/opt/datagen \
+  docker exec -w /opt iceberg-jupyter env PYTHONPATH=/opt/herramientas/datagen \
     python3 -m datagen --escala curso --salida /opt/datos/
   ok "datos generados"
 else
@@ -50,8 +51,8 @@ fi
 
 # --- 2. Cargar las tablas de 'curso' y crear 'mi_espacio' ------------------
 paso "cargando las tablas en el catalogo"
-docker cp bin/cargar-datos.py iceberg-jupyter:/opt/cargar-datos.py >/dev/null
-docker exec -w /opt iceberg-jupyter python3 /opt/cargar-datos.py --dentro
+docker cp bin/cargar-datos.py iceberg-jupyter:/opt/herramientas/cargar-datos.py >/dev/null
+docker exec -w /opt iceberg-jupyter python3 /opt/herramientas/cargar-datos.py --dentro
 ok "tablas cargadas"
 
 # --- 2b. La tabla compartida del laboratorio 10 ----------------------------

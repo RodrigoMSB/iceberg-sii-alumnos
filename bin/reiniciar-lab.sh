@@ -50,10 +50,41 @@ else:
 if not objetivo:
     print(f"  no hay tablas que borrar para '{LAB}'")
 else:
+    # Primero la tabla y DESPUES el directorio, en ese orden. DROP TABLE no
+    # borra los archivos, y si el directorio queda, volver a crear una tabla
+    # Hive en el mismo lugar falla con "the associated location already
+    # exists". Es lo que pasa al repetir el laboratorio 07.
+    from py4j.java_gateway import java_import
+    jvm = spark.sparkContext._jvm
+    java_import(jvm, "org.apache.hadoop.fs.Path")
+    java_import(jvm, "org.apache.hadoop.fs.FileSystem")
+    conf = spark.sparkContext._jsc.hadoopConfiguration()
     for tabla in objetivo:
         spark.sql(f"DROP TABLE IF EXISTS {DB}.{tabla}")
+        ruta = jvm.Path(f"hdfs://namenode:8020/warehouse/iceberg/{DB}.db/{tabla}")
+        fs = ruta.getFileSystem(conf)
+        if fs.exists(ruta):
+            fs.delete(ruta, True)
         print(f"  borrada {DB}.{tabla}")
     print(f"  {len(objetivo)} tabla(s) borradas de {DB}")
+
+if LAB == "todos":
+    # Y los directorios que quedaron huerfanos de borrados anteriores: sin
+    # tabla registrada nadie los nombra, pero siguen ahi y hacen fallar la
+    # creacion de una tabla Hive con el mismo nombre.
+    from py4j.java_gateway import java_import
+    jvm = spark.sparkContext._jvm
+    java_import(jvm, "org.apache.hadoop.fs.Path")
+    conf = spark.sparkContext._jsc.hadoopConfiguration()
+    base = jvm.Path(f"hdfs://namenode:8020/warehouse/iceberg/{DB}.db")
+    fs = base.getFileSystem(conf)
+    if fs.exists(base):
+        vivas = {f["tableName"] for f in spark.sql(f"SHOW TABLES IN {DB}").collect()}
+        for estado in fs.listStatus(base):
+            nombre = estado.getPath().getName()
+            if nombre not in vivas:
+                fs.delete(estado.getPath(), True)
+                print(f"  borrado el directorio huerfano de {nombre}")
 PY
 
 if [ "${LAB}" = "10" ] || [ "${LAB}" = "todos" ]; then

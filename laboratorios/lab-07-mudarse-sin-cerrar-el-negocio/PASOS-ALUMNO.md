@@ -349,12 +349,10 @@ SHOW TABLES IN mi_espacio
 **En consola**
 
 ```
-| namespace | tableName               | isTemporary |
-| mi_espacio   | documentos_hive         | False       |
-| mi_espacio   | documentos_hive_backup_ | False       |
+| namespace  | tableName               | isTemporary |
+| mi_espacio | documentos_hive         | False       |
+| mi_espacio | documentos_hive_backup_ | False       |
 ```
-
-**Varía entre alumnos** su database.
 
 ## Paso 6. La capa de consulta
 

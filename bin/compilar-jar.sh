@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 #
 # Compila el programa Scala del laboratorio 09 y lo deja donde el cuaderno lo
-# busca, en /home/mi_espacio/sin-spark.jar.
+# busca, en /opt/herramientas/sin-spark.jar.
 #
 #   bin/compilar-jar.sh            compila si falta
 #   bin/compilar-jar.sh --rehacer  vuelve a compilar aunque ya exista
@@ -20,7 +20,7 @@ set -euo pipefail
 cd "$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 
 IMAGEN="iceberg-alumnos/cliente-scala:1.0.0"
-DESTINO="/home/mi_espacio/sin-spark.jar"
+DESTINO="/opt/herramientas/sin-spark.jar"
 
 if [ "${1:-}" != "--rehacer" ] && docker exec iceberg-jupyter test -f "${DESTINO}" 2>/dev/null; then
   echo "  el jar ya estaba compilado (usa --rehacer para rehacerlo)"
@@ -33,6 +33,7 @@ docker build -t "${IMAGEN}" cliente-scala/
 contenedor="$(docker create "${IMAGEN}")"
 trap 'docker rm -f "${contenedor}" >/dev/null 2>&1 || true' EXIT
 docker cp "${contenedor}:/cliente/sin-spark.jar" /tmp/sin-spark.jar >/dev/null
+docker exec iceberg-jupyter mkdir -p /opt/herramientas
 docker cp /tmp/sin-spark.jar iceberg-jupyter:"${DESTINO}" >/dev/null
 rm -f /tmp/sin-spark.jar
 
