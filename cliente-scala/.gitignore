@@ -1,0 +1,6 @@
+# Salida de sbt. Los directorios bajo modulos/ existen solo para que sbt tenga
+# donde dejarla; el codigo vive en src/.
+target/
+modulos/
+project/target/
+project/project/

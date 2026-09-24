@@ -1,0 +1,263 @@
+# Ambiente del curso de Apache Iceberg, para un solo alumno en su notebook.
+#
+#   docker compose up -d                    el ambiente liviano, que es el normal
+#   docker compose --profile sql up -d      ademas Hue y el Spark Thrift Server
+#
+# Hay un script que hace esto y ademas espera a que todo quede sano:
+#
+#   bin/ambiente.sh arriba
+#   bin/ambiente.sh arriba --sql
+#
+# EL AMBIENTE ES DE UN SOLO USUARIO. Hay un JupyterLab y una sola base de
+# trabajo, 'mi_espacio', que se crea sola al cargar los datos. La base 'curso'
+# guarda las tablas de referencia que los laboratorios leen.
+#
+# TODO ESCUCHA EN LOCALHOST. No hay dominio, ni certificados, ni nada expuesto
+# a la red: las direcciones son 127.0.0.1 y nadie mas llega.
+
+x-jupyter-imagen: &jupyter-imagen
+  image: iceberg-alumnos/spark-jupyter:3.3.4-iceberg1.3.0
+  build:
+    context: ./imagenes/spark-jupyter
+
+services:
+
+  # --------------------------------------------------------------------------
+  # PostgreSQL. Guarda dos cosas: el catalogo del Hive Metastore y la base
+  # 'origen' que el laboratorio 16 migra a Iceberg.
+  # --------------------------------------------------------------------------
+  postgres:
+    image: postgres:15
+    container_name: iceberg-postgres
+    environment:
+      POSTGRES_DB: metastore
+      POSTGRES_USER: hive
+      POSTGRES_PASSWORD: ${METASTORE_DB_PASSWORD:-hive}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U hive -d metastore"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 15s
+    mem_limit: 512m
+    networks: [lab]
+    restart: unless-stopped
+
+  # --------------------------------------------------------------------------
+  # HDFS. Aqui viven los archivos de las tablas, que es lo que los laboratorios
+  # miran cuando preguntan "donde esta esto en el disco".
+  # --------------------------------------------------------------------------
+  namenode:
+    image: iceberg-alumnos/hadoop:3.3.6
+    build:
+      context: ./imagenes/hadoop
+    container_name: iceberg-namenode
+    command: ["namenode"]
+    environment:
+      HDFS_NAMENODE_DIR: /hadoop/dfs/name
+    volumes:
+      - nn-data:/hadoop/dfs/name
+    ports:
+      - "127.0.0.1:${NAMENODE_UI_PORT:-9870}:9870"
+    healthcheck:
+      # Comprueba que el NameNode responde, NO que haya salido de safemode: en
+      # un reinicio con datos ya existentes no sale hasta que el DataNode le
+      # reporta sus bloques, y el DataNode espera a que el NameNode este sano.
+      test: ["CMD-SHELL", "hdfs dfsadmin -safemode get >/dev/null 2>&1"]
+      interval: 10s
+      timeout: 10s
+      retries: 30
+      start_period: 30s
+    mem_limit: 1g
+    networks: [lab]
+    restart: unless-stopped
+
+  datanode:
+    image: iceberg-alumnos/hadoop:3.3.6
+    build:
+      context: ./imagenes/hadoop
+    container_name: iceberg-datanode
+    command: ["datanode"]
+    environment:
+      HDFS_DATANODE_DIR: /hadoop/dfs/data
+    volumes:
+      - dn-data:/hadoop/dfs/data
+    depends_on:
+      namenode:
+        condition: service_healthy
+    healthcheck:
+      # No basta con que el proceso viva: tiene que haberse registrado.
+      test: ["CMD-SHELL", "hdfs dfsadmin -report 2>/dev/null | grep -q 'Live datanodes (1)'"]
+      interval: 10s
+      timeout: 10s
+      retries: 30
+      start_period: 30s
+    mem_limit: 1g
+    networks: [lab]
+    restart: unless-stopped
+
+  # --------------------------------------------------------------------------
+  # Hive Metastore. Es el catalogo: el clavo del que cuelgan las libretas.
+  # --------------------------------------------------------------------------
+  hive-metastore:
+    image: iceberg-alumnos/hive-metastore:3.1.3
+    build:
+      context: ./imagenes/hive-metastore
+    container_name: iceberg-hive-metastore
+    command: ["metastore"]
+    environment:
+      METASTORE_DB_HOST: postgres
+      METASTORE_DB_PORT: "5432"
+      ICEBERG_WAREHOUSE: /warehouse/iceberg
+    volumes:
+      - ./conf/hive-site.xml:/opt/hive/conf/hive-site.xml:ro
+      - ./conf/core-site.xml:/opt/hadoop/etc/hadoop/core-site.xml:ro
+    depends_on:
+      postgres:
+        condition: service_healthy
+      namenode:
+        condition: service_healthy
+      # Es el primero que ESCRIBE en HDFS: necesita un DataNode vivo.
+      datanode:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "nc -z localhost 9083"]
+      interval: 10s
+      timeout: 5s
+      retries: 30
+      start_period: 60s
+    mem_limit: 1g
+    networks: [lab]
+    restart: unless-stopped
+
+  # --------------------------------------------------------------------------
+  # JupyterLab. Aqui se trabaja: es el unico lugar que el alumno abre.
+  # --------------------------------------------------------------------------
+  jupyter:
+    <<: *jupyter-imagen
+    container_name: iceberg-jupyter
+    environment:
+      LAB_USER: mi_espacio
+      JUPYTER_TOKEN: ${JUPYTER_TOKEN:?falta JUPYTER_TOKEN, copialo de .env.example a .env}
+    volumes:
+      - ./conf/spark-defaults.conf:/opt/spark/conf/spark-defaults.conf:ro
+      - ./conf/core-site.xml:/opt/spark/conf/core-site.xml:ro
+      - ./laboratorios:/home/mi_espacio/laboratorios
+      - trabajo:/home/mi_espacio/trabajo
+    ports:
+      - "127.0.0.1:${JUPYTER_PORT:-8888}:8888"
+    depends_on:
+      hive-metastore:
+        condition: service_healthy
+      datanode:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "python3 -c \"import socket; socket.create_connection(('localhost',8888),3).close()\""]
+      interval: 15s
+      timeout: 5s
+      retries: 20
+      start_period: 40s
+    # El driver de Spark pide 2 GB, igual que en el curso. El contenedor lleva
+    # 3 GB para que quepan el driver, el kernel y el propio JupyterLab.
+    mem_limit: 3g
+    networks: [lab]
+    restart: unless-stopped
+
+  # --------------------------------------------------------------------------
+  # PERFIL 'sql'. Solo lo necesitan los laboratorios 02 y 07, que consultan la
+  # misma tabla desde un segundo motor. Se levanta aparte porque suma cerca de
+  # 2 GB de memoria y en un notebook eso se nota.
+  # --------------------------------------------------------------------------
+  spark-thrift:
+    <<: *jupyter-imagen
+    container_name: iceberg-spark-thrift
+    profiles: ["sql"]
+    entrypoint: ["/usr/bin/tini", "--", "/opt/spark/sbin/start-thriftserver.sh"]
+    command:
+      - "--master"
+      - "local[2]"
+      - "--driver-memory"
+      - "2g"
+      - "--hiveconf"
+      - "hive.server2.thrift.bind.host=0.0.0.0"
+      - "--hiveconf"
+      - "hive.server2.thrift.port=10000"
+    environment:
+      SPARK_NO_DAEMONIZE: "true"
+    volumes:
+      - ./conf/spark-defaults.conf:/opt/spark/conf/spark-defaults.conf:ro
+      - ./conf/core-site.xml:/opt/spark/conf/core-site.xml:ro
+    depends_on:
+      hive-metastore:
+        condition: service_healthy
+      datanode:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "python3 -c \"import socket; socket.create_connection(('localhost',10000),3).close()\""]
+      interval: 15s
+      timeout: 10s
+      retries: 30
+      start_period: 60s
+    mem_limit: 3g
+    networks: [lab]
+    restart: unless-stopped
+
+  # Crea la base interna de Hue. La imagen de postgres solo corre sus scripts de
+  # arranque la primera vez y crea una sola base, asi que sin esto Hue levanta
+  # contra una base que no existe y se queda reintentando sin decir por que.
+  hue-init:
+    image: postgres:15
+    container_name: iceberg-hue-init
+    profiles: ["sql"]
+    environment:
+      PGPASSWORD: ${METASTORE_DB_PASSWORD:-hive}
+      HUE_DB_NAME: ${HUE_DB_NAME:-hue}
+      HUE_DB_USER: ${HUE_DB_USER:-hue_app}
+      HUE_DB_PASSWORD: ${HUE_DB_PASSWORD:-hue}
+    entrypoint: ["/bin/sh", "/opt/lab/crear-base-hue.sh"]
+    volumes:
+      - ./bin/crear-base-hue.sh:/opt/lab/crear-base-hue.sh:ro
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks: [lab]
+    restart: "no"
+
+  # OJO: gethue/hue no publica imagen para ARM en ningun tag. En un Mac con
+  # procesador Apple corre emulada, asi que arranca lento y consume mas. Es el
+  # unico servicio del ambiente con esa limitacion, y por eso va en el perfil
+  # opcional: el ambiente normal es nativo en los dos procesadores.
+  hue:
+    image: gethue/hue:${HUE_VERSION:-4.11.0}
+    platform: linux/amd64
+    container_name: iceberg-hue
+    profiles: ["sql"]
+    environment:
+      HUE_DB_NAME: ${HUE_DB_NAME:-hue}
+      HUE_DB_USER: ${HUE_DB_USER:-hue_app}
+      HUE_DB_PASSWORD: ${HUE_DB_PASSWORD:-hue}
+      HUE_SECRET_KEY: ${HUE_SECRET_KEY:-cambia-esta-clave-en-tu-env}
+    volumes:
+      - ./conf/hue.ini:/usr/share/hue/desktop/conf/hue.ini:ro
+    ports:
+      - "127.0.0.1:${HUE_PORT:-8889}:8888"
+    depends_on:
+      hue-init:
+        condition: service_completed_successfully
+      spark-thrift:
+        condition: service_healthy
+    mem_limit: 2g
+    networks: [lab]
+    restart: unless-stopped
+
+networks:
+  lab:
+    name: iceberg-alumnos
+
+volumes:
+  pgdata:
+  nn-data:
+  dn-data:
+  trabajo:

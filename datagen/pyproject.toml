@@ -1,0 +1,25 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "datagen-dgt"
+version = "1.0.0"
+description = "Generador de datos tributarios sinteticos del universo DGT para el curso de Apache Iceberg"
+requires-python = ">=3.10"
+# Dependencias minimas a proposito: pyarrow y biblioteca estandar. Sin pandas y
+# sin generadores de datos falsos de terceros, para que el generador se pueda
+# ejecutar dentro del contenedor del laboratorio sin arrastrar medio ecosistema.
+dependencies = ["pyarrow>=12"]
+
+[project.optional-dependencies]
+dev = ["pytest>=7.4"]
+
+[project.scripts]
+datagen-dgt = "datagen.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["datagen*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

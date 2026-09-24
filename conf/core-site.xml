@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+<!--
+  Config de CLIENTE HDFS: la montan los Jupyter, el metastore y el Thrift Server.
+  La config de los daemons HDFS vive en images/hadoop/conf/.
+-->
+<configuration>
+
+  <property>
+    <name>fs.defaultFS</name>
+    <value>hdfs://namenode:8020</value>
+  </property>
+
+  <property>
+    <name>hadoop.security.authentication</name>
+    <value>simple</value>
+  </property>
+
+  <!-- Los clientes viven en otros contenedores: deben alcanzar al DataNode por
+       nombre de servicio Docker y no por la IP interna que anuncia el NameNode. -->
+  <property>
+    <name>dfs.client.use.datanode.hostname</name>
+    <value>true</value>
+  </property>
+
+</configuration>

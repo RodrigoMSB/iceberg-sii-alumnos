@@ -1,0 +1,18 @@
+# El .env lleva el token del alumno y no se comparte.
+.env
+
+# Salida del generador de datos: se regenera con bin/cargar-datos.sh
+datos/
+datos-bodega/
+
+# Compilacion del cliente Scala del laboratorio 09
+cliente-scala/modulos/
+cliente-scala/target/
+cliente-scala/project/target/
+cliente-scala/project/project/
+*.jar
+
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+.DS_Store
