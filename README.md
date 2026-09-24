@@ -14,7 +14,7 @@ dentro de Docker, y se apaga cuando terminas.
 |---|---|---|
 | **Docker Desktop** | instalado y corriendo | — |
 | **Memoria libre** | 8 GB | 12 GB |
-| **Disco libre** | 15 GB | 25 GB si vas a hacer el laboratorio 17 |
+| **Disco libre** | **unos 10 GB** | 15 GB si vas a hacer el laboratorio 17 |
 | **Procesador** | Intel o ARM | cualquiera de los dos sirve |
 
 Funciona igual en un Mac con procesador Apple (M1 a M4), en un Mac Intel y en un PC con
@@ -58,9 +58,12 @@ cp .env.example .env        # y cambia el token por uno tuyo
 bin/ambiente.sh arriba
 ```
 
-**La primera vez demora.** Construye tres imágenes y baja Spark, que son unos 300 MB:
-entre **diez y veinte minutos** según tu conexión. Las veces siguientes levanta en **menos
-de un minuto**, porque ya está todo construido.
+**La primera vez demora unos 9 minutos, y es normal.** No se colgó: está construyendo las
+tres imágenes del ambiente, y una de ellas baja Spark, que son unos 300 MB. Vas a ver pasar
+líneas de Docker todo ese rato; si tu conexión es lenta puede tomar algo más.
+
+**Las veces siguientes levanta en menos de un minuto**, porque las imágenes ya están
+construidas y no se vuelven a bajar.
 
 ### Cómo sabes que quedó listo
 
