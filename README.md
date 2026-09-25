@@ -17,9 +17,6 @@ dentro de Docker, y se apaga cuando terminas.
 | **Disco libre** | **unos 10 GB** | 15 GB si vas a hacer el laboratorio 17 |
 | **Procesador** | Intel o ARM | cualquiera de los dos sirve |
 
-El ambiente se probó en un Mac con procesador Apple. En un Mac Intel o en Windows con WSL2
-debería funcionar, pero no se probó.
-
 ### Cuánta memoria le das a Docker
 
 Docker Desktop reparte la memoria de tu máquina, y por omisión a veces deja poca. El
@@ -42,9 +39,17 @@ Docker Desktop en Windows necesita **WSL2**, que es el Linux que Windows trae ad
 3. Instala **Docker Desktop** desde su sitio. En la instalación, deja marcada la opción
    **Use WSL 2 based engine**.
 4. Abre Docker Desktop y espera a que el ícono de la ballena deje de moverse.
-5. **Trabaja dentro de WSL**, no en `C:\`. Abre la aplicación **Ubuntu** y clona el
-   repositorio ahí. Si lo clonas en `C:\` todo anda mucho más lento, porque Docker tiene
-   que cruzar dos sistemas de archivos en cada lectura.
+5. **Trabaja dentro de WSL2**, no en `C:\`. Abre la aplicación **Ubuntu**, que es la
+   terminal de WSL2, y clona el repositorio en tu carpeta de inicio:
+
+   ```bash
+   cd ~
+   git clone <la dirección que te pasaron> iceberg-sii-alumnos
+   ```
+
+   Corre todo desde esa terminal de Ubuntu: `bin/ambiente.sh`, `bin/cargar-datos.sh` y los
+   demás scripts. Si lo clonas en `C:\` todo anda mucho más lento, porque Docker tiene que
+   cruzar dos sistemas de archivos en cada lectura.
 
 ---
 
