@@ -640,7 +640,7 @@ No. `expire_snapshots` borra los archivos del disco. Por eso la fecha de corte s
 
 ### ¿Por qué la fecha de la celda 4.1 es de 2030?
 
-Para que en una sola celda toda la historia cuente como vieja y se vea el efecto completo. En producción la fecha de corte sale de la política de retención, y una fecha futura se llevaría toda la historia de la tabla.
+Para que en una sola celda toda la historia cuente como vieja y se vea el efecto completo. En producción la fecha de corte sale de la política de retención, y una fecha futura se llevaría toda la historia salvo la página vigente, que expire_snapshots nunca borra.
 
 ### ¿Por qué no hubo huérfanos?
 
