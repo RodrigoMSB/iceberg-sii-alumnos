@@ -22,7 +22,7 @@ WHERE fecha_emision = DATE '2015-01-05'
 1 fila.
 ```
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ---
 
@@ -44,7 +44,7 @@ WHERE fecha_emision = DATE '2015-01-05'
 1 fila.
 ```
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ---
 
@@ -67,7 +67,7 @@ CPU times: user 11.4 ms, sys: 5.36 ms, total: 16.7 ms
 Wall time: 598 ms
 ```
 
-**Varía entre alumnos** el tiempo, siempre.
+**Cambia en tu corrida** el tiempo, siempre.
 
 ---
 
@@ -90,7 +90,7 @@ CPU times: user 10.9 ms, sys: 3.11 ms, total: 14 ms
 Wall time: 217 ms
 ```
 
-**Varía entre alumnos** el tiempo.
+**Cambia en tu corrida** el tiempo.
 
 ## Paso 1. Contar la bodega entera
 
@@ -134,7 +134,7 @@ CPU times: user 15.8 ms, sys: 4.29 ms, total: 20.1 ms
 Wall time: 1.88 s
 ```
 
-**Varía entre alumnos** el tiempo, y bastante.
+**Cambia en tu corrida** el tiempo, y bastante.
 
 ---
 
@@ -174,7 +174,7 @@ Wall time: 239 ms
 246.5 M  739.4 M  /warehouse/iceberg/curso.db/dte_10_anios
 ```
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ---
 

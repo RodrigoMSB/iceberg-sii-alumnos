@@ -23,7 +23,7 @@ import org.apache.parquet.schema.MessageType
  * La misma tabla, sin Spark en ninguna parte.
  *
  * Este jar no lleva Spark adentro y esa ausencia es el punto: una tabla
- * Iceberg es un directorio de archivos Parquet mas unos indices que dicen
+ * Iceberg es un directorio de archivos Parquet mas unos manifiestos que dicen
  * cuales cuentan, y cualquier programa que sepa leer ese formato la lee. No
  * hace falta el motor que la escribio, ni ningun servidor que preste el dato.
  *
@@ -36,8 +36,8 @@ object SinSpark {
   def main(argumentos: Array[String]): Unit = {
 
     // El espacio y la tabla los pone quien lanza el programa, nunca este
-    // archivo: cada alumno corre la celda con el suyo, y si el nombre viniera
-    // escrito aqui, todos leerian y escribirian en la tabla del mismo.
+    // archivo: asi el mismo programa sirve para cualquier tabla, y ninguna
+    // queda amarrada a un nombre escrito aqui.
     val espacio = sys.env.getOrElse("ESPACIO", "")
     val tabla = sys.env.getOrElse("TABLA", "")
     if (espacio.isEmpty || tabla.isEmpty) {
@@ -47,7 +47,7 @@ object SinSpark {
     }
     println(s"Tabla pedida: $espacio.$tabla")
 
-    // 1. Decirle donde esta HDFS. La direccion es la misma en los siete espacios.
+    // 1. Decirle donde esta HDFS. La direccion es la del ambiente.
     val hadoop = new Configuration()
     hadoop.set("fs.defaultFS", "hdfs://namenode:8020")
     hadoop.set("dfs.client.use.datanode.hostname", "true")
@@ -96,7 +96,7 @@ object SinSpark {
         IcebergGenerics.read(libreta).useSnapshot(primera).build())
     }
 
-    // 5. Escribir la fila de Litre Transportes: el Parquet, el indice y el commit.
+    // 5. Escribir la fila de Litre Transportes: el Parquet, el manifiesto y el commit.
     val rut = "79856201-3"
     val buscado = IcebergGenerics.read(libreta).where(Expressions.equal("rut", rut)).build()
     val yaEsta = try buscado.iterator().hasNext finally buscado.close()
@@ -124,7 +124,7 @@ object SinSpark {
       println(s"5. Parquet escrito: ${destino.location()}")
       libreta.newAppend().appendFile(escritor.toDataFile).commit()
       libreta.refresh()
-      println(s"   Indice de esa pagina: ${libreta.currentSnapshot().manifestListLocation()}")
+      println(s"   Lista de manifiestos de esa pagina: ${libreta.currentSnapshot().manifestListLocation()}")
       println(s"   Commit hecho. Pagina nueva ${libreta.currentSnapshot().snapshotId()}.")
     }
 

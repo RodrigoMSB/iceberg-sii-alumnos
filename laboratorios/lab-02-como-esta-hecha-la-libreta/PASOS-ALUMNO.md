@@ -14,7 +14,7 @@ USE mi_espacio
 
 **En consola** `Listo. La sentencia se ejecutó.` Primera celda.
 
-**Varía entre alumnos** el nombre que escribió cada uno.
+**Cambia en tu corrida** nada.
 
 ---
 
@@ -28,7 +28,7 @@ DROP TABLE IF EXISTS contribuyentes_lab02
 
 **En consola** `Listo. La sentencia se ejecutó.`
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ---
 
@@ -46,7 +46,7 @@ CREATE TABLE contribuyentes_lab02 (
 
 **En consola** `Listo. La sentencia se ejecutó.`
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ---
 
@@ -63,7 +63,7 @@ INSERT INTO contribuyentes_lab02 VALUES
 
 **En consola** `Listo. La sentencia se ejecutó.`
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ---
 
@@ -78,7 +78,7 @@ INSERT INTO contribuyentes_lab02 VALUES
 
 **En consola** `Listo. La sentencia se ejecutó.`
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ---
 
@@ -101,7 +101,7 @@ SELECT * FROM contribuyentes_lab02 ORDER BY rut
 4 filas.
 ```
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ## Paso 1. La tabla se describe a sí misma
 
@@ -121,7 +121,7 @@ DESCRIBE TABLE EXTENDED contribuyentes_lab02
 | Provider | iceberg                                             |
 ```
 
-**Varía entre alumnos** el nombre de la database dentro de `Name` y de `Location`.
+**Cambia en tu corrida** nada.
 
 ---
 
@@ -142,13 +142,13 @@ SHOW TBLPROPERTIES contribuyentes_lab02
 | format-version      | 1                   |
 ```
 
-**Varía entre alumnos** `current-snapshot-id`, siempre.
+**Cambia en tu corrida** `current-snapshot-id`, siempre.
 
-## Paso 2. Las páginas y el índice
+## Paso 2. Las páginas y los manifiestos
 
 **Celda 2.1**
 
-**Se escribe** (con su propia database adelante).
+**Se escribe**
 
 ```sql
 SELECT snapshot_id, committed_at, operation
@@ -164,7 +164,7 @@ ORDER BY committed_at
 | 3612637108659539787 | 2026-08-23 00:44:29.985 | append    |
 ```
 
-**Varía entre alumnos** los identificadores y las fechas, siempre.
+**Cambia en tu corrida** los identificadores y las fechas, siempre.
 
 ---
 
@@ -180,7 +180,7 @@ ORDER BY made_current_at
 
 **En consola** dos filas, las dos con `is_current_ancestor` en `True`.
 
-**Varía entre alumnos** identificadores y fechas.
+**Cambia en tu corrida** identificadores y fechas.
 
 ---
 
@@ -201,7 +201,7 @@ FROM mi_espacio.contribuyentes_lab02.manifests
 | hdfs://…    | 5604856730393747384 | 2                      | 0                         |
 ```
 
-**Varía entre alumnos** las rutas y los identificadores.
+**Cambia en tu corrida** las rutas y los identificadores.
 
 ## Paso 3. Dónde viven los datos
 
@@ -223,8 +223,7 @@ FROM mi_espacio.contribuyentes_lab02.files
 | hdfs://…  | 2            | 1091               |
 ```
 
-**Varía entre alumnos** las rutas, y los tamaños en bytes pueden diferir en algunas
-unidades.
+**Cambia en tu corrida** las rutas, y los tamaños en bytes en algunas unidades.
 
 ---
 
@@ -246,11 +245,11 @@ FROM mi_espacio.contribuyentes_lab02.files
 | 3        | 4     | 3302  |
 ```
 
-**Varía entre alumnos** `bytes`.
+**Cambia en tu corrida** `bytes`.
 
 ## Paso 4. El mismo dato desde otro motor
 
-**Se escribe** (en Hue, cada uno con su database).
+**Se escribe** (en Hue).
 
 ```sql-hue
 SELECT * FROM mi_espacio.contribuyentes_lab02 ORDER BY rut
@@ -266,7 +265,7 @@ SELECT * FROM mi_espacio.contribuyentes_lab02 ORDER BY rut
 | 78800840-6 | Copihue Maquinarias EIRL | MEDIANA  |
 ```
 
-**Varía entre alumnos** su database en la consulta.
+**Cambia en tu corrida** nada.
 
 ---
 
@@ -278,7 +277,7 @@ INSERT INTO mi_espacio.contribuyentes_lab02 VALUES ('79412337-8','Quillay Servic
 
 **En consola** Hue muestra una tabla con una sola columna `Result` y ninguna fila.
 
-**Varía entre alumnos** su database.
+**Cambia en tu corrida** nada.
 
 ---
 
@@ -301,7 +300,7 @@ SELECT * FROM contribuyentes_lab02 ORDER BY rut
 4 filas.
 ```
 
-**Varía entre alumnos** a algunos les van a salir cinco.
+**Cambia en tu corrida** puede que salgan cinco, si la copia que el motor tenía en memoria ya se venció.
 
 ---
 
@@ -315,7 +314,7 @@ REFRESH TABLE contribuyentes_lab02
 
 **En consola** `Listo. La sentencia se ejecutó.`
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ---
 
@@ -339,7 +338,7 @@ SELECT * FROM contribuyentes_lab02 ORDER BY rut
 5 filas.
 ```
 
-**Varía entre alumnos** nada, si todos escribieron la misma fila en Hue.
+**Cambia en tu corrida** nada, si escribiste en Hue la misma fila que aparece aquí.
 
 ---
 
@@ -362,4 +361,4 @@ ORDER BY committed_at
 | 1526672598735946670 | 2026-08-23 00:44:34.191 | append    |
 ```
 
-**Varía entre alumnos** identificadores y fechas.
+**Cambia en tu corrida** identificadores y fechas.

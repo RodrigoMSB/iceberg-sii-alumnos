@@ -14,7 +14,7 @@ USE mi_espacio
 
 **En consola** `Listo. La sentencia se ejecutó.`
 
-**Varía entre alumnos** el nombre que escribió cada uno.
+**Cambia en tu corrida** nada.
 
 ---
 
@@ -28,7 +28,7 @@ DROP TABLE IF EXISTS documentos_recibidos
 
 **En consola** `Listo. La sentencia se ejecutó.`
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ---
 
@@ -44,7 +44,7 @@ WHERE month(fecha_emision) = 1
 
 **En consola** `Listo. La sentencia se ejecutó.`
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ---
 
@@ -60,7 +60,7 @@ WHERE month(fecha_emision) = 2
 
 **En consola** `Listo. La sentencia se ejecutó.`
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ---
 
@@ -76,7 +76,7 @@ WHERE month(fecha_emision) = 3
 
 **En consola** `Listo. La sentencia se ejecutó.`
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ---
 
@@ -92,7 +92,7 @@ WHERE month(fecha_emision) = 4
 
 **En consola** `Listo. La sentencia se ejecutó.`
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ---
 
@@ -108,7 +108,7 @@ WHERE month(fecha_emision) = 5
 
 **En consola** `Listo. La sentencia se ejecutó.`
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ---
 
@@ -124,7 +124,7 @@ WHERE month(fecha_emision) = 6
 
 **En consola** `Listo. La sentencia se ejecutó.`
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ---
 
@@ -140,7 +140,7 @@ WHERE month(fecha_emision) = 7
 
 **En consola** `Listo. La sentencia se ejecutó.`
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ---
 
@@ -156,7 +156,7 @@ WHERE month(fecha_emision) = 8
 
 **En consola** `Listo. La sentencia se ejecutó.`
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ---
 
@@ -172,7 +172,7 @@ WHERE month(fecha_emision) = 9
 
 **En consola** `Listo. La sentencia se ejecutó.`
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ---
 
@@ -188,7 +188,7 @@ WHERE month(fecha_emision) = 10
 
 **En consola** `Listo. La sentencia se ejecutó.`
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ---
 
@@ -204,7 +204,7 @@ WHERE month(fecha_emision) = 11
 
 **En consola** `Listo. La sentencia se ejecutó.`
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ---
 
@@ -220,7 +220,7 @@ WHERE month(fecha_emision) = 12
 
 **En consola** `Listo. La sentencia se ejecutó.`
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ---
 
@@ -241,7 +241,7 @@ documentos | total_general
 30000      | 291293351462.71
 ```
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ## Paso 1. Medir el costo
 
@@ -264,7 +264,7 @@ archivos | documentos | bytes_por_archivo | bytes_totales
 12       | 30000      | 74031             | 888378
 ```
 
-**Varía entre alumnos** nada en los números; sí la database que escribió cada uno.
+**Cambia en tu corrida** nada.
 
 ---
 
@@ -284,7 +284,7 @@ ORDER BY desde
 **En consola** doce filas, una por archivo, todas con 2.500 documentos y entre 73.000 y
 74.500 bytes.
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ---
 
@@ -303,7 +303,7 @@ ORDER BY periodo
 
 **En consola** doce filas, de `2024-01` a `2024-12`, con 2.500 documentos cada una.
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ## Paso 2. Pasar en limpio
 
@@ -322,7 +322,7 @@ rewritten_data_files_count | added_data_files_count | rewritten_bytes_count
 12                         | 1                      | 888378
 ```
 
-**Varía entre alumnos** nada en los números; sí la database.
+**Cambia en tu corrida** nada.
 
 ---
 
@@ -345,7 +345,7 @@ archivos | documentos | bytes_por_archivo | bytes_totales
 1        | 30000      | 762542            | 762542
 ```
 
-**Varía entre alumnos** **el tamaño sí varía** en algunos cientos de bytes.
+**Cambia en tu corrida** el tamaño, en algunos cientos de bytes.
 
 ---
 
@@ -366,7 +366,7 @@ documentos | total_general
 30000      | 291293351462.71
 ```
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ## Paso 3. Lo que no se liberó
 
@@ -382,7 +382,7 @@ ORDER BY committed_at
 
 **En consola** **trece filas**.
 
-**Varía entre alumnos** `snapshot_id` y `committed_at`.
+**Cambia en tu corrida** `snapshot_id` y `committed_at`.
 
 ---
 
@@ -396,8 +396,7 @@ SELECT count(*) AS documentos FROM documentos_recibidos VERSION AS OF <TU_SNAPSH
 
 **En consola** una fila con **2.500** documentos.
 
-**Varía entre alumnos** el número que escribió cada uno; el resultado, 2.500, es igual
-para todos.
+**Cambia en tu corrida** el número que escribiste; el resultado, 2.500, es siempre el mismo.
 
 ---
 
@@ -418,8 +417,7 @@ archivos_guardados | bytes_ocupados
 13                 | 1650920
 ```
 
-**Varía entre alumnos** los `archivos_guardados` son 13 para todos; los `bytes_ocupados`
-varían en algunos cientos, por lo mismo de la celda anterior.
+**Cambia en tu corrida** los `bytes_ocupados`, en algunos cientos, por lo mismo de la celda anterior. Los `archivos_guardados` son siempre 13.
 
 ## Paso 4. Botar los borradores
 
@@ -441,7 +439,7 @@ deleted_data_files_count | ... | deleted_manifest_files_count | deleted_manifest
 12                       |     | 12                           | 12                           |
 ```
 
-**Varía entre alumnos** la marca de tiempo que escribió cada uno.
+**Cambia en tu corrida** la marca de tiempo que escribiste.
 
 ---
 
@@ -461,7 +459,7 @@ Spark rechazó la sentencia:
 Cannot find snapshot with ID <el número que copiaste>
 ```
 
-**Varía entre alumnos** el identificador que aparece en el mensaje es el de cada uno.
+**Cambia en tu corrida** el identificador que aparece en el mensaje.
 
 ---
 
@@ -477,7 +475,7 @@ ORDER BY committed_at
 
 **En consola** **una sola fila**, la `replace` de la compactación.
 
-**Varía entre alumnos** el `snapshot_id` y la marca de tiempo.
+**Cambia en tu corrida** el `snapshot_id` y la marca de tiempo.
 
 ---
 
@@ -498,8 +496,7 @@ archivos_guardados | bytes_ocupados
 1                  | 762542
 ```
 
-**Varía entre alumnos** el archivo es uno para todos; los bytes, los mismos que salieron
-en la celda del paso 2.
+**Cambia en tu corrida** nada; los bytes son los mismos que salieron en la celda del paso 2.
 
 ---
 
@@ -520,7 +517,7 @@ documentos | total_general
 30000      | 291293351462.71
 ```
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ## Paso 5. Los archivos que nadie reclama
 
@@ -537,7 +534,7 @@ CALL spark_catalog.system.remove_orphan_files(
 **En consola** la tabla vacía, con la columna `orphan_file_location` y el aviso `0
 filas`.
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ---
 
@@ -560,7 +557,7 @@ procedure with a short interval may corrupt the table if other operations are
 happening at the same time...
 ```
 
-**Varía entre alumnos** la marca de tiempo que escribió cada uno.
+**Cambia en tu corrida** la marca de tiempo que escribiste.
 
 ## Paso 6. La rutina (conversación, sin celdas)
 
@@ -568,7 +565,7 @@ happening at the same time...
 
 **En consola** nada.
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ## Paso 7. Cerrar el curso (conversación, sin celdas)
 
@@ -576,4 +573,4 @@ happening at the same time...
 
 **En consola** nada.
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.

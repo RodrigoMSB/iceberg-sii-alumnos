@@ -14,7 +14,7 @@ USE mi_espacio
 
 **En consola** `Listo. La sentencia se ejecutó.` Primera celda.
 
-**Varía entre alumnos** el nombre que escribió cada uno.
+**Cambia en tu corrida** nada.
 
 ---
 
@@ -28,7 +28,7 @@ DROP TABLE IF EXISTS documentos_sin_particion
 
 **En consola** `Listo. La sentencia se ejecutó.`
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ---
 
@@ -42,7 +42,7 @@ DROP TABLE IF EXISTS documentos_por_mes
 
 **En consola** `Listo. La sentencia se ejecutó.`
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ---
 
@@ -58,7 +58,7 @@ SELECT * FROM curso.dte_2024
 **En consola** `Listo. La sentencia se ejecutó.` Es de las celdas más lentas del
 laboratorio, unos segundos.
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ---
 
@@ -84,7 +84,7 @@ LIMIT 5
 5 filas.
 ```
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ---
 
@@ -103,7 +103,7 @@ SELECT count(*) AS documentos FROM documentos_sin_particion
 | 30000      |
 ```
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ## Paso 1. La consulta lenta
 
@@ -125,13 +125,13 @@ WHERE fecha_emision BETWEEN DATE '2024-06-01' AND DATE '2024-06-30'
 | 2500       | 24547341762.59 |
 ```
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ---
 
 **Celda 1.2**
 
-**Se escribe** (con su propia database adelante).
+**Se escribe**
 
 ```sql
 SELECT record_count                                AS filas,
@@ -149,13 +149,13 @@ ORDER BY desde
 1 fila.
 ```
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ---
 
 **Celda 1.3**
 
-**Se escribe** (con su database).
+**Se escribe**
 
 ```sql
 SELECT count(*)                AS archivos_a_leer,
@@ -173,7 +173,7 @@ WHERE readable_metrics.fecha_emision.upper_bound >= DATE '2024-06-01'
 | 1               | 30000        | 776514       |
 ```
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ## Paso 2. Crear la tabla particionada
 
@@ -189,7 +189,7 @@ SELECT * FROM curso.dte_2024 ORDER BY fecha_emision
 
 **En consola** `Listo. La sentencia se ejecutó.` Es la celda más lenta del laboratorio.
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ---
 
@@ -208,7 +208,7 @@ SELECT count(*) AS documentos FROM documentos_por_mes
 | 30000      |
 ```
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ## Paso 3. La misma consulta, ahora sí
 
@@ -230,13 +230,13 @@ WHERE fecha_emision BETWEEN DATE '2024-06-01' AND DATE '2024-06-30'
 | 2500       | 24547341762.59 |
 ```
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ---
 
 **Celda 3.2**
 
-**Se escribe** (con su database).
+**Se escribe**
 
 ```sql
 SELECT count(*)                AS archivos_a_leer,
@@ -259,7 +259,7 @@ sin particionar        1 archivo    30.000 filas    776.514 bytes
 particionada por mes   1 archivo     2.500 filas     71.779 bytes
 ```
 
-**Varía entre alumnos** los bytes pueden diferir en algunas unidades.
+**Cambia en tu corrida** los bytes, en algunas unidades.
 
 ## Paso 4. El particionamiento oculto
 
@@ -278,13 +278,13 @@ DESCRIBE TABLE EXTENDED documentos_por_mes
 | Part 0         | months(fecha_emision) |
 ```
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ---
 
 **Celda 4.2**
 
-**Se escribe** (con su database).
+**Se escribe**
 
 ```sql
 SELECT add_months(DATE '1970-01-01', partition.fecha_emision_month) AS mes,
@@ -304,7 +304,7 @@ ORDER BY mes
 12 filas.
 ```
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ## Paso 5. Cambiar el criterio
 
@@ -319,7 +319,7 @@ REPLACE PARTITION FIELD months(fecha_emision) WITH days(fecha_emision)
 
 **En consola** `Listo. La sentencia se ejecutó.` Instantánea.
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ---
 
@@ -337,7 +337,7 @@ DESCRIBE TABLE EXTENDED documentos_por_mes
 | Part 0 | days(fecha_emision) |
 ```
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ---
 
@@ -352,13 +352,13 @@ SELECT * FROM curso.dte_2025_enero ORDER BY fecha_emision
 
 **En consola** `Listo. La sentencia se ejecutó.`
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ---
 
 **Celda 5.4**
 
-**Se escribe** (con su database).
+**Se escribe**
 
 ```sql
 SELECT spec_id,
@@ -378,7 +378,7 @@ ORDER BY spec_id
 2 filas.
 ```
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ---
 
@@ -400,7 +400,7 @@ WHERE fecha_emision BETWEEN DATE '2024-06-01' AND DATE '2024-06-30'
 | 2500       | 24547341762.59 |
 ```
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ---
 
@@ -422,4 +422,4 @@ WHERE fecha_emision BETWEEN DATE '2025-01-01' AND DATE '2025-01-31'
 | 2500       | 24895193513.17   |
 ```
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.

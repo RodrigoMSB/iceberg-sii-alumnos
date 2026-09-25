@@ -6,7 +6,7 @@ Cada celda lleva `%%sql` en la primera línea y una sola sentencia por celda.
 
 **Celda 0.1**
 
-**Se escribe** (cada uno el suyo).
+**Se escribe**
 
 ```sql
 USE mi_espacio
@@ -18,7 +18,7 @@ USE mi_espacio
 Listo. La sentencia se ejecutó.
 ```
 
-**Varía entre alumnos** el nombre que escribió cada uno.
+**Cambia en tu corrida** nada.
 
 ---
 
@@ -36,7 +36,7 @@ DROP TABLE IF EXISTS contribuyentes_lab01
 Listo. La sentencia se ejecutó.
 ```
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ---
 
@@ -58,7 +58,7 @@ CREATE TABLE contribuyentes_lab01 (
 Listo. La sentencia se ejecutó.
 ```
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ---
 
@@ -80,7 +80,7 @@ INSERT INTO contribuyentes_lab01 VALUES
 Listo. La sentencia se ejecutó.
 ```
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ---
 
@@ -103,7 +103,7 @@ SELECT * FROM contribuyentes_lab01 ORDER BY rut
 4 filas.
 ```
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ## Paso 1. Corregir un dato
 
@@ -121,7 +121,7 @@ UPDATE contribuyentes_lab01 SET segmento = 'MEDIANA' WHERE rut = '77884562-8'
 Listo. La sentencia se ejecutó.
 ```
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ---
 
@@ -144,13 +144,13 @@ SELECT * FROM contribuyentes_lab01 ORDER BY rut
 4 filas.
 ```
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ## Paso 2. Descubrir que hay historia
 
 **Celda 2.1**
 
-**Se escribe** (con su propia database en la primera parte).
+**Se escribe**
 
 ```sql
 SELECT snapshot_id, committed_at, operation
@@ -167,13 +167,13 @@ ORDER BY committed_at
 2 filas.
 ```
 
-**Varía entre alumnos** los dos números y las dos fechas, siempre.
+**Cambia en tu corrida** los dos números y las dos fechas, siempre.
 
 ## Paso 3. Mirar el pasado
 
 **Celda 3.1**
 
-**Se escribe** (con su propio identificador).
+**Se escribe** (con tu propio identificador).
 
 ```sql
 SELECT * FROM contribuyentes_lab01 VERSION AS OF <TU_SNAPSHOT_ID> ORDER BY rut
@@ -190,7 +190,7 @@ SELECT * FROM contribuyentes_lab01 VERSION AS OF <TU_SNAPSHOT_ID> ORDER BY rut
 4 filas.
 ```
 
-**Varía entre alumnos** el número que escribió cada uno.
+**Cambia en tu corrida** el número que escribiste, que es el de tu propia tabla.
 
 ---
 
@@ -214,13 +214,13 @@ al pasado.
 4 filas.
 ```
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ---
 
 **Celda 3.3**
 
-**Se escribe** (con su propia marca de tiempo).
+**Se escribe** (con tu propia marca de tiempo).
 
 ```sql
 SELECT * FROM contribuyentes_lab01 TIMESTAMP AS OF '<TU_COMMITTED_AT>' ORDER BY rut
@@ -237,13 +237,13 @@ SELECT * FROM contribuyentes_lab01 TIMESTAMP AS OF '<TU_COMMITTED_AT>' ORDER BY 
 4 filas.
 ```
 
-**Varía entre alumnos** la fecha que escribió cada uno.
+**Cambia en tu corrida** la fecha que escribiste.
 
 ## Paso 4. Volver atrás de verdad
 
 **Celda 4.1**
 
-**Se escribe** (con su database y su identificador).
+**Se escribe** (con tu identificador).
 
 ```sql
 CALL spark_catalog.system.rollback_to_snapshot('mi_espacio.contribuyentes_lab01', <TU_SNAPSHOT_ID>)
@@ -257,7 +257,7 @@ CALL spark_catalog.system.rollback_to_snapshot('mi_espacio.contribuyentes_lab01'
 1 fila.
 ```
 
-**Varía entre alumnos** los dos números.
+**Cambia en tu corrida** los dos números.
 
 ---
 
@@ -280,13 +280,13 @@ SELECT * FROM contribuyentes_lab01 ORDER BY rut
 4 filas.
 ```
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ---
 
 **Celda 4.3**
 
-**Se escribe** (con su propia database).
+**Se escribe**
 
 ```sql
 SELECT made_current_at, snapshot_id, is_current_ancestor
@@ -304,4 +304,4 @@ ORDER BY made_current_at
 3 filas.
 ```
 
-**Varía entre alumnos** los números y las fechas.
+**Cambia en tu corrida** los números y las fechas.

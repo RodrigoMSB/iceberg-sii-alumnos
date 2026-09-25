@@ -14,7 +14,7 @@ USE mi_espacio
 
 **En consola** `Listo. La sentencia se ejecutó.` Es la primera celda del día.
 
-**Varía entre alumnos** el nombre que escribió cada uno.
+**Cambia en tu corrida** nada.
 
 ---
 
@@ -28,7 +28,7 @@ DROP TABLE IF EXISTS contribuyentes_lab15
 
 **En consola** `Listo. La sentencia se ejecutó.`
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ---
 
@@ -46,7 +46,7 @@ CREATE TABLE contribuyentes_lab15 (
 
 **En consola** `Listo. La sentencia se ejecutó.`
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ---
 
@@ -70,7 +70,7 @@ INSERT INTO contribuyentes_lab15 VALUES
 
 **En consola** `Listo. La sentencia se ejecutó.`
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ---
 
@@ -84,7 +84,7 @@ UPDATE contribuyentes_lab15 SET segmento = 'MEDIANA' WHERE rut = '77884562-8'
 
 **En consola** `Listo. La sentencia se ejecutó.`
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ---
 
@@ -101,7 +101,7 @@ INSERT INTO contribuyentes_lab15 VALUES
 
 **En consola** `Listo. La sentencia se ejecutó.`
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ---
 
@@ -130,7 +130,7 @@ print("Montaje: listo.")
 
 **En consola** la celda imprime `Montaje: listo.` y nada más.
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ---
 
@@ -144,7 +144,7 @@ UPDATE contribuyentes_lab15 SET segmento = 'GRANDE' WHERE rut = '77884562-8'
 
 **En consola** `Listo. La sentencia se ejecutó.`
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ---
 
@@ -159,7 +159,7 @@ ALTER TABLE contribuyentes_lab15 ADD COLUMN region STRING
 **En consola** `Listo. La sentencia se ejecutó.` Esta celda **no deja página**, porque
 no toca archivos.
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ---
 
@@ -173,7 +173,7 @@ DELETE FROM contribuyentes_lab15 WHERE rut = '76011940-7'
 
 **En consola** `Listo. La sentencia se ejecutó.`
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ## Paso 1. El oficio
 
@@ -181,7 +181,7 @@ DELETE FROM contribuyentes_lab15 WHERE rut = '76011940-7'
 
 **En consola** nada.
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ## Paso 2. Primera pregunta
 
@@ -195,7 +195,7 @@ DELETE FROM contribuyentes_lab15 WHERE rut = '76011940-7'
 1 fila.
 ```
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ## Paso 3. Segunda pregunta
 
@@ -208,7 +208,7 @@ org.apache.iceberg.exceptions.ValidationException:
 Cannot find a snapshot older than 2026-06-01T00:00:00+00:00
 ```
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ---
 
@@ -221,7 +221,7 @@ Cannot find a snapshot older than 2026-06-01T00:00:00+00:00
 | 2026-09-15 23:39:21.293   |
 ```
 
-**Varía entre alumnos** la fecha, que es la de su propia corrida.
+**Cambia en tu corrida** la fecha, que es la de tu corrida.
 
 ## Paso 4. Tercera pregunta
 
@@ -239,7 +239,7 @@ Cannot find a snapshot older than 2026-06-01T00:00:00+00:00
 5 filas.
 ```
 
-**Varía entre alumnos** los identificadores y las fechas.
+**Cambia en tu corrida** los identificadores y las fechas.
 
 ## Paso 5. Cuarta pregunta
 
@@ -258,7 +258,7 @@ Cannot find a snapshot older than 2026-06-01T00:00:00+00:00
 6 filas.
 ```
 
-**Varía entre alumnos** los identificadores y las fechas.
+**Cambia en tu corrida** los identificadores y las fechas.
 
 ## Paso 6. La respuesta
 
@@ -266,4 +266,4 @@ Cannot find a snapshot older than 2026-06-01T00:00:00+00:00
 
 **En consola** nada.
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.

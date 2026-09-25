@@ -40,13 +40,13 @@ SHOW DATABASES
 3 filas.
 ```
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ---
 
 **Celda 1.2**
 
-**Se escribe** (cada uno el suyo).
+**Se escribe**
 
 ```sql
 USE mi_espacio
@@ -58,7 +58,7 @@ USE mi_espacio
 Listo. La sentencia se ejecutó.
 ```
 
-**Varía entre alumnos** nada en la salida; sí lo que cada uno escribió.
+**Cambia en tu corrida** nada.
 
 ---
 
@@ -78,7 +78,7 @@ SELECT current_database() AS estoy_en
 1 fila.
 ```
 
-**Varía entre alumnos** el nombre.
+**Cambia en tu corrida** nada.
 
 ## Paso 2. Crear tu primera tabla
 
@@ -96,7 +96,7 @@ DROP TABLE IF EXISTS contribuyentes_lab00
 Listo. La sentencia se ejecutó.
 ```
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ---
 
@@ -119,7 +119,7 @@ CREATE TABLE contribuyentes_lab00 (
 Listo. La sentencia se ejecutó.
 ```
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ## Paso 3. Escribir tres filas
 
@@ -140,7 +140,7 @@ INSERT INTO contribuyentes_lab00 VALUES
 Listo. La sentencia se ejecutó.
 ```
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ## Paso 4. Leerlas
 
@@ -162,4 +162,4 @@ SELECT * FROM contribuyentes_lab00
 3 filas.
 ```
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.

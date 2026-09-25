@@ -14,7 +14,7 @@ USE mi_espacio
 
 **En consola** `Listo. La sentencia se ejecutó.` Primera celda.
 
-**Varía entre alumnos** el nombre que escribió cada uno.
+**Cambia en tu corrida** nada.
 
 ---
 
@@ -28,7 +28,7 @@ DROP TABLE IF EXISTS documentos_lab03
 
 **En consola** `Listo. La sentencia se ejecutó.`
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ---
 
@@ -43,7 +43,7 @@ SELECT * FROM curso.recepcion_lote1
 
 **En consola** `Listo. La sentencia se ejecutó.`
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ---
 
@@ -62,7 +62,7 @@ SELECT count(*) AS documentos FROM documentos_lab03
 | 30         |
 ```
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ---
 
@@ -89,7 +89,7 @@ LIMIT 5
 5 filas.
 ```
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ## Paso 1. Llega el lote nuevo
 
@@ -108,7 +108,7 @@ SELECT count(*) AS documentos FROM curso.recepcion_lote2
 | 20         |
 ```
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ---
 
@@ -132,7 +132,7 @@ JOIN documentos_lab03 AS actual
 | 12              |
 ```
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ## Paso 2. El error que hay que ver
 
@@ -146,7 +146,7 @@ INSERT INTO documentos_lab03 SELECT * FROM curso.recepcion_lote2
 
 **En consola** `Listo. La sentencia se ejecutó.`
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ---
 
@@ -165,7 +165,7 @@ SELECT count(*) AS documentos FROM documentos_lab03
 | 50         |
 ```
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ---
 
@@ -192,7 +192,7 @@ ORDER BY rut_emisor, tipo_dte, folio
 12 filas.
 ```
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ---
 
@@ -216,13 +216,13 @@ ORDER BY fecha_recepcion
 2 filas.
 ```
 
-**Varía entre alumnos** nada, ni siquiera el orden.
+**Cambia en tu corrida** nada, ni siquiera el orden.
 
 ## Paso 3. Deshacer
 
 **Celda 3.1**
 
-**Se escribe** (con su propia database adelante).
+**Se escribe**
 
 ```sql
 SELECT snapshot_id, committed_at, operation
@@ -239,13 +239,13 @@ ORDER BY committed_at
 2 filas.
 ```
 
-**Varía entre alumnos** los identificadores y las fechas, siempre.
+**Cambia en tu corrida** los identificadores y las fechas, siempre.
 
 ---
 
 **Celda 3.2**
 
-**Se escribe** (con su database y su identificador).
+**Se escribe** (con tu identificador).
 
 ```sql
 CALL spark_catalog.system.rollback_to_snapshot('mi_espacio.documentos_lab03', <TU_SNAPSHOT_ID>)
@@ -253,7 +253,7 @@ CALL spark_catalog.system.rollback_to_snapshot('mi_espacio.documentos_lab03', <T
 
 **En consola** una fila con dos números.
 
-**Varía entre alumnos** los dos números.
+**Cambia en tu corrida** los dos números.
 
 ---
 
@@ -272,7 +272,7 @@ SELECT count(*) AS documentos FROM documentos_lab03
 | 30         |
 ```
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ## Paso 4. La fusión
 
@@ -293,7 +293,7 @@ WHEN NOT MATCHED THEN INSERT *
 **En consola** `Listo. La sentencia se ejecutó.` Es la celda más lenta del laboratorio,
 y aun así es menos de un segundo.
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ---
 
@@ -312,7 +312,7 @@ SELECT count(*) AS documentos FROM documentos_lab03
 | 38         |
 ```
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ---
 
@@ -334,7 +334,7 @@ WHERE rut_emisor = '76057484-8' AND tipo_dte = 33 AND folio = 226
 1 fila.
 ```
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ---
 
@@ -358,7 +358,7 @@ SELECT count(*) AS folios_repetidos FROM (
 | 0                |
 ```
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ## Paso 5. Las otras dos operaciones
 
@@ -372,7 +372,7 @@ UPDATE documentos_lab03 SET estado_sii = 'REVISADO' WHERE tipo_dte = 61
 
 **En consola** `Listo. La sentencia se ejecutó.`
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ---
 
@@ -397,7 +397,7 @@ ORDER BY estado_sii
 3 filas.
 ```
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ---
 
@@ -411,7 +411,7 @@ DELETE FROM documentos_lab03 WHERE monto_total < 0
 
 **En consola** `Listo. La sentencia se ejecutó.`
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ---
 
@@ -430,4 +430,4 @@ SELECT count(*) AS documentos FROM documentos_lab03
 | 33         |
 ```
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.

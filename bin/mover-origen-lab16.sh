@@ -2,14 +2,14 @@
 #
 # Mueve el origen del laboratorio 16, como lo haria el sistema de la DGT.
 #
-#   bin/97-cambiar-origen-lab16.sh          # tres cambios y dos altas
-#   bin/97-cambiar-origen-lab16.sh --reset  # deja el origen como estaba
-#   bin/97-cambiar-origen-lab16.sh --estado # solo mira
+#   bin/mover-origen-lab16.sh          # tres cambios y dos altas
+#   bin/mover-origen-lab16.sh --reset  # deja el origen como estaba
+#   bin/mover-origen-lab16.sh --estado # solo mira
 #
-# Lo corre EL RELATOR, a mitad del laboratorio, entre el paso 2 y el paso 4.
-# Los alumnos no tocan el origen: su usuario 'lector' solo tiene SELECT. Ese es
-# justamente el punto del paso 3, que el origen se mueve por su cuenta mientras
-# la carga inicial ya esta hecha.
+# Lo corres TU, a mitad del laboratorio, en el paso 3, entre la carga inicial y
+# la deteccion de cambios. El cuaderno no toca el origen: su usuario 'lector'
+# solo tiene SELECT. Ese es justamente el punto del paso 3, que el origen se
+# mueve por su cuenta mientras la carga inicial ya esta hecha.
 #
 # QUE CAMBIA, Y POR QUE ASI
 #

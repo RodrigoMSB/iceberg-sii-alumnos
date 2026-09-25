@@ -8,13 +8,13 @@ Cada celda lleva `%%sql` en la primera línea y una sola sentencia por celda.
 
 **En consola** nada.
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ## Paso 1. Mirar el origen
 
 **Celda 1.1**
 
-**Se escribe** (cada uno el suyo).
+**Se escribe**
 
 ```sql
 USE mi_espacio
@@ -22,7 +22,7 @@ USE mi_espacio
 
 **En consola** `Listo. La sentencia se ejecutó.` Primera celda del día.
 
-**Varía entre alumnos** el nombre que escribió cada uno.
+**Cambia en tu corrida** nada.
 
 ---
 
@@ -41,7 +41,7 @@ CREATE TEMPORARY VIEW origen_pg USING jdbc OPTIONS (
 
 **En consola** `Listo. La sentencia se ejecutó.` La clave va vacía a propósito.
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ---
 
@@ -66,7 +66,7 @@ SELECT * FROM origen_pg ORDER BY rut
 20 filas.
 ```
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ## Paso 2. Carga inicial
 
@@ -80,7 +80,7 @@ DROP TABLE IF EXISTS contribuyentes_lab16
 
 **En consola** `Listo. La sentencia se ejecutó.`
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ---
 
@@ -96,7 +96,7 @@ SELECT * FROM origen_pg
 **En consola** `Listo. La sentencia se ejecutó.` Es de las celdas más lentas, un par de
 segundos.
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ---
 
@@ -115,7 +115,7 @@ SELECT count(*) AS contribuyentes FROM contribuyentes_lab16
 | 20             |
 ```
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ---
 
@@ -134,7 +134,7 @@ SELECT max(actualizado_en) AS marca_de_agua FROM contribuyentes_lab16
 | 2026-09-01 09:35:00 |
 ```
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ## Paso 3. El origen sigue vivo
 
@@ -142,13 +142,13 @@ SELECT max(actualizado_en) AS marca_de_agua FROM contribuyentes_lab16
 
 **En consola** nada.
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ## Paso 4. Detectar qué cambió
 
 **Celda 4.1**
 
-**Se escribe** (con la marca de agua que anotaron).
+**Se escribe** (con la marca de agua que anotaste).
 
 ```sql
 SELECT * FROM origen_pg
@@ -168,7 +168,7 @@ ORDER BY rut
 5 filas.
 ```
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ## Paso 5. Carga incremental
 
@@ -193,7 +193,7 @@ WHEN NOT MATCHED THEN INSERT *
 **En consola** `Listo. La sentencia se ejecutó.` Es la celda más lenta del laboratorio,
 unos segundos.
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ---
 
@@ -212,7 +212,7 @@ SELECT count(*) AS contribuyentes FROM contribuyentes_lab16
 | 22             |
 ```
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ## Paso 6. Validar
 
@@ -235,13 +235,13 @@ SELECT
 | 22           | 22            | 39995702816    | 39995702816     |
 ```
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ## Paso 7. Lo que quedó escrito
 
 **Celda 7.1**
 
-**Se escribe** (con su propia database).
+**Se escribe**
 
 ```sql
 SELECT snapshot_id, committed_at, operation
@@ -258,4 +258,4 @@ ORDER BY committed_at
 2 filas.
 ```
 
-**Varía entre alumnos** los dos identificadores y las dos fechas.
+**Cambia en tu corrida** los dos identificadores y las dos fechas.

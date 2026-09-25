@@ -14,7 +14,7 @@ USE mi_espacio
 
 **En consola** `Listo. La sentencia se ejecutó.`
 
-**Varía entre alumnos** el nombre que escribió cada uno.
+**Cambia en tu corrida** nada.
 
 ---
 
@@ -28,7 +28,7 @@ DROP TABLE IF EXISTS documentos_hive
 
 **En consola** `Listo. La sentencia se ejecutó.`
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ---
 
@@ -42,7 +42,7 @@ DROP TABLE IF EXISTS documentos_hive_backup_
 
 **En consola** `Listo. La sentencia se ejecutó.`
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ---
 
@@ -65,7 +65,7 @@ CREATE TABLE documentos_hive (
 
 **En consola** `Listo. La sentencia se ejecutó.`
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ---
 
@@ -82,7 +82,7 @@ FROM curso.dte_2024
 
 **En consola** `Listo. La sentencia se ejecutó.`
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ---
 
@@ -107,9 +107,7 @@ DESCRIBE TABLE EXTENDED documentos_hive
 25 filas.
 ```
 
-**Varía entre alumnos** su database dentro de `Location` y del nombre de la tabla, la
-hora de creación, y una línea `transient_lastDdlTime` con un número distinto para cada
-uno.
+**Cambia en tu corrida** la hora de creación y el número de la línea `transient_lastDdlTime`.
 
 ## Paso 1. Levantar el inventario
 
@@ -130,7 +128,7 @@ FROM documentos_hive
 | 30000      | 291293351462.71 |
 ```
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ---
 
@@ -165,13 +163,13 @@ ORDER BY periodo
 | 2024-12 | 2500       | 24545538881.59    |
 ```
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ## Paso 2. Mirar sus límites
 
 **Celda 2.1**
 
-**Se escribe** (con su propia database).
+**Se escribe**
 
 ```sql
 SELECT snapshot_id, committed_at, operation
@@ -181,13 +179,13 @@ ORDER BY committed_at
 
 **En consola** `Spark rechazó la sentencia: spark_catalog requires a single-part namespace, but got [mi_espacio, documentos_hive]`.
 
-**Varía entre alumnos** su database dentro del mensaje.
+**Cambia en tu corrida** nada.
 
 ---
 
 **Celda 2.2**
 
-**Se escribe** (con su propia database).
+**Se escribe**
 
 ```sql
 CALL spark_catalog.system.rollback_to_snapshot('mi_espacio.documentos_hive', 1)
@@ -195,13 +193,13 @@ CALL spark_catalog.system.rollback_to_snapshot('mi_espacio.documentos_hive', 1)
 
 **En consola** `Spark rechazó la sentencia: An error occurred while calling o38.sql. : org.apache.iceberg.exceptions.ValidationException: mi_espacio.documentos_hive is not org.apache.iceberg.spark.source.SparkTable at org.apache.iceberg.exceptions.ValidationException.check(ValidationException.java:49) at org.apache.iceberg.spark.procedures.BaseProcedure.loadSparkTable(BaseProcedure.java:141) at org.apache.iceberg.spark.procedures.BaseProcedure.execute(BaseProcedure.java:101) at org.apache.iceberg.spark.procedures.BaseProcedure.modifyIcebergTable(BaseProcedure.java:85) at org.apache.iceberg.spark.procedures.RollbackToSnapshotProcedure.call(RollbackToSnapshotProcedure.java:83) at org.apache.spark.sql.execution.datasources.v2.CallExec.run(CallExec.scala:34) at org.apache.spark.sql.execution.datasources.v2.V2CommandExec.result$lzycompute(V2CommandExec.scala:43) at org.apache.spark.sql.execution.datasources.v2.V2CommandExec.result(V2CommandExec.scala:43) at org.apache.spark.sql.execution.datasources.v2.V2CommandExec.executeCollect(V2CommandExec.scala:49) at org.apache.spark.sql.execution.QueryExecution$$anonfun$eagerlyExecuteCommands$1.$anonfun$applyOrElse$1(QueryExecution.scala:98) at org.apache.spark.sql.execution.SQLExecution$.$anonfun$withNewExecutionId$6(SQLExecution.scala:109) at org.apache.spark.sql.execution.SQLExecution$.withSQLConfPropagated(SQLExecution.scala:169) at org.apache.spark.sql.execution.SQLExecution$.$anonfun$withNewExecutionId$1(SQLExecution.scala:95) at org.apache.spark.sql.SparkSession.withActive(SparkSession.scala:779) at org.apache.spark.sql.execution.SQLExecution$.withNewExecutionId(SQLExecution.scala:64) at org.apache.spark.sql.execution.QueryExecution$$anonfun$eagerlyExecuteCommands$1.applyOrElse(QueryExecution.scala:98) at org.apache.spark.sql.execution.QueryExecution$$anonfun$eagerlyExecuteCommands$1.applyOrElse(QueryExecution.scala:94) at org.apache.spark.sql.catalyst.trees.TreeNode.$anonfun$transformDownWithPruning$1(TreeNode.scala:584) at org.apache.spark.sql.catalyst.trees.CurrentOrigin$.withOrigin(TreeNode.scala:176) at org.apache.spark.sql.catalyst.trees.TreeNode.transformDownWithPruning(TreeNode.scala:584) at org.apache.spark.sql.catalyst.plans.logical.LogicalPlan.org$apache$spark$sql$catalyst$plans$logical$AnalysisHelper$$super$transformDownWithPruning(LogicalPlan.scala:30) at org.apache.spark.sql.catalyst.plans.logical.AnalysisHelper.transformDownWithPruning(AnalysisHelper.scala:267) at org.apache.spark.sql.catalyst.plans.logical.AnalysisHelper.transformDownWithPruning$(AnalysisHelper.scala:263) at org.apache.spark.sql.catalyst.plans.logical.LogicalPlan.transformDownWithPruning(LogicalPlan.scala:30) at org.apache.spark.sql.catalyst.plans.logical.LogicalPlan.transformDownWithPruning(LogicalPlan.scala:30) at org.apache.spark.sql.catalyst.trees.TreeNode.transformDown(TreeNode.scala:560) at org.apache.spark.sql.execution.QueryExecution.eagerlyExecuteCommands(QueryExecution.scala:94) at org.apache.spark.sql.execution.QueryExecution.commandExecuted$lzycompute(QueryExecution.scala:81) at org.apache.spark.sql.execution.QueryExecution.commandExecuted(QueryExecution.scala:79) at org.apache.spark.sql.Dataset.<init>(Dataset.scala:219) at org.apache.spark.sql.Dataset$.$anonfun$ofRows$2(Dataset.scala:99) at org.apache.spark.sql.SparkSession.withActive(SparkSession.scala:779) at org.apache.spark.sql.Dataset$.ofRows(Dataset.scala:96) at org.apache.spark.sql.SparkSession.$anonfun$sql$1(SparkSession.scala:622) at org.apache.spark.sql.SparkSession.withActive(SparkSession.scala:779) at org.apache.spark.sql.SparkSession.sql(SparkSession.scala:617) at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62) at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) at java.base/java.lang.reflect.Method.invoke(Method.java:566) at py4j.reflection.MethodInvoker.invoke(MethodInvoker.java:244) at py4j.reflection.ReflectionEngine.invoke(ReflectionEngine.java:357) at py4j.Gateway.invoke(Gateway.java:282) at py4j.commands.AbstractCommand.invokeMethod(AbstractCommand.java:132) at py4j.commands.CallCommand.execute(CallCommand.java:79) at py4j.ClientServerConnection.waitForCommands(ClientServerConnection.java:182) at py4j.ClientServerConnection.run(ClientServerConnection.java:106) at java.base/java.lang.Thread.run(Thread.java:829)`.
 
-**Varía entre alumnos** su database dentro del mensaje.
+**Cambia en tu corrida** nada.
 
 ## Paso 3. Migrar
 
 **Celda 3.1**
 
-**Se escribe** (con su propia database).
+**Se escribe**
 
 ```sql
 CALL spark_catalog.system.migrate('mi_espacio.documentos_hive')
@@ -214,7 +212,7 @@ CALL spark_catalog.system.migrate('mi_espacio.documentos_hive')
 | 1                    |
 ```
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ---
 
@@ -236,7 +234,7 @@ DESCRIBE TABLE EXTENDED documentos_hive
 24 filas.
 ```
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ## Paso 4. Verificar
 
@@ -257,7 +255,7 @@ FROM documentos_hive
 | 30000      | 291293351462.71 |
 ```
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ---
 
@@ -292,13 +290,13 @@ ORDER BY periodo
 | 2024-12 | 2500       | 24545538881.59    |
 ```
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ## Paso 5. Comprobar que ahora sí es Iceberg
 
 **Celda 5.1**
 
-**Se escribe** (con su propia database).
+**Se escribe**
 
 ```sql
 SELECT snapshot_id, committed_at, operation
@@ -313,13 +311,13 @@ ORDER BY committed_at
 | 5615239969771712128 | 2026-08-23 20:31:31.061 | append    |
 ```
 
-**Varía entre alumnos** el identificador y la hora, siempre.
+**Cambia en tu corrida** el identificador y la hora, siempre.
 
 ---
 
 **Celda 5.2**
 
-**Se escribe** (con su propia database).
+**Se escribe**
 
 ```sql
 SELECT count(*)          AS archivos,
@@ -334,7 +332,7 @@ FROM mi_espacio.documentos_hive.files
 | 1        | 30000      |
 ```
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ---
 
@@ -356,7 +354,7 @@ SHOW TABLES IN mi_espacio
 
 ## Paso 6. La capa de consulta
 
-**Se escribe** (en Hue, con su propia database).
+**Se escribe** (en Hue).
 
 ```sql-hue
 SELECT date_format(fecha_emision, 'yyyy-MM') AS periodo,
@@ -374,15 +372,23 @@ ORDER BY periodo
 | 2024-01 | 2500       | 23381729910.07    |
 | 2024-02 | 2500       | 24831948613.59    |
 | 2024-03 | 2500       | 26699931432.64    |
-…
+| 2024-04 | 2500       | 23722997990.55    |
+| 2024-05 | 2500       | 24328007216.84    |
+| 2024-06 | 2500       | 24547341762.59    |
+| 2024-07 | 2500       | 23621609483.83    |
+| 2024-08 | 2500       | 23648615665.89    |
+| 2024-09 | 2500       | 24136964210.51    |
+| 2024-10 | 2500       | 23106058024.78    |
+| 2024-11 | 2500       | 24722608269.83    |
+| 2024-12 | 2500       | 24545538881.59    |
 (12 filas)
 ```
 
-**Varía entre alumnos** su database en la consulta.
+**Cambia en tu corrida** nada.
 
 ---
 
-**Se escribe** (en Hue, con su propia database).
+**Se escribe** (en Hue).
 
 ```sql-hue
 SELECT tipo_dte,
@@ -406,4 +412,4 @@ ORDER BY tipo_dte
 (6 filas)
 ```
 
-**Varía entre alumnos** su database en la consulta.
+**Cambia en tu corrida** nada.

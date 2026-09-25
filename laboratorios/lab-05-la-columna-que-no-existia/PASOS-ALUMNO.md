@@ -14,7 +14,7 @@ USE mi_espacio
 
 **En consola** `Listo. La sentencia se ejecutó.` Primera celda.
 
-**Varía entre alumnos** el nombre que escribió cada uno.
+**Cambia en tu corrida** nada.
 
 ---
 
@@ -28,7 +28,7 @@ DROP TABLE IF EXISTS documentos_lab05
 
 **En consola** `Listo. La sentencia se ejecutó.`
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ---
 
@@ -44,7 +44,7 @@ SELECT * FROM curso.dte_2024
 **En consola** `Listo. La sentencia se ejecutó.` Es de las celdas más lentas, un par de
 segundos.
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ---
 
@@ -63,7 +63,7 @@ SELECT count(*) AS documentos FROM documentos_lab05
 | 30000      |
 ```
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ---
 
@@ -95,7 +95,7 @@ DESCRIBE TABLE documentos_lab05
 13 filas.
 ```
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ## Paso 1. Llega el formato nuevo
 
@@ -114,7 +114,7 @@ DESCRIBE TABLE curso.dte_2026_reciente
 | codigo_sucursal | string |
 ```
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ---
 
@@ -135,7 +135,7 @@ Table columns: 'rut_emisor', 'razon_social_emisor', …
 Data columns:  'rut_emisor', 'razon_social_emisor', …
 ```
 
-**Varía entre alumnos** el nombre de su database dentro del mensaje.
+**Cambia en tu corrida** nada.
 
 ## Paso 2. Agregar las columnas
 
@@ -150,7 +150,7 @@ ADD COLUMNS (canal_emision STRING, codigo_sucursal STRING)
 
 **En consola** `Listo. La sentencia se ejecutó.` Y fue **instantánea**.
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ---
 
@@ -175,7 +175,7 @@ LIMIT 3
 3 filas.
 ```
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ---
 
@@ -196,7 +196,7 @@ FROM documentos_lab05
 | 30000      | 0         |
 ```
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ## Paso 3. Cargar el lote nuevo
 
@@ -210,7 +210,7 @@ INSERT INTO documentos_lab05 SELECT * FROM curso.dte_2026_reciente
 
 **En consola** `Listo. La sentencia se ejecutó.`
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ---
 
@@ -236,7 +236,7 @@ ORDER BY anio
 2 filas.
 ```
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ## Paso 4. Los otros cambios
 
@@ -250,7 +250,7 @@ ALTER TABLE documentos_lab05 RENAME COLUMN codigo_sucursal TO sucursal
 
 **En consola** `Listo. La sentencia se ejecutó.`
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ---
 
@@ -276,7 +276,7 @@ LIMIT 3
 3 filas.
 ```
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ---
 
@@ -290,7 +290,7 @@ ALTER TABLE documentos_lab05 ALTER COLUMN tipo_dte TYPE BIGINT
 
 **En consola** `Listo. La sentencia se ejecutó.`
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ---
 
@@ -318,7 +318,7 @@ ORDER BY tipo_dte
 6 filas.
 ```
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ---
 
@@ -332,7 +332,7 @@ ALTER TABLE documentos_lab05 DROP COLUMN sucursal
 
 **En consola** `Listo. La sentencia se ejecutó.`
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ---
 
@@ -358,13 +358,13 @@ LIMIT 3
 3 filas.
 ```
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ## Paso 5. La historia del esquema
 
 **Celda 5.1**
 
-**Se escribe** (con su propia database adelante).
+**Se escribe**
 
 ```sql
 SELECT timestamp, latest_schema_id AS version_del_esquema
@@ -383,13 +383,13 @@ ORDER BY timestamp
 6 filas.
 ```
 
-**Varía entre alumnos** las horas, siempre.
+**Cambia en tu corrida** las horas, siempre.
 
 ---
 
 **Celda 5.2**
 
-**Se escribe** (con su database).
+**Se escribe**
 
 ```sql
 SELECT snapshot_id, committed_at, operation
@@ -406,13 +406,13 @@ ORDER BY committed_at
 2 filas.
 ```
 
-**Varía entre alumnos** los identificadores y las horas, siempre.
+**Cambia en tu corrida** los identificadores y las horas, siempre.
 
 ---
 
 **Celda 5.3**
 
-**Se escribe** (con su identificador).
+**Se escribe** (con tu identificador).
 
 ```sql
 SELECT count(*) AS documentos FROM documentos_lab05 VERSION AS OF <TU_SNAPSHOT_ID>
@@ -425,13 +425,13 @@ SELECT count(*) AS documentos FROM documentos_lab05 VERSION AS OF <TU_SNAPSHOT_I
 | 30000      |
 ```
 
-**Varía entre alumnos** el número que escribieron.
+**Cambia en tu corrida** el número que escribiste, que es el de tu propia tabla.
 
 ---
 
 **Celda 5.4**
 
-**Se escribe** (con su identificador).
+**Se escribe** (con tu identificador).
 
 ```sql
 SELECT canal_emision FROM documentos_lab05 VERSION AS OF <TU_SNAPSHOT_ID> LIMIT 1
@@ -444,4 +444,4 @@ Spark rechazó la sentencia:
 Column 'canal_emision' does not exist. Did you mean one of the following? […]
 ```
 
-**Varía entre alumnos** el identificador dentro del mensaje.
+**Cambia en tu corrida** el identificador dentro del mensaje.

@@ -6,7 +6,7 @@ Cada celda lleva `%%sql` en la primera línea y una sola sentencia por celda.
 
 **Celda 0.1**
 
-**Se escribe** (cada uno el suyo).
+**Se escribe**
 
 ```sql
 USE mi_espacio
@@ -14,7 +14,7 @@ USE mi_espacio
 
 **En consola** `Listo. La sentencia se ejecutó.` Primera celda del día.
 
-**Varía entre alumnos** el nombre que escribió cada uno.
+**Cambia en tu corrida** nada.
 
 ---
 
@@ -28,7 +28,7 @@ DROP TABLE IF EXISTS contribuyentes_lab09
 
 **En consola** `Listo. La sentencia se ejecutó.`
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ---
 
@@ -46,7 +46,7 @@ CREATE TABLE contribuyentes_lab09 (
 
 **En consola** `Listo. La sentencia se ejecutó.`
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ---
 
@@ -64,7 +64,7 @@ INSERT INTO contribuyentes_lab09 VALUES
 
 **En consola** `Listo. La sentencia se ejecutó.`
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ## Paso 1. El código, sin Spark
 
@@ -72,7 +72,7 @@ INSERT INTO contribuyentes_lab09 VALUES
 
 **En consola** nada.
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ---
 
@@ -80,13 +80,13 @@ INSERT INTO contribuyentes_lab09 VALUES
 
 **En consola** nada.
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ## Paso 2. Correrlo
 
 **Celda 2.1**
 
-**Se escribe** (con su espacio en los dos lugares).
+**Se escribe**
 
 ```
 !ESPACIO=mi_espacio TABLA=contribuyentes_lab09 java -jar /home/mi_espacio/sin-spark.jar
@@ -119,14 +119,13 @@ Tabla pedida: mi_espacio.contribuyentes_lab09
    4 filas
 
 5. Parquet escrito: hdfs://namenode:8020/warehouse/iceberg/mi_espacio.db/contribuyentes_lab09/data/sin-spark-c3bcb01e-a619-47d6-9dbe-1f07142c0bdc.parquet
-   Indice de esa pagina: hdfs://namenode:8020/warehouse/iceberg/mi_espacio.db/contribuyentes_lab09/metadata/snap-1956004222642998237-1-6c515f41-6493-4868-94db-5083021e9e71.avro
+   Lista de manifiestos de esa pagina: hdfs://namenode:8020/warehouse/iceberg/mi_espacio.db/contribuyentes_lab09/metadata/snap-1956004222642998237-1-6c515f41-6493-4868-94db-5083021e9e71.avro
    Commit hecho. Pagina nueva 1956004222642998237.
 
 Fin. Ni la lectura ni la escritura pasaron por Spark. No hay Spark en este jar.
 ```
 
-**Varía entre alumnos** el nombre del espacio, los identificadores, las fechas y los
-nombres de archivo.
+**Cambia en tu corrida** los identificadores, las fechas y los nombres de archivo.
 
 ## Paso 3. Comprobar en SQL
 
@@ -140,7 +139,7 @@ REFRESH TABLE contribuyentes_lab09
 
 **En consola** `Listo. La sentencia se ejecutó.`
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ---
 
@@ -164,13 +163,13 @@ SELECT * FROM contribuyentes_lab09 ORDER BY rut
 5 filas.
 ```
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ---
 
 **Celda 3.3**
 
-**Se escribe** (con su propia database).
+**Se escribe**
 
 ```sql
 SELECT snapshot_id, committed_at, operation
@@ -187,7 +186,7 @@ ORDER BY committed_at
 2 filas.
 ```
 
-**Varía entre alumnos** los dos identificadores y las dos fechas.
+**Cambia en tu corrida** los dos identificadores y las dos fechas.
 
 ## Paso 4. Las dependencias
 
@@ -195,7 +194,7 @@ ORDER BY committed_at
 
 **En consola** nada.
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ## Paso 5. El mismo programa con Spark
 
@@ -203,4 +202,4 @@ ORDER BY committed_at
 
 **En consola** nada.
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.

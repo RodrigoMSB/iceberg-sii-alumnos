@@ -6,7 +6,7 @@ Cada celda lleva `%%sql` en la primera línea y una sola sentencia por celda.
 
 **Celda 0.1**
 
-**Se escribe** (cada uno el suyo).
+**Se escribe**
 
 ```sql
 USE mi_espacio
@@ -14,7 +14,7 @@ USE mi_espacio
 
 **En consola** `Listo. La sentencia se ejecutó.` Primera celda del día.
 
-**Varía entre alumnos** el nombre que escribió cada uno.
+**Cambia en tu corrida** nada.
 
 ---
 
@@ -28,7 +28,7 @@ DROP TABLE IF EXISTS contribuyentes_lab14
 
 **En consola** `Listo. La sentencia se ejecutó.`
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ---
 
@@ -46,7 +46,7 @@ CREATE TABLE contribuyentes_lab14 (
 
 **En consola** `Listo. La sentencia se ejecutó.`
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ---
 
@@ -64,7 +64,7 @@ INSERT INTO contribuyentes_lab14 VALUES
 
 **En consola** `Listo. La sentencia se ejecutó.`
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ## Paso 1. Un día de movimientos
 
@@ -80,7 +80,7 @@ INSERT INTO contribuyentes_lab14 VALUES
 
 **En consola** `Listo. La sentencia se ejecutó.`
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ---
 
@@ -96,7 +96,7 @@ WHERE rut = '77884562-8'
 
 **En consola** `Listo. La sentencia se ejecutó.`
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ---
 
@@ -110,13 +110,13 @@ DELETE FROM contribuyentes_lab14 WHERE rut = '78800840-6'
 
 **En consola** `Listo. La sentencia se ejecutó.`
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ---
 
 **Celda 1.4**
 
-**Se escribe** (con su propia database).
+**Se escribe**
 
 ```sql
 SELECT snapshot_id, committed_at, operation
@@ -135,13 +135,13 @@ ORDER BY committed_at
 4 filas.
 ```
 
-**Varía entre alumnos** los cuatro identificadores y las cuatro fechas, siempre.
+**Cambia en tu corrida** los cuatro identificadores y las cuatro fechas, siempre.
 
 ## Paso 2. La vista de cambios
 
 **Celda 2.1**
 
-**Se escribe** (con su propia database).
+**Se escribe**
 
 ```sql
 CALL spark_catalog.system.create_changelog_view(table => 'mi_espacio.contribuyentes_lab14')
@@ -155,7 +155,7 @@ CALL spark_catalog.system.create_changelog_view(table => 'mi_espacio.contribuyen
 1 fila.
 ```
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ---
 
@@ -184,13 +184,13 @@ ORDER BY _change_ordinal, rut
 9 filas.
 ```
 
-**Varía entre alumnos** los identificadores.
+**Cambia en tu corrida** los identificadores.
 
 ## Paso 3. Solo lo de hoy
 
 **Celda 3.1**
 
-**Se escribe** (con su database y sus dos identificadores).
+**Se escribe** (con tus dos identificadores).
 
 ```sql
 CALL spark_catalog.system.create_changelog_view(
@@ -209,7 +209,7 @@ CALL spark_catalog.system.create_changelog_view(
 1 fila.
 ```
 
-**Varía entre alumnos** los dos identificadores que escribió cada uno.
+**Cambia en tu corrida** los dos identificadores que escribiste.
 
 ---
 
@@ -232,7 +232,7 @@ ORDER BY _change_ordinal, rut
 3 filas.
 ```
 
-**Varía entre alumnos** los identificadores.
+**Cambia en tu corrida** los identificadores.
 
 ## Paso 4. Cómo lo usa un proceso nocturno
 
@@ -240,4 +240,4 @@ ORDER BY _change_ordinal, rut
 
 **En consola** nada.
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.

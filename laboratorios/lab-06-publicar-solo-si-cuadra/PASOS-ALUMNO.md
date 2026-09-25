@@ -14,7 +14,7 @@ USE mi_espacio
 
 **En consola** `Listo. La sentencia se ejecutó.`
 
-**Varía entre alumnos** el nombre que escribió cada uno.
+**Cambia en tu corrida** nada.
 
 ---
 
@@ -28,7 +28,7 @@ DROP TABLE IF EXISTS recepcion_lab06
 
 **En consola** `Listo. La sentencia se ejecutó.`
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ---
 
@@ -43,7 +43,7 @@ SELECT * FROM curso.recepcion_limpia
 
 **En consola** `Listo. La sentencia se ejecutó.`
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ---
 
@@ -64,7 +64,7 @@ FROM recepcion_lab06
 | 1000       | 9117709433.18 |
 ```
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ## Paso 1. El riesgo, mostrado
 
@@ -78,7 +78,7 @@ INSERT INTO recepcion_lab06 SELECT * FROM curso.recepcion_sospechosa
 
 **En consola** `Listo. La sentencia se ejecutó.`
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ---
 
@@ -104,7 +104,7 @@ FROM recepcion_lab06
 | 1500       | 13          | 20           | 7                 |
 ```
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ---
 
@@ -127,13 +127,13 @@ WHERE abs(monto_iva - round(monto_neto * 0.19)) > 2
 | 20                        |
 ```
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ---
 
 **Celda 1.4**
 
-**Se escribe** (con su propia database).
+**Se escribe**
 
 ```sql
 SELECT snapshot_id, committed_at, operation
@@ -149,13 +149,13 @@ ORDER BY committed_at
 | 8948402203407673627 | 2026-08-23 18:49:48.454 | append    |
 ```
 
-**Varía entre alumnos** los identificadores y las horas, siempre.
+**Cambia en tu corrida** los identificadores y las horas, siempre.
 
 ---
 
 **Celda 1.5**
 
-**Se escribe** (con su propia database).
+**Se escribe**
 
 ```sql
 CALL spark_catalog.system.rollback_to_snapshot('mi_espacio.recepcion_lab06', <TU_SNAPSHOT_ID>)
@@ -168,7 +168,7 @@ CALL spark_catalog.system.rollback_to_snapshot('mi_espacio.recepcion_lab06', <TU
 | 8948402203407673627  | 1276068155314944172 |
 ```
 
-**Varía entre alumnos** los dos números.
+**Cambia en tu corrida** los dos números.
 
 ---
 
@@ -194,7 +194,7 @@ FROM recepcion_lab06
 | 1000       | 0           | 0            | 0                 |
 ```
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ## Paso 2. Crear la rama
 
@@ -208,13 +208,13 @@ ALTER TABLE recepcion_lab06 CREATE BRANCH revision_junio
 
 **En consola** `Listo. La sentencia se ejecutó.`
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ---
 
 **Celda 2.2**
 
-**Se escribe** (con su propia database).
+**Se escribe**
 
 ```sql
 SELECT name, type, snapshot_id
@@ -230,13 +230,13 @@ ORDER BY type, name
 | revision_junio | BRANCH | 1276068155314944172 |
 ```
 
-**Varía entre alumnos** los identificadores.
+**Cambia en tu corrida** los identificadores.
 
 ## Paso 3. Escribir en la rama
 
 **Celda 3.1**
 
-**Se escribe** (con su propia database).
+**Se escribe**
 
 ```sql
 INSERT INTO mi_espacio.recepcion_lab06.branch_revision_junio
@@ -245,7 +245,7 @@ SELECT * FROM curso.recepcion_sospechosa
 
 **En consola** `Listo. La sentencia se ejecutó.`
 
-**Varía entre alumnos** su database en el nombre de la tabla.
+**Cambia en tu corrida** nada.
 
 ---
 
@@ -266,7 +266,7 @@ FROM recepcion_lab06 VERSION AS OF 'revision_junio'
 | 1500       | 13693496696.68 |
 ```
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ---
 
@@ -287,7 +287,7 @@ FROM recepcion_lab06
 | 1000       | 9117709433.18 |
 ```
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ## Paso 4. Auditar
 
@@ -313,7 +313,7 @@ FROM recepcion_lab06 VERSION AS OF 'revision_junio'
 | 1500       | 13          | 20           | 7                 |
 ```
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ---
 
@@ -336,7 +336,7 @@ WHERE abs(monto_iva - round(monto_neto * 0.19)) > 2
 | 20                        |
 ```
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ## Paso 5. Decidir, descartar
 
@@ -350,7 +350,7 @@ ALTER TABLE recepcion_lab06 DROP BRANCH revision_junio
 
 **En consola** `Listo. La sentencia se ejecutó.`
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ---
 
@@ -376,13 +376,13 @@ FROM recepcion_lab06
 | 1000       | 0           | 0            | 0                 |
 ```
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ---
 
 **Celda 5.3**
 
-**Se escribe** (con su propia database).
+**Se escribe**
 
 ```sql
 SELECT name, type
@@ -397,7 +397,7 @@ ORDER BY type, name
 | main | BRANCH |
 ```
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ## Paso 5 (continúa). Decidir, corregir y publicar
 
@@ -411,13 +411,13 @@ ALTER TABLE recepcion_lab06 CREATE BRANCH revision_junio_v2
 
 **En consola** `Listo. La sentencia se ejecutó.`
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ---
 
 **Celda 5.5**
 
-**Se escribe** (con su propia database).
+**Se escribe**
 
 ```sql
 INSERT INTO mi_espacio.recepcion_lab06.branch_revision_junio_v2
@@ -429,7 +429,7 @@ WHERE abs(monto_iva - round(monto_neto * 0.19)) <= 2
 
 **En consola** `Listo. La sentencia se ejecutó.`
 
-**Varía entre alumnos** su database en el nombre de la tabla.
+**Cambia en tu corrida** nada.
 
 ---
 
@@ -455,13 +455,13 @@ FROM recepcion_lab06 VERSION AS OF 'revision_junio_v2'
 | 1480       | 0           | 0            | 0                 |
 ```
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ---
 
 **Celda 5.7**
 
-**Se escribe** (con su propia database).
+**Se escribe**
 
 ```sql
 SELECT snapshot_id
@@ -476,7 +476,7 @@ WHERE name = 'revision_junio_v2'
 | 5971121042725466227 |
 ```
 
-**Varía entre alumnos** el identificador, siempre.
+**Cambia en tu corrida** el identificador, siempre.
 
 ---
 
@@ -490,7 +490,7 @@ ALTER TABLE recepcion_lab06 REPLACE BRANCH main AS OF VERSION <TU_SNAPSHOT_DE_LA
 
 **En consola** `Listo. La sentencia se ejecutó.`
 
-**Varía entre alumnos** el número que escribieron.
+**Cambia en tu corrida** el número que escribiste, que es el de tu propia tabla.
 
 ---
 
@@ -516,7 +516,7 @@ FROM recepcion_lab06
 | 1480       | 0           | 0            | 0                 |
 ```
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ---
 
@@ -530,7 +530,7 @@ ALTER TABLE recepcion_lab06 DROP BRANCH revision_junio_v2
 
 **En consola** `Listo. La sentencia se ejecutó.`
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ## Paso 6. Etiquetar el cierre
 
@@ -544,7 +544,7 @@ ALTER TABLE recepcion_lab06 CREATE TAG cierre_junio_2026
 
 **En consola** `Listo. La sentencia se ejecutó.`
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ---
 
@@ -565,13 +565,13 @@ FROM recepcion_lab06 VERSION AS OF 'cierre_junio_2026'
 | 1480       | 13576071743.67 |
 ```
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ---
 
 **Celda 6.3**
 
-**Se escribe** (con su propia database).
+**Se escribe**
 
 ```sql
 SELECT name, type, snapshot_id
@@ -587,4 +587,4 @@ ORDER BY type, name
 | cierre_junio_2026 | TAG    | 5971121042725466227 |
 ```
 
-**Varía entre alumnos** los identificadores.
+**Cambia en tu corrida** los identificadores.

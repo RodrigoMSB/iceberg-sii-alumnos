@@ -6,7 +6,7 @@ Cada celda lleva `%%sql` en la primera línea y una sola sentencia por celda.
 
 **Celda 0.1**
 
-**Se escribe** (cada uno el suyo).
+**Se escribe**
 
 ```sql
 USE mi_espacio
@@ -14,7 +14,7 @@ USE mi_espacio
 
 **En consola** `Listo. La sentencia se ejecutó.` Primera celda del día.
 
-**Varía entre alumnos** el nombre que escribió cada uno.
+**Cambia en tu corrida** nada.
 
 ---
 
@@ -28,7 +28,7 @@ DROP TABLE IF EXISTS panel_lab12
 
 **En consola** `Listo. La sentencia se ejecutó.`
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ---
 
@@ -46,13 +46,13 @@ WHERE fecha_emision BETWEEN DATE '2024-01-01' AND DATE '2024-01-31'
 
 **En consola** `Listo. La sentencia se ejecutó.`
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ---
 
 **Celda 0.4**
 
-**Se escribe** (ya viene escrita; solo el espacio de la primera línea).
+**Se escribe** (ya viene escrita).
 
 ```python
 ESPACIO = "mi_espacio"
@@ -80,7 +80,7 @@ cargado 2024-12-20
 listo: 22 cargas diarias
 ```
 
-**Varía entre alumnos** el espacio de la primera línea.
+**Cambia en tu corrida** nada.
 
 ---
 
@@ -97,7 +97,7 @@ WHERE fecha_emision BETWEEN DATE '2024-01-01' AND DATE '2024-01-31'
 
 **En consola** `Listo. La sentencia se ejecutó.`
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ---
 
@@ -113,7 +113,7 @@ WHERE fecha_emision = DATE '2024-01-05'
 
 **En consola** `Listo. La sentencia se ejecutó.`
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ---
 
@@ -130,7 +130,7 @@ WHERE fecha_emision = DATE '2024-01-01'
 
 **En consola** `Listo. La sentencia se ejecutó.`
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ---
 
@@ -144,7 +144,7 @@ ALTER TABLE panel_lab12 ADD COLUMN revisado_por STRING
 
 **En consola** `Listo. La sentencia se ejecutó.`
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ---
 
@@ -158,13 +158,13 @@ DELETE FROM panel_lab12 WHERE fecha_emision = DATE '2024-07-20'
 
 **En consola** `Listo. La sentencia se ejecutó.`
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ## Paso 1. ¿Cuántos archivos tiene la tabla y cuánto pesan?
 
 **Celda 1.1**
 
-**Se escribe** (con su propia database).
+**Se escribe**
 
 ```sql
 SELECT count(*)                AS archivos,
@@ -181,13 +181,13 @@ FROM mi_espacio.panel_lab12.files
 1 fila.
 ```
 
-**Varía entre alumnos** su database, y los bytes en unas pocas unidades.
+**Cambia en tu corrida** los bytes, en unas pocas unidades.
 
 ---
 
 **Celda 1.2**
 
-**Se escribe** (con su propia database).
+**Se escribe**
 
 ```sql
 SELECT 'panel_lab12' AS tabla, count(*) AS archivos
@@ -207,14 +207,13 @@ ORDER BY archivos DESC
 2 filas.
 ```
 
-**Varía entre alumnos** su database, y los archivos de `documentos_lab11` según cómo les
-haya quedado esa tabla.
+**Cambia en tu corrida** los archivos de `documentos_lab11`, según cómo haya quedado esa tabla.
 
 ## Paso 2. ¿Cuántos archivos chicos hay?
 
 **Celda 2.1**
 
-**Se escribe** (con su propia database).
+**Se escribe**
 
 ```sql
 SELECT count(*)                                                 AS archivos,
@@ -231,13 +230,13 @@ FROM mi_espacio.panel_lab12.files
 1 fila.
 ```
 
-**Varía entre alumnos** su database, y el tamaño del más chico en unas pocas unidades.
+**Cambia en tu corrida** el tamaño del más chico, en unas pocas unidades.
 
 ## Paso 3. ¿Cuántas páginas acumula la tabla?
 
 **Celda 3.1**
 
-**Se escribe** (con su propia database).
+**Se escribe**
 
 ```sql
 SELECT count(*)          AS paginas,
@@ -254,13 +253,13 @@ FROM mi_espacio.panel_lab12.snapshots
 1 fila.
 ```
 
-**Varía entre alumnos** las dos fechas, siempre.
+**Cambia en tu corrida** las dos fechas, siempre.
 
 ## Paso 4. ¿Cuánto ocupan las páginas que ya no cuentan?
 
 **Celda 4.1**
 
-**Se escribe** (con su propia database).
+**Se escribe**
 
 ```sql
 SELECT (SELECT count(*) FROM mi_espacio.panel_lab12.files)     AS archivos_vigentes,
@@ -277,13 +276,13 @@ SELECT (SELECT count(*) FROM mi_espacio.panel_lab12.files)     AS archivos_vigen
 1 fila.
 ```
 
-**Varía entre alumnos** su database, y los bytes en unas pocas unidades.
+**Cambia en tu corrida** los bytes, en unas pocas unidades.
 
 ## Paso 5. ¿Hay particiones desparejas?
 
 **Celda 5.1**
 
-**Se escribe** (con su propia database).
+**Se escribe**
 
 ```sql
 SELECT partition,
@@ -312,13 +311,13 @@ ORDER BY record_count DESC
 12 filas.
 ```
 
-**Varía entre alumnos** su database.
+**Cambia en tu corrida** nada.
 
 ## Paso 6. ¿Cuándo fue la última escritura?
 
 **Celda 6.1**
 
-**Se escribe** (con su propia database).
+**Se escribe**
 
 ```sql
 SELECT committed_at AS ultima_escritura,
@@ -336,13 +335,13 @@ LIMIT 1
 1 fila.
 ```
 
-**Varía entre alumnos** la fecha, siempre.
+**Cambia en tu corrida** la fecha, siempre.
 
 ## Paso 7. ¿Cuántas versiones de portada hay?
 
 **Celda 7.1**
 
-**Se escribe** (con su propia database).
+**Se escribe**
 
 ```sql
 SELECT count(*)              AS portadas,
@@ -358,13 +357,13 @@ FROM mi_espacio.panel_lab12.metadata_log_entries
 1 fila.
 ```
 
-**Varía entre alumnos** su database.
+**Cambia en tu corrida** nada.
 
 ## Paso 8. ¿La tabla se compactó alguna vez?
 
 **Celda 8.1**
 
-**Se escribe** (con su propia database).
+**Se escribe**
 
 ```sql
 SELECT (SELECT count(*) FROM mi_espacio.panel_lab12.files)                                 AS archivos,
@@ -379,4 +378,4 @@ SELECT (SELECT count(*) FROM mi_espacio.panel_lab12.files)                      
 1 fila.
 ```
 
-**Varía entre alumnos** su database.
+**Cambia en tu corrida** nada.

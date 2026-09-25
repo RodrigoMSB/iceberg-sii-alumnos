@@ -6,7 +6,7 @@ Cada celda lleva `%%sql` en la primera línea y una sola sentencia por celda.
 
 **Celda 0.1**
 
-**Se escribe** (cada uno el suyo).
+**Se escribe**
 
 ```sql
 USE mi_espacio
@@ -14,7 +14,7 @@ USE mi_espacio
 
 **En consola** `Listo. La sentencia se ejecutó.` Primera celda del día.
 
-**Varía entre alumnos** el nombre que escribió cada uno.
+**Cambia en tu corrida** nada.
 
 ---
 
@@ -28,7 +28,7 @@ DROP TABLE IF EXISTS documentos_lab11
 
 **En consola** `Listo. La sentencia se ejecutó.`
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ---
 
@@ -44,13 +44,13 @@ SELECT * FROM curso.dte_2024
 **En consola** `Listo. La sentencia se ejecutó.` Es de las celdas más lentas, unos
 segundos.
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ## Paso 1. Medir el disco
 
 **Celda 1.1**
 
-**Se escribe** (con su propia database).
+**Se escribe**
 
 ```sql
 SELECT count(*)                AS archivos_vigentes,
@@ -65,14 +65,13 @@ FROM mi_espacio.documentos_lab11.files
 | 1                 | 776514         |
 ```
 
-**Varía entre alumnos** los bytes varían en unos cientos, porque la compresión depende
-del orden en que el motor leyó las filas.
+**Cambia en tu corrida** los bytes, en unos cientos, porque la compresión depende del orden en que el motor leyó las filas.
 
 ---
 
 **Celda 1.2**
 
-**Se escribe** (con su espacio en la ruta).
+**Se escribe**
 
 ```
 !hdfs dfs -du -s /warehouse/iceberg/mi_espacio.db/documentos_lab11
@@ -84,7 +83,7 @@ del orden en que el motor leyó las filas.
 790808  2372424  /warehouse/iceberg/mi_espacio.db/documentos_lab11
 ```
 
-**Varía entre alumnos** los dos números, en unos cientos de bytes.
+**Cambia en tu corrida** los dos números, en unos cientos de bytes.
 
 ---
 
@@ -92,7 +91,7 @@ del orden en que el motor leyó las filas.
 
 **En consola** nada.
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ## Paso 2. Cinco correcciones
 
@@ -107,7 +106,7 @@ WHERE tipo_dte = 33 AND fecha_emision BETWEEN DATE '2024-01-01' AND DATE '2024-0
 
 **En consola** `Listo. La sentencia se ejecutó.`
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ---
 
@@ -122,7 +121,7 @@ WHERE tipo_dte = 33 AND fecha_emision BETWEEN DATE '2024-02-01' AND DATE '2024-0
 
 **En consola** `Listo. La sentencia se ejecutó.`
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ---
 
@@ -137,7 +136,7 @@ WHERE tipo_dte = 33 AND fecha_emision BETWEEN DATE '2024-03-01' AND DATE '2024-0
 
 **En consola** `Listo. La sentencia se ejecutó.`
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ---
 
@@ -152,7 +151,7 @@ WHERE tipo_dte = 33 AND fecha_emision BETWEEN DATE '2024-04-01' AND DATE '2024-0
 
 **En consola** `Listo. La sentencia se ejecutó.`
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ---
 
@@ -167,7 +166,7 @@ WHERE tipo_dte = 33 AND fecha_emision BETWEEN DATE '2024-05-01' AND DATE '2024-0
 
 **En consola** `Listo. La sentencia se ejecutó.`
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ---
 
@@ -186,13 +185,13 @@ SELECT count(*) AS documentos FROM documentos_lab11
 | 30000      |
 ```
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ---
 
 **Celda 2.7**
 
-**Se escribe** (con su espacio en la ruta).
+**Se escribe**
 
 ```
 !hdfs dfs -du -s /warehouse/iceberg/mi_espacio.db/documentos_lab11
@@ -204,13 +203,13 @@ SELECT count(*) AS documentos FROM documentos_lab11
 4804920  14414760  /warehouse/iceberg/mi_espacio.db/documentos_lab11
 ```
 
-**Varía entre alumnos** los números, en algunos miles.
+**Cambia en tu corrida** los números, en algunos miles.
 
 ## Paso 3. Dónde se fue el espacio
 
 **Celda 3.1**
 
-**Se escribe** (con su propia database).
+**Se escribe**
 
 ```sql
 SELECT snapshot_id, committed_at, operation
@@ -231,13 +230,13 @@ ORDER BY committed_at
 6 filas.
 ```
 
-**Varía entre alumnos** los identificadores y las fechas.
+**Cambia en tu corrida** los identificadores y las fechas.
 
 ---
 
 **Celda 3.2**
 
-**Se escribe** (con su propia database).
+**Se escribe**
 
 ```sql
 SELECT
@@ -254,13 +253,13 @@ SELECT
 | 1                 | 778984         | 6              | 4668576     |
 ```
 
-**Varía entre alumnos** los bytes.
+**Cambia en tu corrida** los bytes.
 
 ## Paso 4. Botar las páginas viejas
 
 **Celda 4.1**
 
-**Se escribe** (con su propia database).
+**Se escribe**
 
 ```sql
 CALL spark_catalog.system.expire_snapshots(
@@ -272,13 +271,13 @@ CALL spark_catalog.system.expire_snapshots(
 
 **En consola** una fila con lo que borró, cinco archivos de datos entre ellos.
 
-**Varía entre alumnos** los conteos de manifiestos.
+**Cambia en tu corrida** los conteos de manifiestos.
 
 ---
 
 **Celda 4.2**
 
-**Se escribe** (con su espacio en la ruta).
+**Se escribe**
 
 ```
 !hdfs dfs -du -s /warehouse/iceberg/mi_espacio.db/documentos_lab11
@@ -290,7 +289,7 @@ CALL spark_catalog.system.expire_snapshots(
 842260  2526780  /warehouse/iceberg/mi_espacio.db/documentos_lab11
 ```
 
-**Varía entre alumnos** los números, en algunos miles.
+**Cambia en tu corrida** los números, en algunos miles.
 
 ---
 
@@ -309,13 +308,13 @@ SELECT count(*) AS documentos FROM documentos_lab11
 | 30000      |
 ```
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ## Paso 5. Los archivos que nadie reclama
 
 **Celda 5.1**
 
-**Se escribe** (con su propia database).
+**Se escribe**
 
 ```sql
 CALL spark_catalog.system.remove_orphan_files(
@@ -332,4 +331,4 @@ CALL spark_catalog.system.remove_orphan_files(
 0 filas.
 ```
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.

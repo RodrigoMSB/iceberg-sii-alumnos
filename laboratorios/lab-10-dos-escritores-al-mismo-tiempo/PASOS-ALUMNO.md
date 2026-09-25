@@ -1,6 +1,13 @@
 # Laboratorio 10. Dos escritores al mismo tiempo
 
-Cada celda lleva `%%sql` en la primera línea y una sola sentencia por celda.
+Las celdas SQL llevan `%%sql` en la primera línea y una sola sentencia por celda. Las
+celdas 1.1 y 2.1 son de Python y ya vienen escritas.
+
+Antes de empezar, deja la tabla como recién creada, desde la carpeta del repositorio.
+
+```bash
+bin/reiniciar-lab.sh 10
+```
 
 ## Paso 0. La tabla compartida
 
@@ -12,7 +19,7 @@ Cada celda lleva `%%sql` en la primera línea y una sola sentencia por celda.
 SELECT * FROM curso.escritores_lab10 ORDER BY rut
 ```
 
-**En consola** cuatro contribuyentes.
+**En consola** cuatro contribuyentes, después de los avisos de arranque de Spark.
 
 ```
 | rut        | razon_social             | segmento |
@@ -23,7 +30,7 @@ SELECT * FROM curso.escritores_lab10 ORDER BY rut
 4 filas.
 ```
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.
 
 ---
 
@@ -41,27 +48,59 @@ ORDER BY committed_at
 
 ```
 | snapshot_id         | committed_at            | operation |
-| 5489459193992190112 | 2026-09-15 20:11:20.607 | append    |
+| 7355731461086440536 | 2026-09-25 18:05:23.416 | append    |
 1 fila.
 ```
 
-**Varía entre alumnos** el identificador y la fecha, que son los de la última vez que se
-repuso la tabla.
+**Cambia en tu corrida** el identificador y la fecha, que son los de la última vez que
+se repuso la tabla.
 
-## Paso 1. Todos insertan a la vez
+## Paso 1. Dos escritores insertan a la vez
 
 **Celda 1.1**
 
-**Se escribe** (cada uno con su espacio).
+**Se escribe** (ya viene escrita).
 
-```sql
-INSERT INTO curso.escritores_lab10 VALUES
-    ('99000001-1', 'Escritor mi_espacio SpA', 'MICRO')
+```python
+import threading
+
+def escribe(nombre):
+    spark.sql(
+        f"INSERT INTO curso.escritores_lab10 VALUES "
+        f"('99000001-1', 'Escritor {nombre} SpA', 'MICRO')"
+    )
+    print(nombre, "escribio")
+
+hilos = [threading.Thread(target=escribe, args=(n,)) for n in ("uno", "dos")]
+for h in hilos:
+    h.start()
+for h in hilos:
+    h.join()
+
+print("los dos terminaron")
 ```
 
-**En consola** `Listo. La sentencia se ejecutó.` A nadie le falla.
+**En consola** los dos hilos escriben y a ninguno le falla.
 
-**Varía entre alumnos** el nombre que escribió cada uno.
+```
+dos escribio
+uno escribio
+los dos terminaron
+```
+
+**Cambia en tu corrida** el orden en que terminan los dos hilos.
+
+> **A mano, con dos pestañas.** Duplica el cuaderno (clic derecho sobre `lab-10.ipynb`,
+> **Duplicate**) y abre `lab-10-Copy1.ipynb` en otra pestaña del navegador. Cada cuaderno
+> tiene su propio kernel, así que son dos escritores. En una celda nueva de cada pestaña
+> escribe el `INSERT` con un nombre distinto y ejecútalas una tras otra. Las dos dicen
+> `Listo. La sentencia se ejecutó.` y la tabla queda con dos filas más de las que
+> muestran las celdas siguientes.
+>
+> ```sql
+> INSERT INTO curso.escritores_lab10 VALUES
+>     ('99000001-1', 'Escritor pestaña uno SpA', 'MICRO')
+> ```
 
 ---
 
@@ -73,12 +112,15 @@ INSERT INTO curso.escritores_lab10 VALUES
 SELECT count(*) AS filas FROM curso.escritores_lab10
 ```
 
+**En consola**
+
 ```
 | filas |
 | 6     |
+1 fila.
 ```
 
-**Varía entre alumnos** nada entre ellos, pero **sí depende de cuántos ejecutaron**.
+**Cambia en tu corrida** nada.
 
 ---
 
@@ -92,44 +134,65 @@ FROM curso.escritores_lab10.snapshots
 ORDER BY committed_at
 ```
 
-**En consola** la página inicial más una por cada escritor, todas `append`.
+**En consola** la página inicial más una por cada hilo, todas `append`.
 
 ```
 | snapshot_id         | committed_at            | operation |
-| 5489459193992190112 | 2026-09-15 20:11:20.607 | append    |
-| 7638901174419374418 | 2026-09-15 20:12:42.170 | append    |
-| 6948472985130829003 | 2026-09-15 20:12:42.599 | append    |
+| 7355731461086440536 | 2026-09-25 18:05:23.416 | append    |
+| 6046838079518803208 | 2026-09-25 18:09:09.544 | append    |
+| 5186261370086278124 | 2026-09-25 18:09:09.858 | append    |
 3 filas.
 ```
 
-**Varía entre alumnos** los identificadores y las fechas.
+**Cambia en tu corrida** los identificadores y las fechas.
 
-## Paso 2. Todos corrigen la misma fila
+## Paso 2. Los dos corrigen la misma fila
 
 **Celda 2.1**
 
-**Se escribe** (cada uno con su espacio).
+**Se escribe** (ya viene escrita).
 
-```sql
-UPDATE curso.escritores_lab10
-SET segmento = 'CORREGIDO POR mi_espacio'
-WHERE rut = '77746521-K'
+```python
+import threading
+
+def corrige(nombre, segmento):
+    try:
+        spark.sql(
+            f"UPDATE curso.escritores_lab10 SET segmento = '{segmento}' "
+            f"WHERE rut = '77746521-K'"
+        )
+        print(nombre, "corrigio a", segmento)
+    except Exception as error:
+        lineas = str(error).splitlines()
+        print(nombre, "NO pudo:", lineas[0][:90])
+        causa = [l.strip() for l in lineas if "ValidationException" in l]
+        if causa:
+            print(causa[0])
+
+hilos = [
+    threading.Thread(target=corrige, args=("uno", "GRANDE")),
+    threading.Thread(target=corrige, args=("dos", "PEQUENA")),
+]
+for h in hilos:
+    h.start()
+for h in hilos:
+    h.join()
+
+print("los dos terminaron")
 ```
 
-**En consola** a uno le dice `Listo. La sentencia se ejecutó.` y a los demás les sale un
-error largo.
+**En consola** a un hilo le resulta y al otro le sale el error, con la línea de la causa.
 
 ```
-org.apache.spark.SparkException: Writing job aborted
+uno corrigio a GRANDE
+26/09/25 18:09:12 ERROR ReplaceDataExec: Data source write support IcebergBatchWrite(table=spark_catalog.curso.escritores_lab10, format=PARQUET) is aborting.
+26/09/25 18:09:12 ERROR ReplaceDataExec: Data source write support IcebergBatchWrite(table=spark_catalog.curso.escritores_lab10, format=PARQUET) aborted.
+dos NO pudo: An error occurred while calling o39.sql.
+Caused by: org.apache.iceberg.exceptions.ValidationException: Found conflicting files that can contain records matching ref(name="rut") == "77746521-K": [hdfs://namenode:8020/warehouse/iceberg/curso.db/escritores_lab10/data/00003-11-b5262010-d20e-4613-bd26-2794f5407040-00001.parquet]
+los dos terminaron
 ```
 
-```
-org.apache.iceberg.exceptions.ValidationException: Found conflicting files that can
-contain records matching ref(name="rut") == "77746521-K":
-[hdfs://namenode:8020/warehouse/iceberg/curso.db/escritores_lab10/data/00002-3-fa44257a-...parquet]
-```
-
-**Varía entre alumnos** a quién le falla.
+**Cambia en tu corrida** cuál de los dos gana, las horas y el nombre del archivo.
 
 ---
 
@@ -141,13 +204,15 @@ contain records matching ref(name="rut") == "77746521-K":
 SELECT * FROM curso.escritores_lab10 WHERE rut = '77746521-K'
 ```
 
-**En consola** una fila, con el nombre del que ganó.
+**En consola** una fila, con el segmento del que ganó.
 
 ```
-| rut        | razon_social          | segmento              |
-| 77746521-K | Pehuen Logistica EIRL | CORREGIDO POR mi_espacio |
+| rut        | razon_social          | segmento |
+| 77746521-K | Pehuen Logistica EIRL | GRANDE   |
 1 fila.
 ```
+
+**Cambia en tu corrida** el segmento, `GRANDE` si ganó el hilo uno y `PEQUENA` si ganó el dos.
 
 ---
 
@@ -161,19 +226,19 @@ FROM curso.escritores_lab10.history
 ORDER BY made_current_at
 ```
 
-**En consola** las páginas del paso 1 más **una sola** del paso 2, y todas con
-`is_current_ancestor` en `true`.
+**En consola** las tres páginas del paso 1 más **una sola** del paso 2, todas con
+`is_current_ancestor` en `True`.
 
 ```
 | made_current_at         | snapshot_id         | is_current_ancestor |
-| 2026-09-15 20:11:20.607 | 5489459193992190112 | true                |
-| 2026-09-15 20:12:42.170 | 7638901174419374418 | true                |
-| 2026-09-15 20:12:42.599 | 6948472985130829003 | true                |
-| 2026-09-15 20:14:15.578 | 4242012492127956567 | true                |
+| 2026-09-25 18:05:23.416 | 7355731461086440536 | True                |
+| 2026-09-25 18:09:09.544 | 6046838079518803208 | True                |
+| 2026-09-25 18:09:09.858 | 5186261370086278124 | True                |
+| 2026-09-25 18:09:12.000 | 1568745537035200151 | True                |
 4 filas.
 ```
 
-**Varía entre alumnos** los identificadores y las fechas.
+**Cambia en tu corrida** los identificadores y las fechas.
 
 ## Paso 3. Concurrencia optimista
 
@@ -181,4 +246,4 @@ ORDER BY made_current_at
 
 **En consola** nada.
 
-**Varía entre alumnos** nada.
+**Cambia en tu corrida** nada.

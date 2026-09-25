@@ -2,8 +2,8 @@
 #
 # Deja en pie el origen relacional del laboratorio 16.
 #
-#   bin/41-cargar-origen-lab16.sh           # crea o repone el origen
-#   bin/41-cargar-origen-lab16.sh --estado  # solo mira, no toca nada
+#   bin/origen-lab16.sh                     # crea o repone el origen
+#   bin/origen-lab16.sh --estado            # solo mira, no toca nada
 #
 # El laboratorio 16 simula una migracion desde una base relacional. El "origen"
 # es una base PostgreSQL que vive en el mismo contenedor que el Metastore,
