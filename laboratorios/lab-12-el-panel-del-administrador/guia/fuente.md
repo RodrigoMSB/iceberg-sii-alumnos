@@ -2,7 +2,7 @@ numero: 12
 titulo: El panel del administrador
 subtitulo: Guía para leer mientras trabajas el cuaderno. Cada celda trae la pregunta que responde, la idea en el almacén, la sentencia explicada parte por parte, lo que sale en pantalla y cómo leerlo.
 excepcion: 1970 | definición | el cajón mensual cuenta los meses desde enero de 1970
-excepcion: 200 | conversión | 4232 filas entre 22 archivos dan menos de 200 por archivo
+excepcion: 192 | conversión | 4232 filas entre 22 archivos, unas 192 por archivo
 excepcion: 3 | conversión | 25 archivos totales menos 22 vigentes en la celda 4.1
 ---
 
@@ -346,7 +346,7 @@ Esta celda viene escrita en el cuaderno y es la única que no es SQL. Son veinti
 
 **Cómo se lee.** La tabla tiene 22 archivos, 4232 filas y pesa 208727 bytes, unos 0,21 MB.
 
-Son 22 archivos para un poco más de cuatro mil filas. En promedio, menos de 200 filas por archivo. Es una tabla chica partida en muchos pedazos, que es justo lo que la ingesta diaria deja.
+Son 22 archivos para un poco más de cuatro mil filas. En promedio, unas 192 filas por archivo. Es una tabla chica partida en muchos pedazos, que es justo lo que la ingesta diaria deja.
 
 ## Celda 1.2 · La misma pregunta para varias tablas
 
