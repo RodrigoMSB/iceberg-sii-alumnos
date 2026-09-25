@@ -61,7 +61,21 @@ SELECT * FROM origen_pg ORDER BY rut
 | 76000503-7 | Calafate Ferreteria EIRL   | PEQUENA  | 2026-09-01 08:05:00 |
 | 76002248-9 | Andes Consultores SpA      | MEDIANA  | 2026-09-01 08:10:00 |
 | 76002652-2 | Calafate Constructora S.A. | GRANDE   | 2026-09-01 08:15:00 |
-| ...        |                            |          |                     |
+| 76002830-4 | Huemul Alimentos Ltda.     | MICRO    | 2026-09-01 08:20:00 |
+| 76004358-3 | Ulmo Constructora Ltda.    | PEQUENA  | 2026-09-01 08:25:00 |
+| 76005022-9 | Andes Distribuidora EIRL   | MEDIANA  | 2026-09-01 08:30:00 |
+| 76005135-7 | Huemul Servicios SpA       | GRANDE   | 2026-09-01 08:35:00 |
+| 76005575-1 | Copihue Consultores EIRL   | MICRO    | 2026-09-01 08:40:00 |
+| 76005701-0 | Maiten Constructora Ltda.  | PEQUENA  | 2026-09-01 08:45:00 |
+| 76006049-6 | Canelo Constructora S.A.   | MEDIANA  | 2026-09-01 08:50:00 |
+| 76007969-3 | Maiten Alimentos EIRL      | GRANDE   | 2026-09-01 08:55:00 |
+| 76008296-1 | Quillay Maquinarias Ltda.  | MICRO    | 2026-09-01 09:00:00 |
+| 76008516-2 | Boldo Logistica SpA        | PEQUENA  | 2026-09-01 09:05:00 |
+| 76010063-3 | Calafate Ferreteria EIRL   | MEDIANA  | 2026-09-01 09:10:00 |
+| 76010099-4 | Rauli Transportes EIRL     | GRANDE   | 2026-09-01 09:15:00 |
+| 76011940-7 | Canelo Servicios EIRL      | MICRO    | 2026-09-01 09:20:00 |
+| 76014257-3 | Maiten Automotriz SpA      | PEQUENA  | 2026-09-01 09:25:00 |
+| 76015893-3 | Lenga Consultores Ltda.    | MEDIANA  | 2026-09-01 09:30:00 |
 | 76016523-9 | Andes Maquinarias EIRL     | GRANDE   | 2026-09-01 09:35:00 |
 20 filas.
 ```
@@ -113,6 +127,7 @@ SELECT count(*) AS contribuyentes FROM contribuyentes_lab16
 ```
 | contribuyentes |
 | 20             |
+1 fila.
 ```
 
 **Cambia en tu corrida** nada.
@@ -132,6 +147,7 @@ SELECT max(actualizado_en) AS marca_de_agua FROM contribuyentes_lab16
 ```
 | marca_de_agua       |
 | 2026-09-01 09:35:00 |
+1 fila.
 ```
 
 **Cambia en tu corrida** nada.
@@ -210,6 +226,7 @@ SELECT count(*) AS contribuyentes FROM contribuyentes_lab16
 ```
 | contribuyentes |
 | 22             |
+1 fila.
 ```
 
 **Cambia en tu corrida** nada.
@@ -223,9 +240,9 @@ SELECT count(*) AS contribuyentes FROM contribuyentes_lab16
 ```sql
 SELECT
     (SELECT count(*) FROM origen_pg)                                        AS filas_origen,
-    (SELECT count(*) FROM contribuyentes_lab16)                             AS filas_iceberg,
+    (SELECT count(*) FROM contribuyentes_lab16)                                          AS filas_iceberg,
     (SELECT sum(crc32(concat(rut, razon_social, segmento))) FROM origen_pg) AS control_origen,
-    (SELECT sum(crc32(concat(rut, razon_social, segmento))) FROM contribuyentes_lab16) AS control_iceberg
+    (SELECT sum(crc32(concat(rut, razon_social, segmento))) FROM contribuyentes_lab16)   AS control_iceberg
 ```
 
 **En consola** los cuatro números, y los pares cuadran.
@@ -233,6 +250,7 @@ SELECT
 ```
 | filas_origen | filas_iceberg | control_origen | control_iceberg |
 | 22           | 22            | 39995702816    | 39995702816     |
+1 fila.
 ```
 
 **Cambia en tu corrida** nada.
@@ -253,8 +271,8 @@ ORDER BY committed_at
 
 ```
 | snapshot_id         | committed_at            | operation |
-| 4587895169207763573 | 2026-09-15 20:04:05.625 | append    |
-| 8947180928895479897 | 2026-09-15 20:04:13.919 | overwrite |
+| 2550665139341160300 | 2026-09-25 18:11:43.816 | append    |
+| 7138320268844862618 | 2026-09-25 18:11:52.668 | overwrite |
 2 filas.
 ```
 

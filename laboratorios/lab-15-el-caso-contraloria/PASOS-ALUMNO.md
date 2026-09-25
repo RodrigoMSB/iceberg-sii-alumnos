@@ -130,6 +130,10 @@ print("Montaje: listo.")
 
 **En consola** la celda imprime `Montaje: listo.` y nada más.
 
+```
+Montaje: listo.
+```
+
 **Cambia en tu corrida** nada.
 
 ---

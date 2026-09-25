@@ -63,8 +63,8 @@ FROM curso.dte_10_anios.files
 | documentos |
 | 10000000   |
 1 fila.
-CPU times: user 11.4 ms, sys: 5.36 ms, total: 16.7 ms
-Wall time: 598 ms
+CPU times: user 4.59 ms, sys: 3.07 ms, total: 7.67 ms
+Wall time: 260 ms
 ```
 
 **Cambia en tu corrida** el tiempo, siempre.
@@ -86,8 +86,8 @@ FROM curso.dte_10_anios_por_mes.files
 | documentos |
 | 10000000   |
 1 fila.
-CPU times: user 10.9 ms, sys: 3.11 ms, total: 14 ms
-Wall time: 217 ms
+CPU times: user 8.49 ms, sys: 1.28 ms, total: 9.77 ms
+Wall time: 136 ms
 ```
 
 **Cambia en tu corrida** el tiempo.
@@ -108,8 +108,8 @@ SELECT count(*) AS documentos FROM curso.dte_10_anios
 | documentos |
 | 10000000   |
 1 fila.
-CPU times: user 10.2 ms, sys: 4.84 ms, total: 15 ms
-Wall time: 317 ms
+CPU times: user 6.08 ms, sys: 1.85 ms, total: 7.93 ms
+Wall time: 195 ms
 ```
 
 ## Paso 2. Junio de 2020
@@ -130,8 +130,8 @@ WHERE fecha_emision BETWEEN '2020-06-01' AND '2020-06-30'
 | total_de_junio  |
 | 799678968699.81 |
 1 fila.
-CPU times: user 15.8 ms, sys: 4.29 ms, total: 20.1 ms
-Wall time: 1.88 s
+CPU times: user 8.13 ms, sys: 1.96 ms, total: 10.1 ms
+Wall time: 1.16 s
 ```
 
 **Cambia en tu corrida** el tiempo, y bastante.
@@ -154,8 +154,8 @@ WHERE fecha_emision BETWEEN '2020-06-01' AND '2020-06-30'
 | total_de_junio  |
 | 799678968699.81 |
 1 fila.
-CPU times: user 11.1 ms, sys: 3.55 ms, total: 14.7 ms
-Wall time: 239 ms
+CPU times: user 4.86 ms, sys: 2.16 ms, total: 7.03 ms
+Wall time: 171 ms
 ```
 
 ## Paso 3. Cuánto pesa cada una

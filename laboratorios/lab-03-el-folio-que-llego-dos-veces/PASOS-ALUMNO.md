@@ -60,6 +60,7 @@ SELECT count(*) AS documentos FROM documentos_lab03
 ```
 | documentos |
 | 30         |
+1 fila.
 ```
 
 **Cambia en tu corrida** nada.
@@ -106,6 +107,7 @@ SELECT count(*) AS documentos FROM curso.recepcion_lote2
 ```
 | documentos |
 | 20         |
+1 fila.
 ```
 
 **Cambia en tu corrida** nada.
@@ -130,6 +132,7 @@ JOIN documentos_lab03 AS actual
 ```
 | ya_los_teniamos |
 | 12              |
+1 fila.
 ```
 
 **Cambia en tu corrida** nada.
@@ -163,6 +166,7 @@ SELECT count(*) AS documentos FROM documentos_lab03
 ```
 | documentos |
 | 50         |
+1 fila.
 ```
 
 **Cambia en tu corrida** nada.
@@ -188,7 +192,15 @@ ORDER BY rut_emisor, tipo_dte, folio
 | 76057484-8 | 33       | 226   | 2     |
 | 76133016-0 | 61       | 12    | 2     |
 | 76705019-4 | 34       | 149   | 2     |
-…
+| 76899472-2 | 61       | 28    | 2     |
+| 76913181-7 | 39       | 778   | 2     |
+| 77612645-4 | 61       | 100   | 2     |
+| 77781727-2 | 39       | 15    | 2     |
+| 78086012-K | 39       | 223   | 2     |
+| 78914770-1 | 61       | 10    | 2     |
+| 79068554-7 | 33       | 52    | 2     |
+| 79324470-3 | 33       | 16    | 2     |
+| 79961054-K | 39       | 889   | 2     |
 12 filas.
 ```
 
@@ -234,8 +246,8 @@ ORDER BY committed_at
 
 ```
 | snapshot_id         | committed_at            | operation |
-| 2177146603707033947 | 2026-08-23 04:16:24.288 | append    |
-| 3211044656129630615 | 2026-08-23 04:16:26.560 | append    |
+| 7877079783851262128 | 2026-09-25 18:22:19.586 | append    |
+| 8377222337610389612 | 2026-09-25 18:22:21.583 | append    |
 2 filas.
 ```
 
@@ -252,6 +264,12 @@ CALL spark_catalog.system.rollback_to_snapshot('mi_espacio.documentos_lab03', <T
 ```
 
 **En consola** una fila con dos números.
+
+```
+| previous_snapshot_id | current_snapshot_id |
+| 8377222337610389612  | 7877079783851262128 |
+1 fila.
+```
 
 **Cambia en tu corrida** los dos números.
 
@@ -270,6 +288,7 @@ SELECT count(*) AS documentos FROM documentos_lab03
 ```
 | documentos |
 | 30         |
+1 fila.
 ```
 
 **Cambia en tu corrida** nada.
@@ -310,6 +329,7 @@ SELECT count(*) AS documentos FROM documentos_lab03
 ```
 | documentos |
 | 38         |
+1 fila.
 ```
 
 **Cambia en tu corrida** nada.
@@ -356,6 +376,7 @@ SELECT count(*) AS folios_repetidos FROM (
 ```
 | folios_repetidos |
 | 0                |
+1 fila.
 ```
 
 **Cambia en tu corrida** nada.
@@ -428,6 +449,7 @@ SELECT count(*) AS documentos FROM documentos_lab03
 ```
 | documentos |
 | 33         |
+1 fila.
 ```
 
 **Cambia en tu corrida** nada.

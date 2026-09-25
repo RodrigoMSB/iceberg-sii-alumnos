@@ -128,10 +128,10 @@ ORDER BY committed_at
 
 ```
 | snapshot_id         | committed_at            | operation |
-| 1955255258653438703 | 2026-09-15 23:15:02.020 | append    |
-| 1888029377711109026 | 2026-09-15 23:15:03.142 | append    |
-| 1387644716275639918 | 2026-09-15 23:15:07.025 | overwrite |
-| 792703808674629253  | 2026-09-15 23:15:09.155 | overwrite |
+| 2909951952428611620 | 2026-09-25 18:24:57.549 | append    |
+| 6810304009964451568 | 2026-09-25 18:24:57.980 | append    |
+| 6660392441357658505 | 2026-09-25 18:25:01.066 | overwrite |
+| 7477665559979367789 | 2026-09-25 18:25:02.147 | overwrite |
 4 filas.
 ```
 
@@ -172,15 +172,15 @@ ORDER BY _change_ordinal, rut
 
 ```
 | rut        | razon_social             | segmento | _change_type | _change_ordinal | _commit_snapshot_id |
-| 76171162-8 | Huemul Alimentos EIRL    | GRANDE   | INSERT       | 0               | 1955255258653438703 |
-| 77746521-K | Pehuen Logistica EIRL    | MICRO    | INSERT       | 0               | 1955255258653438703 |
-| 77884562-8 | Araucaria Ferreteria SpA | PEQUENA  | INSERT       | 0               | 1955255258653438703 |
-| 78800840-6 | Copihue Maquinarias EIRL | MEDIANA  | INSERT       | 0               | 1955255258653438703 |
-| 77129445-1 | Lenga Transportes SpA    | MICRO    | INSERT       | 1               | 1888029377711109026 |
-| 79412337-8 | Quillay Servicios SpA    | PEQUENA  | INSERT       | 1               | 1888029377711109026 |
-| 77884562-8 | Araucaria Ferreteria SpA | MEDIANA  | INSERT       | 2               | 1387644716275639918 |
-| 77884562-8 | Araucaria Ferreteria SpA | PEQUENA  | DELETE       | 2               | 1387644716275639918 |
-| 78800840-6 | Copihue Maquinarias EIRL | MEDIANA  | DELETE       | 3               | 792703808674629253  |
+| 76171162-8 | Huemul Alimentos EIRL    | GRANDE   | INSERT       | 0               | 2909951952428611620 |
+| 77746521-K | Pehuen Logistica EIRL    | MICRO    | INSERT       | 0               | 2909951952428611620 |
+| 77884562-8 | Araucaria Ferreteria SpA | PEQUENA  | INSERT       | 0               | 2909951952428611620 |
+| 78800840-6 | Copihue Maquinarias EIRL | MEDIANA  | INSERT       | 0               | 2909951952428611620 |
+| 77129445-1 | Lenga Transportes SpA    | MICRO    | INSERT       | 1               | 6810304009964451568 |
+| 79412337-8 | Quillay Servicios SpA    | PEQUENA  | INSERT       | 1               | 6810304009964451568 |
+| 77884562-8 | Araucaria Ferreteria SpA | MEDIANA  | INSERT       | 2               | 6660392441357658505 |
+| 77884562-8 | Araucaria Ferreteria SpA | PEQUENA  | DELETE       | 2               | 6660392441357658505 |
+| 78800840-6 | Copihue Maquinarias EIRL | MEDIANA  | DELETE       | 3               | 7477665559979367789 |
 9 filas.
 ```
 
@@ -226,9 +226,9 @@ ORDER BY _change_ordinal, rut
 
 ```
 | rut        | razon_social             | segmento | _change_type | _change_ordinal | _commit_snapshot_id |
-| 77884562-8 | Araucaria Ferreteria SpA | PEQUENA  | DELETE       | 0               | 1387644716275639918 |
-| 77884562-8 | Araucaria Ferreteria SpA | MEDIANA  | INSERT       | 0               | 1387644716275639918 |
-| 78800840-6 | Copihue Maquinarias EIRL | MEDIANA  | DELETE       | 1               | 792703808674629253  |
+| 77884562-8 | Araucaria Ferreteria SpA | PEQUENA  | DELETE       | 0               | 6660392441357658505 |
+| 77884562-8 | Araucaria Ferreteria SpA | MEDIANA  | INSERT       | 0               | 6660392441357658505 |
+| 78800840-6 | Copihue Maquinarias EIRL | MEDIANA  | DELETE       | 1               | 7477665559979367789 |
 3 filas.
 ```
 

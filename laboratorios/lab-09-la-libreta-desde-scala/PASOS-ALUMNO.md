@@ -89,20 +89,18 @@ INSERT INTO contribuyentes_lab09 VALUES
 **Se escribe**
 
 ```
-!ESPACIO=mi_espacio TABLA=contribuyentes_lab09 java -jar /home/mi_espacio/sin-spark.jar
+!ESPACIO=mi_espacio TABLA=contribuyentes_lab09 java -jar /opt/herramientas/sin-spark.jar
 ```
 
 **En consola** los cinco pasos numerados del programa.
 
 ```
 Tabla pedida: mi_espacio.contribuyentes_lab09
-
 1. HDFS en hdfs://namenode:8020
 2. Catalogo Hive en thrift://hive-metastore:9083
-
 3. Portada leida. Columnas: rut, razon_social, segmento
    Paginas de la libreta, en hora UTC, igual que .snapshots:
-   438635771283733634   2026-09-21 22:38:51.731   append
+   2266374146400284423   2026-09-25 18:08:49.190   append
 
 4. Las filas, leidas registro a registro y sin motor de consultas.
    Pagina vigente:
@@ -111,16 +109,15 @@ Tabla pedida: mi_espacio.contribuyentes_lab09
    77884562-8   Araucaria Ferreteria SpA   PEQUENA
    78800840-6   Copihue Maquinarias EIRL   MEDIANA
    4 filas
-   Primera pagina, la 438635771283733634:
+   Primera pagina, la 2266374146400284423:
    76171162-8   Huemul Alimentos EIRL      GRANDE
    77746521-K   Pehuen Logistica EIRL      MICRO
    77884562-8   Araucaria Ferreteria SpA   PEQUENA
    78800840-6   Copihue Maquinarias EIRL   MEDIANA
    4 filas
-
-5. Parquet escrito: hdfs://namenode:8020/warehouse/iceberg/mi_espacio.db/contribuyentes_lab09/data/sin-spark-c3bcb01e-a619-47d6-9dbe-1f07142c0bdc.parquet
-   Lista de manifiestos de esa pagina: hdfs://namenode:8020/warehouse/iceberg/mi_espacio.db/contribuyentes_lab09/metadata/snap-1956004222642998237-1-6c515f41-6493-4868-94db-5083021e9e71.avro
-   Commit hecho. Pagina nueva 1956004222642998237.
+5. Parquet escrito: hdfs://namenode:8020/warehouse/iceberg/mi_espacio.db/contribuyentes_lab09/data/sin-spark-a3f48485-af46-43f9-8742-3108d43fc10f.parquet
+   Lista de manifiestos de esa pagina: hdfs://namenode:8020/warehouse/iceberg/mi_espacio.db/contribuyentes_lab09/metadata/snap-2188129110206532514-1-9e598506-005e-4c96-a836-77d9a3d12317.avro
+   Commit hecho. Pagina nueva 2188129110206532514.
 
 Fin. Ni la lectura ni la escritura pasaron por Spark. No hay Spark en este jar.
 ```
@@ -181,8 +178,8 @@ ORDER BY committed_at
 
 ```
 | snapshot_id         | committed_at            | operation |
-| 438635771283733634  | 2026-09-21 22:38:51.731 | append    |
-| 1956004222642998237 | 2026-09-21 22:38:56.775 | append    |
+| 2266374146400284423 | 2026-09-25 18:08:49.190 | append    |
+| 2188129110206532514 | 2026-09-25 18:08:52.227 | append    |
 2 filas.
 ```
 

@@ -14,7 +14,7 @@
 #
 # pg_hba.conf y las databases viven dentro del volumen pgdata, no en el
 # repositorio. Si el volumen se rehace, se va con el todo esto, igual que se va
-# el warehouse y hay que volver a correr 40-cargar-datos-curso.py. Este script
+# el warehouse y hay que volver a correr bin/cargar-datos.sh. Este script
 # es a este origen lo que aquel es a la database 'curso': la forma versionada de
 # reponerlo. Es idempotente, se puede correr las veces que haga falta.
 #

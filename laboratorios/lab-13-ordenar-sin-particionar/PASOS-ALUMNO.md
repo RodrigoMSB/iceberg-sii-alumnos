@@ -62,6 +62,7 @@ SELECT count(*) AS documentos FROM documentos_lab13
 ```
 | documentos |
 | 30000      |
+1 fila.
 ```
 
 **Cambia en tu corrida** nada.
@@ -108,6 +109,12 @@ CALL spark_catalog.system.rewrite_data_files(
 ```
 
 **En consola** una fila con lo que reescribió, un archivo leído y nueve escritos.
+
+```
+| rewritten_data_files_count | added_data_files_count | rewritten_bytes_count |
+| 1                          | 9                      | 720233                |
+1 fila.
+```
 
 **Cambia en tu corrida** los bytes, en algunos miles.
 
@@ -162,6 +169,7 @@ WHERE readable_metrics.fecha_emision.upper_bound >= DATE '2024-06-01'
 ```
 | archivos_a_leer | filas_a_leer |
 | 2               | 8000         |
+1 fila.
 ```
 
 **Cambia en tu corrida** las filas, en algunas unidades.
@@ -210,7 +218,12 @@ ORDER BY desde
 | 30000 | 2024-01-01 | 2024-12-31 |
 | 4000  | 2024-01-01 | 2024-02-18 |
 | 4000  | 2024-02-18 | 2024-04-06 |
-| ...   |            |            |
+| 1791  | 2024-04-06 | 2024-04-27 |
+| 4000  | 2024-04-28 | 2024-06-16 |
+| 4000  | 2024-06-16 | 2024-08-04 |
+| 1807  | 2024-08-04 | 2024-08-26 |
+| 4000  | 2024-08-27 | 2024-10-14 |
+| 4000  | 2024-10-14 | 2024-12-02 |
 | 2402  | 2024-12-02 | 2024-12-31 |
 10 filas.
 ```
@@ -236,6 +249,7 @@ WHERE readable_metrics.fecha_emision.upper_bound >= DATE '2024-06-01'
 ```
 | archivos_a_leer | filas_a_leer |
 | 3               | 38000        |
+1 fila.
 ```
 
 **Cambia en tu corrida** las filas, en algunas unidades.
@@ -260,8 +274,9 @@ CALL spark_catalog.system.rewrite_data_files(
 **En consola** diez archivos leídos y dieciocho escritos.
 
 ```
-| rewritten_data_files_count | added_data_files_count | rewritten_bytes |
-| 10                         | 18                     | 1608083         |
+| rewritten_data_files_count | added_data_files_count | rewritten_bytes_count |
+| 10                         | 18                     | 1607543               |
+1 fila.
 ```
 
 **Cambia en tu corrida** los bytes.
@@ -287,9 +302,22 @@ antes, porque ahora hay sesenta mil documentos repartidos.
 | filas | desde      | hasta      |
 | 4000  | 2024-01-01 | 2024-01-25 |
 | 4000  | 2024-01-25 | 2024-02-18 |
-| 1310  | 2024-02-18 | 2024-02-25 |
-| ...   |            |            |
-| 1534  | 2024-12-22 | 2024-12-31 |
+| 2000  | 2024-02-18 | 2024-02-29 |
+| 4000  | 2024-03-01 | 2024-03-25 |
+| 4000  | 2024-03-25 | 2024-04-18 |
+| 1582  | 2024-04-18 | 2024-04-27 |
+| 4000  | 2024-04-28 | 2024-05-23 |
+| 4000  | 2024-05-23 | 2024-06-16 |
+| 2110  | 2024-06-16 | 2024-06-28 |
+| 4000  | 2024-06-29 | 2024-07-23 |
+| 4000  | 2024-07-23 | 2024-08-17 |
+| 1956  | 2024-08-17 | 2024-08-29 |
+| 4000  | 2024-08-30 | 2024-09-23 |
+| 4000  | 2024-09-23 | 2024-10-17 |
+| 2068  | 2024-10-17 | 2024-10-29 |
+| 4000  | 2024-10-30 | 2024-11-23 |
+| 4000  | 2024-11-23 | 2024-12-18 |
+| 2284  | 2024-12-18 | 2024-12-31 |
 18 filas.
 ```
 
@@ -313,7 +341,8 @@ WHERE readable_metrics.fecha_emision.upper_bound >= DATE '2024-06-01'
 
 ```
 | archivos_a_leer | filas_a_leer |
-| 3               | 9816         |
+| 3               | 10110        |
+1 fila.
 ```
 
 **Cambia en tu corrida** las filas, en algunas unidades.
@@ -334,10 +363,10 @@ ORDER BY committed_at
 
 ```
 | snapshot_id         | committed_at            | operation |
-| 5905954432758642680 | 2026-09-15 23:19:47.143 | append    |
-| 3817757125605190733 | 2026-09-15 23:19:51.929 | replace   |
-| 2262320413508159755 | 2026-09-15 23:19:54.294 | append    |
-| 5078509714547263149 | 2026-09-15 23:19:58.428 | replace   |
+| 530236845447903924  | 2026-09-25 18:10:38.144 | append    |
+| 4212473458663648284 | 2026-09-25 18:10:40.540 | replace   |
+| 8305626539744031014 | 2026-09-25 18:10:42.002 | append    |
+| 1566782443588773562 | 2026-09-25 18:10:43.551 | replace   |
 4 filas.
 ```
 

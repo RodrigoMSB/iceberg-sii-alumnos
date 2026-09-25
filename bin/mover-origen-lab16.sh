@@ -19,7 +19,7 @@
 # deteccion de cambios en una migracion real y la que el laboratorio ensena.
 #
 # La fecha es fija, 2026-09-15 12:00:00, y no 'now()'. Si fuera la hora de la
-# corrida, la salida del paso 4 seria distinta en cada dictado y la guia no
+# corrida, la salida del paso 4 seria distinta en cada corrida y la guia no
 # podria declarar lo que el alumno va a ver.
 
 source "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/_comun.sh"

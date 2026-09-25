@@ -63,6 +63,7 @@ FROM mi_espacio.documentos_lab11.files
 ```
 | archivos_vigentes | bytes_vigentes |
 | 1                 | 776514         |
+1 fila.
 ```
 
 **Cambia en tu corrida** los bytes, en unos cientos, porque la compresión depende del orden en que el motor leyó las filas.
@@ -80,7 +81,7 @@ FROM mi_espacio.documentos_lab11.files
 **En consola** dos números y la ruta.
 
 ```
-790808  2372424  /warehouse/iceberg/mi_espacio.db/documentos_lab11
+790816  2372448  /warehouse/iceberg/mi_espacio.db/documentos_lab11
 ```
 
 **Cambia en tu corrida** los dos números, en unos cientos de bytes.
@@ -183,6 +184,7 @@ SELECT count(*) AS documentos FROM documentos_lab11
 ```
 | documentos |
 | 30000      |
+1 fila.
 ```
 
 **Cambia en tu corrida** nada.
@@ -200,7 +202,7 @@ SELECT count(*) AS documentos FROM documentos_lab11
 **En consola**
 
 ```
-4804920  14414760  /warehouse/iceberg/mi_espacio.db/documentos_lab11
+4805132  14415396  /warehouse/iceberg/mi_espacio.db/documentos_lab11
 ```
 
 **Cambia en tu corrida** los números, en algunos miles.
@@ -221,12 +223,12 @@ ORDER BY committed_at
 
 ```
 | snapshot_id         | committed_at            | operation |
-| 7067726178500278946 | 2026-09-15 20:19:09.516 | append    |
-| 1789935202663888754 | 2026-09-15 20:19:16.565 | overwrite |
-| 17782665461576858   | 2026-09-15 20:19:18.863 | overwrite |
-| 6126750899679552327 | 2026-09-15 20:19:20.301 | overwrite |
-| 3971060320449625847 | 2026-09-15 20:19:21.616 | overwrite |
-| 4171071182007391995 | 2026-09-15 20:19:23.597 | overwrite |
+| 3555416021291169985 | 2026-09-25 18:09:27.985 | append    |
+| 8101134315995455764 | 2026-09-25 18:09:31.986 | overwrite |
+| 1029929284241993774 | 2026-09-25 18:09:33.432 | overwrite |
+| 7443930311595880363 | 2026-09-25 18:09:34.236 | overwrite |
+| 4372640588754442152 | 2026-09-25 18:09:35.021 | overwrite |
+| 1180009671557740938 | 2026-09-25 18:09:36.187 | overwrite |
 6 filas.
 ```
 
@@ -251,6 +253,7 @@ SELECT
 ```
 | archivos_vigentes | bytes_vigentes | archivos_todos | bytes_todos |
 | 1                 | 778984         | 6              | 4668576     |
+1 fila.
 ```
 
 **Cambia en tu corrida** los bytes.
@@ -271,6 +274,12 @@ CALL spark_catalog.system.expire_snapshots(
 
 **En consola** una fila con lo que borró, cinco archivos de datos entre ellos.
 
+```
+| deleted_data_files_count | deleted_position_delete_files_count | deleted_equality_delete_files_count | deleted_manifest_files_count | deleted_manifest_lists_count | deleted_statistics_files_count |
+| 5                        | 0                                   | 0                                   | 9                            | 5                            | 0                              |
+1 fila.
+```
+
 **Cambia en tu corrida** los conteos de manifiestos.
 
 ---
@@ -286,7 +295,7 @@ CALL spark_catalog.system.expire_snapshots(
 **En consola**
 
 ```
-842260  2526780  /warehouse/iceberg/mi_espacio.db/documentos_lab11
+842455  2527365  /warehouse/iceberg/mi_espacio.db/documentos_lab11
 ```
 
 **Cambia en tu corrida** los números, en algunos miles.
@@ -306,6 +315,7 @@ SELECT count(*) AS documentos FROM documentos_lab11
 ```
 | documentos |
 | 30000      |
+1 fila.
 ```
 
 **Cambia en tu corrida** nada.

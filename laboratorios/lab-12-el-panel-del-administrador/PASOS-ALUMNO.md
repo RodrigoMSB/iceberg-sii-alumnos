@@ -75,7 +75,24 @@ print("listo: 22 cargas diarias")
 cargado 2024-02-10
 cargado 2024-02-20
 cargado 2024-03-10
-…
+cargado 2024-03-20
+cargado 2024-04-10
+cargado 2024-04-20
+cargado 2024-05-10
+cargado 2024-05-20
+cargado 2024-06-10
+cargado 2024-06-20
+cargado 2024-07-10
+cargado 2024-07-20
+cargado 2024-08-10
+cargado 2024-08-20
+cargado 2024-09-10
+cargado 2024-09-20
+cargado 2024-10-10
+cargado 2024-10-20
+cargado 2024-11-10
+cargado 2024-11-20
+cargado 2024-12-10
 cargado 2024-12-20
 listo: 22 cargas diarias
 ```
@@ -249,7 +266,7 @@ FROM mi_espacio.panel_lab12.snapshots
 
 ```
 | paginas | la_mas_vieja            | la_mas_nueva            |
-| 27      | 2026-09-24 00:12:21.583 | 2026-09-24 00:12:52.648 |
+| 27      | 2026-09-25 18:09:57.685 | 2026-09-25 18:10:21.208 |
 1 fila.
 ```
 
@@ -331,7 +348,7 @@ LIMIT 1
 
 ```
 | ultima_escritura        | que_hizo |
-| 2026-09-24 00:12:52.648 | delete   |
+| 2026-09-25 18:10:21.208 | delete   |
 1 fila.
 ```
 

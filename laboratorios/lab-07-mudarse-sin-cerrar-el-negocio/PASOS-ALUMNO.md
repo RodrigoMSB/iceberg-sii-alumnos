@@ -97,13 +97,32 @@ DESCRIBE TABLE EXTENDED documentos_hive
 **En consola**
 
 ```
-| col_name        | data_type                                        |
-| …               | …                                                |
-| Type            | MANAGED                                          |
-| Provider        | hive                                             |
-| Location        | hdfs://…/mi_espacio.db/documentos_hive              |
-| Serde Library   | org.apache.hadoop.hive.ql.io.parquet.serde.…     |
-| InputFormat     | org.apache.hadoop.hive.ql.io.parquet.MapredPar…  |
+| col_name                     | data_type                                                            | comment |
+| rut_emisor                   | string                                                               | None    |
+| tipo_dte                     | int                                                                  | None    |
+| folio                        | bigint                                                               | None    |
+| fecha_emision                | date                                                                 | None    |
+| monto_neto                   | decimal(18,2)                                                        | None    |
+| monto_iva                    | decimal(18,2)                                                        | None    |
+| monto_total                  | decimal(18,2)                                                        | None    |
+| estado_sii                   | string                                                               | None    |
+|                              |                                                                      |         |
+| # Detailed Table Information |                                                                      |         |
+| Database                     | mi_espacio                                                           |         |
+| Table                        | documentos_hive                                                      |         |
+| Owner                        | root                                                                 |         |
+| Created Time                 | Fri Sep 25 18:07:55 UTC 2026                                         |         |
+| Last Access                  | UNKNOWN                                                              |         |
+| Created By                   | Spark 3.3.4                                                          |         |
+| Type                         | MANAGED                                                              |         |
+| Provider                     | hive                                                                 |         |
+| Table Properties             | [transient_lastDdlTime=1790359675]                                   |         |
+| Location                     | hdfs://namenode:8020/warehouse/iceberg/mi_espacio.db/documentos_hive |         |
+| Serde Library                | org.apache.hadoop.hive.ql.io.parquet.serde.ParquetHiveSerDe          |         |
+| InputFormat                  | org.apache.hadoop.hive.ql.io.parquet.MapredParquetInputFormat        |         |
+| OutputFormat                 | org.apache.hadoop.hive.ql.io.parquet.MapredParquetOutputFormat       |         |
+| Storage Properties           | [serialization.format=1]                                             |         |
+| Partition Provider           | Catalog                                                              |         |
 25 filas.
 ```
 
@@ -126,6 +145,7 @@ FROM documentos_hive
 ```
 | documentos | total_general   |
 | 30000      | 291293351462.71 |
+1 fila.
 ```
 
 **Cambia en tu corrida** nada.
@@ -161,6 +181,7 @@ ORDER BY periodo
 | 2024-10 | 2500       | 23106058024.78    |
 | 2024-11 | 2500       | 24722608269.83    |
 | 2024-12 | 2500       | 24545538881.59    |
+12 filas.
 ```
 
 **Cambia en tu corrida** nada.
@@ -179,6 +200,12 @@ ORDER BY committed_at
 
 **En consola** `Spark rechazó la sentencia: spark_catalog requires a single-part namespace, but got [mi_espacio, documentos_hive]`.
 
+```
+Spark rechazó la sentencia:
+
+spark_catalog requires a single-part namespace, but got [mi_espacio, documentos_hive]
+```
+
 **Cambia en tu corrida** nada.
 
 ---
@@ -192,6 +219,61 @@ CALL spark_catalog.system.rollback_to_snapshot('mi_espacio.documentos_hive', 1)
 ```
 
 **En consola** `Spark rechazó la sentencia: An error occurred while calling o38.sql. : org.apache.iceberg.exceptions.ValidationException: mi_espacio.documentos_hive is not org.apache.iceberg.spark.source.SparkTable at org.apache.iceberg.exceptions.ValidationException.check(ValidationException.java:49) at org.apache.iceberg.spark.procedures.BaseProcedure.loadSparkTable(BaseProcedure.java:141) at org.apache.iceberg.spark.procedures.BaseProcedure.execute(BaseProcedure.java:101) at org.apache.iceberg.spark.procedures.BaseProcedure.modifyIcebergTable(BaseProcedure.java:85) at org.apache.iceberg.spark.procedures.RollbackToSnapshotProcedure.call(RollbackToSnapshotProcedure.java:83) at org.apache.spark.sql.execution.datasources.v2.CallExec.run(CallExec.scala:34) at org.apache.spark.sql.execution.datasources.v2.V2CommandExec.result$lzycompute(V2CommandExec.scala:43) at org.apache.spark.sql.execution.datasources.v2.V2CommandExec.result(V2CommandExec.scala:43) at org.apache.spark.sql.execution.datasources.v2.V2CommandExec.executeCollect(V2CommandExec.scala:49) at org.apache.spark.sql.execution.QueryExecution$$anonfun$eagerlyExecuteCommands$1.$anonfun$applyOrElse$1(QueryExecution.scala:98) at org.apache.spark.sql.execution.SQLExecution$.$anonfun$withNewExecutionId$6(SQLExecution.scala:109) at org.apache.spark.sql.execution.SQLExecution$.withSQLConfPropagated(SQLExecution.scala:169) at org.apache.spark.sql.execution.SQLExecution$.$anonfun$withNewExecutionId$1(SQLExecution.scala:95) at org.apache.spark.sql.SparkSession.withActive(SparkSession.scala:779) at org.apache.spark.sql.execution.SQLExecution$.withNewExecutionId(SQLExecution.scala:64) at org.apache.spark.sql.execution.QueryExecution$$anonfun$eagerlyExecuteCommands$1.applyOrElse(QueryExecution.scala:98) at org.apache.spark.sql.execution.QueryExecution$$anonfun$eagerlyExecuteCommands$1.applyOrElse(QueryExecution.scala:94) at org.apache.spark.sql.catalyst.trees.TreeNode.$anonfun$transformDownWithPruning$1(TreeNode.scala:584) at org.apache.spark.sql.catalyst.trees.CurrentOrigin$.withOrigin(TreeNode.scala:176) at org.apache.spark.sql.catalyst.trees.TreeNode.transformDownWithPruning(TreeNode.scala:584) at org.apache.spark.sql.catalyst.plans.logical.LogicalPlan.org$apache$spark$sql$catalyst$plans$logical$AnalysisHelper$$super$transformDownWithPruning(LogicalPlan.scala:30) at org.apache.spark.sql.catalyst.plans.logical.AnalysisHelper.transformDownWithPruning(AnalysisHelper.scala:267) at org.apache.spark.sql.catalyst.plans.logical.AnalysisHelper.transformDownWithPruning$(AnalysisHelper.scala:263) at org.apache.spark.sql.catalyst.plans.logical.LogicalPlan.transformDownWithPruning(LogicalPlan.scala:30) at org.apache.spark.sql.catalyst.plans.logical.LogicalPlan.transformDownWithPruning(LogicalPlan.scala:30) at org.apache.spark.sql.catalyst.trees.TreeNode.transformDown(TreeNode.scala:560) at org.apache.spark.sql.execution.QueryExecution.eagerlyExecuteCommands(QueryExecution.scala:94) at org.apache.spark.sql.execution.QueryExecution.commandExecuted$lzycompute(QueryExecution.scala:81) at org.apache.spark.sql.execution.QueryExecution.commandExecuted(QueryExecution.scala:79) at org.apache.spark.sql.Dataset.<init>(Dataset.scala:219) at org.apache.spark.sql.Dataset$.$anonfun$ofRows$2(Dataset.scala:99) at org.apache.spark.sql.SparkSession.withActive(SparkSession.scala:779) at org.apache.spark.sql.Dataset$.ofRows(Dataset.scala:96) at org.apache.spark.sql.SparkSession.$anonfun$sql$1(SparkSession.scala:622) at org.apache.spark.sql.SparkSession.withActive(SparkSession.scala:779) at org.apache.spark.sql.SparkSession.sql(SparkSession.scala:617) at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62) at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) at java.base/java.lang.reflect.Method.invoke(Method.java:566) at py4j.reflection.MethodInvoker.invoke(MethodInvoker.java:244) at py4j.reflection.ReflectionEngine.invoke(ReflectionEngine.java:357) at py4j.Gateway.invoke(Gateway.java:282) at py4j.commands.AbstractCommand.invokeMethod(AbstractCommand.java:132) at py4j.commands.CallCommand.execute(CallCommand.java:79) at py4j.ClientServerConnection.waitForCommands(ClientServerConnection.java:182) at py4j.ClientServerConnection.run(ClientServerConnection.java:106) at java.base/java.lang.Thread.run(Thread.java:829)`.
+
+```
+Spark rechazó la sentencia:
+
+An error occurred while calling o39.sql.
+: org.apache.iceberg.exceptions.ValidationException: mi_espacio.documentos_hive is not org.apache.iceberg.spark.source.SparkTable
+	at org.apache.iceberg.exceptions.ValidationException.check(ValidationException.java:49)
+	at org.apache.iceberg.spark.procedures.BaseProcedure.loadSparkTable(BaseProcedure.java:141)
+	at org.apache.iceberg.spark.procedures.BaseProcedure.execute(BaseProcedure.java:101)
+	at org.apache.iceberg.spark.procedures.BaseProcedure.modifyIcebergTable(BaseProcedure.java:85)
+	at org.apache.iceberg.spark.procedures.RollbackToSnapshotProcedure.call(RollbackToSnapshotProcedure.java:83)
+	at org.apache.spark.sql.execution.datasources.v2.CallExec.run(CallExec.scala:34)
+	at org.apache.spark.sql.execution.datasources.v2.V2CommandExec.result$lzycompute(V2CommandExec.scala:43)
+	at org.apache.spark.sql.execution.datasources.v2.V2CommandExec.result(V2CommandExec.scala:43)
+	at org.apache.spark.sql.execution.datasources.v2.V2CommandExec.executeCollect(V2CommandExec.scala:49)
+	at org.apache.spark.sql.execution.QueryExecution$$anonfun$eagerlyExecuteCommands$1.$anonfun$applyOrElse$1(QueryExecution.scala:98)
+	at org.apache.spark.sql.execution.SQLExecution$.$anonfun$withNewExecutionId$6(SQLExecution.scala:109)
+	at org.apache.spark.sql.execution.SQLExecution$.withSQLConfPropagated(SQLExecution.scala:169)
+	at org.apache.spark.sql.execution.SQLExecution$.$anonfun$withNewExecutionId$1(SQLExecution.scala:95)
+	at org.apache.spark.sql.SparkSession.withActive(SparkSession.scala:779)
+	at org.apache.spark.sql.execution.SQLExecution$.withNewExecutionId(SQLExecution.scala:64)
+	at org.apache.spark.sql.execution.QueryExecution$$anonfun$eagerlyExecuteCommands$1.applyOrElse(QueryExecution.scala:98)
+	at org.apache.spark.sql.execution.QueryExecution$$anonfun$eagerlyExecuteCommands$1.applyOrElse(QueryExecution.scala:94)
+	at org.apache.spark.sql.catalyst.trees.TreeNode.$anonfun$transformDownWithPruning$1(TreeNode.scala:584)
+	at org.apache.spark.sql.catalyst.trees.CurrentOrigin$.withOrigin(TreeNode.scala:176)
+	at org.apache.spark.sql.catalyst.trees.TreeNode.transformDownWithPruning(TreeNode.scala:584)
+	at org.apache.spark.sql.catalyst.plans.logical.LogicalPlan.org$apache$spark$sql$catalyst$plans$logical$AnalysisHelper$$super$transformDownWithPruning(LogicalPlan.scala:30)
+	at org.apache.spark.sql.catalyst.plans.logical.AnalysisHelper.transformDownWithPruning(AnalysisHelper.scala:267)
+	at org.apache.spark.sql.catalyst.plans.logical.AnalysisHelper.transformDownWithPruning$(AnalysisHelper.scala:263)
+	at org.apache.spark.sql.catalyst.plans.logical.LogicalPlan.transformDownWithPruning(LogicalPlan.scala:30)
+	at org.apache.spark.sql.catalyst.plans.logical.LogicalPlan.transformDownWithPruning(LogicalPlan.scala:30)
+	at org.apache.spark.sql.catalyst.trees.TreeNode.transformDown(TreeNode.scala:560)
+	at org.apache.spark.sql.execution.QueryExecution.eagerlyExecuteCommands(QueryExecution.scala:94)
+	at org.apache.spark.sql.execution.QueryExecution.commandExecuted$lzycompute(QueryExecution.scala:81)
+	at org.apache.spark.sql.execution.QueryExecution.commandExecuted(QueryExecution.scala:79)
+	at org.apache.spark.sql.Dataset.<init>(Dataset.scala:219)
+	at org.apache.spark.sql.Dataset$.$anonfun$ofRows$2(Dataset.scala:99)
+	at org.apache.spark.sql.SparkSession.withActive(SparkSession.scala:779)
+	at org.apache.spark.sql.Dataset$.ofRows(Dataset.scala:96)
+	at org.apache.spark.sql.SparkSession.$anonfun$sql$1(SparkSession.scala:622)
+	at org.apache.spark.sql.SparkSession.withActive(SparkSession.scala:779)
+	at org.apache.spark.sql.SparkSession.sql(SparkSession.scala:617)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at py4j.reflection.MethodInvoker.invoke(MethodInvoker.java:244)
+	at py4j.reflection.ReflectionEngine.invoke(ReflectionEngine.java:357)
+	at py4j.Gateway.invoke(Gateway.java:282)
+	at py4j.commands.AbstractCommand.invokeMethod(AbstractCommand.java:132)
+	at py4j.commands.CallCommand.execute(CallCommand.java:79)
+	at py4j.ClientServerConnection.waitForCommands(ClientServerConnection.java:182)
+	at py4j.ClientServerConnection.run(ClientServerConnection.java:106)
+	at java.base/java.lang.Thread.run(Thread.java:829)
+```
 
 **Cambia en tu corrida** nada.
 
@@ -210,6 +292,7 @@ CALL spark_catalog.system.migrate('mi_espacio.documentos_hive')
 ```
 | migrated_files_count |
 | 1                    |
+1 fila.
 ```
 
 **Cambia en tu corrida** nada.
@@ -227,10 +310,31 @@ DESCRIBE TABLE EXTENDED documentos_hive
 **En consola**
 
 ```
-| col_name        | data_type                                        |
-| …               | …                                                |
-| Location        | hdfs://…/mi_espacio.db/documentos_hive              |
-| Provider        | iceberg                                          |
+| col_name                     | data_type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          | comment |
+| rut_emisor                   | string                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |         |
+| tipo_dte                     | int                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |         |
+| folio                        | bigint                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |         |
+| fecha_emision                | date                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |         |
+| monto_neto                   | decimal(18,2)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |         |
+| monto_iva                    | decimal(18,2)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |         |
+| monto_total                  | decimal(18,2)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |         |
+| estado_sii                   | string                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |         |
+|                              |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |         |
+| # Partitioning               |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |         |
+| Not partitioned              |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |         |
+|                              |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |         |
+| # Metadata Columns           |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |         |
+| _spec_id                     | int                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |         |
+| _partition                   | struct<>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |         |
+| _file                        | string                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |         |
+| _pos                         | bigint                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |         |
+| _deleted                     | boolean                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |         |
+|                              |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |         |
+| # Detailed Table Information |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |         |
+| Name                         | spark_catalog.mi_espacio.documentos_hive                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |         |
+| Location                     | hdfs://namenode:8020/warehouse/iceberg/mi_espacio.db/documentos_hive                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |         |
+| Provider                     | iceberg                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |         |
+| Table Properties             | [current-snapshot-id=7041860744555628170,format=iceberg/parquet,format-version=1,migrated=true,schema.name-mapping.default=[ {\n  "field-id" : 1,\n  "names" : [ "rut_emisor" ]\n}, {\n  "field-id" : 2,\n  "names" : [ "tipo_dte" ]\n}, {\n  "field-id" : 3,\n  "names" : [ "folio" ]\n}, {\n  "field-id" : 4,\n  "names" : [ "fecha_emision" ]\n}, {\n  "field-id" : 5,\n  "names" : [ "monto_neto" ]\n}, {\n  "field-id" : 6,\n  "names" : [ "monto_iva" ]\n}, {\n  "field-id" : 7,\n  "names" : [ "monto_total" ]\n}, {\n  "field-id" : 8,\n  "names" : [ "estado_sii" ]\n} ]] |         |
 24 filas.
 ```
 
@@ -253,6 +357,7 @@ FROM documentos_hive
 ```
 | documentos | total_general   |
 | 30000      | 291293351462.71 |
+1 fila.
 ```
 
 **Cambia en tu corrida** nada.
@@ -288,6 +393,7 @@ ORDER BY periodo
 | 2024-10 | 2500       | 23106058024.78    |
 | 2024-11 | 2500       | 24722608269.83    |
 | 2024-12 | 2500       | 24545538881.59    |
+12 filas.
 ```
 
 **Cambia en tu corrida** nada.
@@ -308,7 +414,8 @@ ORDER BY committed_at
 
 ```
 | snapshot_id         | committed_at            | operation |
-| 5615239969771712128 | 2026-08-23 20:31:31.061 | append    |
+| 7041860744555628170 | 2026-09-25 18:08:02.285 | append    |
+1 fila.
 ```
 
 **Cambia en tu corrida** el identificador y la hora, siempre.
@@ -330,6 +437,7 @@ FROM mi_espacio.documentos_hive.files
 ```
 | archivos | documentos |
 | 1        | 30000      |
+1 fila.
 ```
 
 **Cambia en tu corrida** nada.
@@ -347,9 +455,18 @@ SHOW TABLES IN mi_espacio
 **En consola**
 
 ```
-| namespace  | tableName               | isTemporary |
-| mi_espacio | documentos_hive         | False       |
-| mi_espacio | documentos_hive_backup_ | False       |
+| namespace  | tableName                | isTemporary |
+| mi_espacio | contribuyentes_lab00     | False       |
+| mi_espacio | contribuyentes_lab01     | False       |
+| mi_espacio | contribuyentes_lab02     | False       |
+| mi_espacio | documentos_hive          | False       |
+| mi_espacio | documentos_hive_backup_  | False       |
+| mi_espacio | documentos_lab03         | False       |
+| mi_espacio | documentos_lab05         | False       |
+| mi_espacio | documentos_por_mes       | False       |
+| mi_espacio | documentos_sin_particion | False       |
+| mi_espacio | recepcion_lab06          | False       |
+10 filas.
 ```
 
 ## Paso 6. La capa de consulta

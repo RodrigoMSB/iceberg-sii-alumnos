@@ -73,8 +73,8 @@ SELECT current_database() AS estoy_en
 **En consola**
 
 ```
-| estoy_en |
-| mi_espacio  |
+| estoy_en   |
+| mi_espacio |
 1 fila.
 ```
 

@@ -61,6 +61,7 @@ SELECT count(*) AS documentos FROM documentos_lab05
 ```
 | documentos |
 | 30000      |
+1 fila.
 ```
 
 **Cambia en tu corrida** nada.
@@ -78,20 +79,20 @@ DESCRIBE TABLE documentos_lab05
 **En consola** 13 filas.
 
 ```
-| col_name            | data_type     |
-| rut_emisor          | string        |
-| razon_social_emisor | string        |
-| tipo_dte            | int           |
-| folio               | bigint        |
-| fecha_emision       | date          |
-| fecha_recepcion     | timestamp     |
-| monto_neto          | decimal(18,2) |
-| monto_iva           | decimal(18,2) |
-| monto_total         | decimal(18,2) |
-| estado_sii          | string        |
-|                     |               |
-| # Partitioning      |               |
-| Not partitioned     |               |
+| col_name            | data_type     | comment |
+| rut_emisor          | string        |         |
+| razon_social_emisor | string        |         |
+| tipo_dte            | int           |         |
+| folio               | bigint        |         |
+| fecha_emision       | date          |         |
+| fecha_recepcion     | timestamp     |         |
+| monto_neto          | decimal(18,2) |         |
+| monto_iva           | decimal(18,2) |         |
+| monto_total         | decimal(18,2) |         |
+| estado_sii          | string        |         |
+|                     |               |         |
+| # Partitioning      |               |         |
+| Not partitioned     |               |         |
 13 filas.
 ```
 
@@ -110,8 +111,23 @@ DESCRIBE TABLE curso.dte_2026_reciente
 **En consola** 15 filas.
 
 ```
-| canal_emision   | string |
-| codigo_sucursal | string |
+| col_name            | data_type     | comment |
+| rut_emisor          | string        |         |
+| razon_social_emisor | string        |         |
+| tipo_dte            | int           |         |
+| folio               | bigint        |         |
+| fecha_emision       | date          |         |
+| fecha_recepcion     | timestamp     |         |
+| monto_neto          | decimal(18,2) |         |
+| monto_iva           | decimal(18,2) |         |
+| monto_total         | decimal(18,2) |         |
+| estado_sii          | string        |         |
+| canal_emision       | string        |         |
+| codigo_sucursal     | string        |         |
+|                     |               |         |
+| # Partitioning      |               |         |
+| Not partitioned     |               |         |
+15 filas.
 ```
 
 **Cambia en tu corrida** nada.
@@ -130,9 +146,10 @@ INSERT INTO documentos_lab05 SELECT * FROM curso.dte_2026_reciente
 
 ```
 Spark rechazó la sentencia:
+
 Cannot write to 'spark_catalog.mi_espacio.documentos_lab05', too many data columns:
-Table columns: 'rut_emisor', 'razon_social_emisor', …
-Data columns:  'rut_emisor', 'razon_social_emisor', …
+Table columns: 'rut_emisor', 'razon_social_emisor', 'tipo_dte', 'folio', 'fecha_emision', 'fecha_recepcion', 'monto_neto', 'monto_iva', 'monto_total', 'estado_sii'
+Data columns: 'rut_emisor', 'razon_social_emisor', 'tipo_dte', 'folio', 'fecha_emision', 'fecha_recepcion', 'monto_neto', 'monto_iva', 'monto_total', 'estado_sii', 'canal_emision', 'codigo_sucursal'
 ```
 
 **Cambia en tu corrida** nada.
@@ -185,7 +202,7 @@ LIMIT 3
 
 ```sql
 SELECT count(*)             AS documentos,
-       count(canal_emision) AS con_canal
+       count(canal_emision)  AS con_canal
 FROM documentos_lab05
 ```
 
@@ -194,6 +211,7 @@ FROM documentos_lab05
 ```
 | documentos | con_canal |
 | 30000      | 0         |
+1 fila.
 ```
 
 **Cambia en tu corrida** nada.
@@ -220,8 +238,8 @@ INSERT INTO documentos_lab05 SELECT * FROM curso.dte_2026_reciente
 
 ```sql
 SELECT year(fecha_emision)   AS anio,
-       count(*)              AS documentos,
-       count(canal_emision)  AS con_canal
+       count(*)             AS documentos,
+       count(canal_emision) AS con_canal
 FROM documentos_lab05
 GROUP BY year(fecha_emision)
 ORDER BY anio
@@ -376,10 +394,12 @@ ORDER BY timestamp
 
 ```
 | timestamp               | version_del_esquema |
-| 2026-08-23 18:08:06.937 | 0                   |
-| 2026-08-23 18:08:08.064 | 0                   |
-| 2026-08-23 18:08:08.923 | 1                   |
-| …                       | 1                   |
+| 2026-09-25 18:22:51.043 | 0                   |
+| 2026-09-25 18:22:52.330 | 0                   |
+| 2026-09-25 18:22:53.222 | 1                   |
+| 2026-09-25 18:22:53.907 | 1                   |
+| 2026-09-25 18:22:54.401 | 1                   |
+| 2026-09-25 18:22:54.860 | 1                   |
 6 filas.
 ```
 
@@ -401,8 +421,8 @@ ORDER BY committed_at
 
 ```
 | snapshot_id         | committed_at            | operation |
-| 6226388126644787856 | 2026-08-23 18:08:06.937 | append    |
-| 2436349570425774481 | 2026-08-23 18:08:10.174 | append    |
+| 1387296462588068198 | 2026-09-25 18:22:51.043 | append    |
+| 1146300458587039073 | 2026-09-25 18:22:53.222 | append    |
 2 filas.
 ```
 
@@ -423,6 +443,7 @@ SELECT count(*) AS documentos FROM documentos_lab05 VERSION AS OF <TU_SNAPSHOT_I
 ```
 | documentos |
 | 30000      |
+1 fila.
 ```
 
 **Cambia en tu corrida** el número que escribiste, que es el de tu propia tabla.
@@ -441,7 +462,8 @@ SELECT canal_emision FROM documentos_lab05 VERSION AS OF <TU_SNAPSHOT_ID> LIMIT 
 
 ```
 Spark rechazó la sentencia:
-Column 'canal_emision' does not exist. Did you mean one of the following? […]
+
+Column 'canal_emision' does not exist. Did you mean one of the following? [spark_catalog.mi_espacio.documentos_lab05.folio, spark_catalog.mi_espacio.documentos_lab05.tipo_dte, spark_catalog.mi_espacio.documentos_lab05.monto_iva, spark_catalog.mi_espacio.documentos_lab05.estado_sii, spark_catalog.mi_espacio.documentos_lab05.monto_neto, spark_catalog.mi_espacio.documentos_lab05.rut_emisor, spark_catalog.mi_espacio.documentos_lab05.fecha_emision, spark_catalog.mi_espacio.documentos_lab05.monto_total, spark_catalog.mi_espacio.documentos_lab05.fecha_recepcion, spark_catalog.mi_espacio.documentos_lab05.razon_social_emisor]; line 2 pos 7;
 ```
 
 **Cambia en tu corrida** el identificador dentro del mensaje.

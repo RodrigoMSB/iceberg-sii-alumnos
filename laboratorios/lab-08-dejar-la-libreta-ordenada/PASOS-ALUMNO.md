@@ -237,8 +237,9 @@ FROM documentos_recibidos
 **En consola** una fila.
 
 ```
-documentos | total_general
-30000      | 291293351462.71
+| documentos | total_general   |
+| 30000      | 291293351462.71 |
+1 fila.
 ```
 
 **Cambia en tu corrida** nada.
@@ -260,8 +261,9 @@ FROM mi_espacio.documentos_recibidos.files
 **En consola** una fila.
 
 ```
-archivos | documentos | bytes_por_archivo | bytes_totales
-12       | 30000      | 74031             | 888378
+| archivos | documentos | bytes_por_archivo | bytes_totales |
+| 12       | 30000      | 74031             | 888378        |
+1 fila.
 ```
 
 **Cambia en tu corrida** nada.
@@ -284,6 +286,23 @@ ORDER BY desde
 **En consola** doce filas, una por archivo, todas con 2.500 documentos y entre 73.000 y
 74.500 bytes.
 
+```
+| documentos | bytes | desde      | hasta      |
+| 2500       | 73189 | 2024-01-01 | 2024-01-31 |
+| 2500       | 73627 | 2024-02-01 | 2024-02-29 |
+| 2500       | 73442 | 2024-03-01 | 2024-03-31 |
+| 2500       | 74229 | 2024-04-01 | 2024-04-30 |
+| 2500       | 73711 | 2024-05-01 | 2024-05-31 |
+| 2500       | 74192 | 2024-06-01 | 2024-06-30 |
+| 2500       | 74452 | 2024-07-01 | 2024-07-31 |
+| 2500       | 74327 | 2024-08-01 | 2024-08-31 |
+| 2500       | 74232 | 2024-09-01 | 2024-09-30 |
+| 2500       | 74333 | 2024-10-01 | 2024-10-31 |
+| 2500       | 74467 | 2024-11-01 | 2024-11-30 |
+| 2500       | 74177 | 2024-12-01 | 2024-12-31 |
+12 filas.
+```
+
 **Cambia en tu corrida** nada.
 
 ---
@@ -303,6 +322,23 @@ ORDER BY periodo
 
 **En consola** doce filas, de `2024-01` a `2024-12`, con 2.500 documentos cada una.
 
+```
+| periodo | documentos | total_del_periodo |
+| 2024-01 | 2500       | 23381729910.07    |
+| 2024-02 | 2500       | 24831948613.59    |
+| 2024-03 | 2500       | 26699931432.64    |
+| 2024-04 | 2500       | 23722997990.55    |
+| 2024-05 | 2500       | 24328007216.84    |
+| 2024-06 | 2500       | 24547341762.59    |
+| 2024-07 | 2500       | 23621609483.83    |
+| 2024-08 | 2500       | 23648615665.89    |
+| 2024-09 | 2500       | 24136964210.51    |
+| 2024-10 | 2500       | 23106058024.78    |
+| 2024-11 | 2500       | 24722608269.83    |
+| 2024-12 | 2500       | 24545538881.59    |
+12 filas.
+```
+
 **Cambia en tu corrida** nada.
 
 ## Paso 2. Pasar en limpio
@@ -318,8 +354,9 @@ CALL spark_catalog.system.rewrite_data_files(table => 'mi_espacio.documentos_rec
 **En consola** una fila con el recibo de lo que hizo.
 
 ```
-rewritten_data_files_count | added_data_files_count | rewritten_bytes_count
-12                         | 1                      | 888378
+| rewritten_data_files_count | added_data_files_count | rewritten_bytes_count |
+| 12                         | 1                      | 888378                |
+1 fila.
 ```
 
 **Cambia en tu corrida** nada.
@@ -341,8 +378,9 @@ FROM mi_espacio.documentos_recibidos.files
 **En consola** una fila.
 
 ```
-archivos | documentos | bytes_por_archivo | bytes_totales
-1        | 30000      | 762542            | 762542
+| archivos | documentos | bytes_por_archivo | bytes_totales |
+| 1        | 30000      | 761212            | 761212        |
+1 fila.
 ```
 
 **Cambia en tu corrida** el tamaño, en algunos cientos de bytes.
@@ -362,8 +400,9 @@ FROM documentos_recibidos
 **En consola** la misma fila del paso 0, idéntica.
 
 ```
-documentos | total_general
-30000      | 291293351462.71
+| documentos | total_general   |
+| 30000      | 291293351462.71 |
+1 fila.
 ```
 
 **Cambia en tu corrida** nada.
@@ -382,6 +421,24 @@ ORDER BY committed_at
 
 **En consola** **trece filas**.
 
+```
+| snapshot_id         | committed_at            | operation |
+| 7561399047907185895 | 2026-09-25 18:24:05.778 | append    |
+| 5013964436874795132 | 2026-09-25 18:24:06.939 | append    |
+| 5605958553486786000 | 2026-09-25 18:24:08.367 | append    |
+| 1802040594104167461 | 2026-09-25 18:24:09.361 | append    |
+| 1009743359021141391 | 2026-09-25 18:24:10.738 | append    |
+| 2700393237366741854 | 2026-09-25 18:24:12.531 | append    |
+| 4370442779747130215 | 2026-09-25 18:24:13.891 | append    |
+| 3256189979838852168 | 2026-09-25 18:24:15.136 | append    |
+| 1041927787630357096 | 2026-09-25 18:24:16.432 | append    |
+| 17116443147193272   | 2026-09-25 18:24:17.391 | append    |
+| 5355173705741653654 | 2026-09-25 18:24:18.644 | append    |
+| 5991328770865681656 | 2026-09-25 18:24:19.063 | append    |
+| 7875847062182413290 | 2026-09-25 18:24:24.762 | replace   |
+13 filas.
+```
+
 **Cambia en tu corrida** `snapshot_id` y `committed_at`.
 
 ---
@@ -395,6 +452,12 @@ SELECT count(*) AS documentos FROM documentos_recibidos VERSION AS OF <TU_SNAPSH
 ```
 
 **En consola** una fila con **2.500** documentos.
+
+```
+| documentos |
+| 2500       |
+1 fila.
+```
 
 **Cambia en tu corrida** el número que escribiste; el resultado, 2.500, es siempre el mismo.
 
@@ -413,8 +476,9 @@ FROM mi_espacio.documentos_recibidos.all_data_files
 **En consola** una fila.
 
 ```
-archivos_guardados | bytes_ocupados
-13                 | 1650920
+| archivos_guardados | bytes_ocupados |
+| 13                 | 1649590        |
+1 fila.
 ```
 
 **Cambia en tu corrida** los `bytes_ocupados`, en algunos cientos, por lo mismo de la celda anterior. Los `archivos_guardados` son siempre 13.
@@ -435,8 +499,9 @@ CALL spark_catalog.system.expire_snapshots(
 **En consola** una fila con el recibo de lo que se botó.
 
 ```
-deleted_data_files_count | ... | deleted_manifest_files_count | deleted_manifest_lists_count | ...
-12                       |     | 12                           | 12                           |
+| deleted_data_files_count | deleted_position_delete_files_count | deleted_equality_delete_files_count | deleted_manifest_files_count | deleted_manifest_lists_count | deleted_statistics_files_count |
+| 12                       | 0                                   | 0                                   | 12                           | 12                           | 0                              |
+1 fila.
 ```
 
 **Cambia en tu corrida** la marca de tiempo que escribiste.
@@ -456,7 +521,7 @@ SELECT count(*) AS documentos FROM documentos_recibidos VERSION AS OF <TU_SNAPSH
 ```
 Spark rechazó la sentencia:
 
-Cannot find snapshot with ID <el número que copiaste>
+Cannot find snapshot with ID 7561399047907185895
 ```
 
 **Cambia en tu corrida** el identificador que aparece en el mensaje.
@@ -475,6 +540,12 @@ ORDER BY committed_at
 
 **En consola** **una sola fila**, la `replace` de la compactación.
 
+```
+| snapshot_id         | committed_at            | operation |
+| 7875847062182413290 | 2026-09-25 18:24:24.762 | replace   |
+1 fila.
+```
+
 **Cambia en tu corrida** el `snapshot_id` y la marca de tiempo.
 
 ---
@@ -492,8 +563,9 @@ FROM mi_espacio.documentos_recibidos.all_data_files
 **En consola** una fila.
 
 ```
-archivos_guardados | bytes_ocupados
-1                  | 762542
+| archivos_guardados | bytes_ocupados |
+| 1                  | 761212         |
+1 fila.
 ```
 
 **Cambia en tu corrida** nada; los bytes son los mismos que salieron en la celda del paso 2.
@@ -513,8 +585,9 @@ FROM documentos_recibidos
 **En consola** la misma fila del paso 0 y del paso 2.
 
 ```
-documentos | total_general
-30000      | 291293351462.71
+| documentos | total_general   |
+| 30000      | 291293351462.71 |
+1 fila.
 ```
 
 **Cambia en tu corrida** nada.
@@ -534,6 +607,11 @@ CALL spark_catalog.system.remove_orphan_files(
 **En consola** la tabla vacía, con la columna `orphan_file_location` y el aviso `0
 filas`.
 
+```
+| orphan_file_location |
+0 filas.
+```
+
 **Cambia en tu corrida** nada.
 
 ---
@@ -552,9 +630,9 @@ CALL spark_catalog.system.remove_orphan_files(
 **En consola** el aviso rojo.
 
 ```
-Cannot remove orphan files with an interval less than 24 hours. Executing this
-procedure with a short interval may corrupt the table if other operations are
-happening at the same time...
+Spark rechazó la sentencia:
+
+Cannot remove orphan files with an interval less than 24 hours. Executing this procedure with a short interval may corrupt the table if other operations are happening at the same time. If you are absolutely confident that no concurrent operations will be affected by removing orphan files with such a short interval, you can use the Action API to remove orphan files with an arbitrary interval.
 ```
 
 **Cambia en tu corrida** la marca de tiempo que escribiste.
@@ -567,7 +645,7 @@ happening at the same time...
 
 **Cambia en tu corrida** nada.
 
-## Paso 7. Cerrar el curso (conversación, sin celdas)
+## Paso 7. Las preguntas que quedaron abiertas (sin celdas)
 
 **Se escribe** nada.
 

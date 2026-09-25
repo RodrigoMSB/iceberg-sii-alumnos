@@ -1,13 +1,12 @@
 #!/usr/bin/env bash
 #
-# Repone la tabla fragmentada que el mi_espacio proyecta en el paso 4 del
-# laboratorio 17.
+# Repone la tabla fragmentada que usa el paso 4 del laboratorio 17.
 #
-#   bin/43-reponer-fragmentada-lab17.sh           # la deja recien creada
-#   bin/43-reponer-fragmentada-lab17.sh --estado  # solo mira, no toca nada
+#   bin/reponer-fragmentada.sh           # la deja recien creada
+#   bin/reponer-fragmentada.sh --estado  # solo mira, no toca nada
 #
-# ANTES DE CADA DICTADO DEL LABORATORIO 17, igual que 96-reiniciar-lab10.sh y
-# 97-cambiar-origen-lab16.sh --reset antes de los suyos.
+# Correlo antes de hacer el laboratorio 17, y cada vez que quieras repetir su
+# paso 4: la compactacion del paso 4 deja la tabla en un solo archivo.
 #
 # QUE DEJA
 #
@@ -21,9 +20,9 @@
 #
 # POR QUE SE REPONE CADA VEZ
 #
-# El paso 4 COMPACTA la tabla. Despues de un dictado queda con sus archivos ya
-# juntos, y el siguiente mi_espacio proyectaria una compactacion que no tiene nada
-# que compactar. Este script la devuelve a su estado fragmentado.
+# El paso 4 COMPACTA la tabla. Despues de hacerlo queda con sus archivos ya
+# juntos, y si repites el laboratorio la compactacion no tendria nada que
+# compactar. Este script la devuelve a su estado fragmentado.
 #
 # SOLO TOCA EL ESPACIO 'mi_espacio'
 #
@@ -96,7 +95,7 @@ try:
     spark.sql(f"SELECT 1 FROM {ORIGEN} LIMIT 1").collect()
 except Exception:
     raise SystemExit(
-        f"no existe {ORIGEN}. Corre antes bin/42-crear-bodega-10-anios.sh"
+        f"no existe {ORIGEN}. Corre antes bin/crear-bodega.sh"
     )
 
 spark.sql(f"CREATE DATABASE IF NOT EXISTS {DB}")

@@ -62,6 +62,7 @@ FROM recepcion_lab06
 ```
 | documentos | total_del_mes |
 | 1000       | 9117709433.18 |
+1 fila.
 ```
 
 **Cambia en tu corrida** nada.
@@ -102,6 +103,7 @@ FROM recepcion_lab06
 ```
 | documentos | errores_iva | errores_suma | errores_negativos |
 | 1500       | 13          | 20           | 7                 |
+1 fila.
 ```
 
 **Cambia en tu corrida** nada.
@@ -125,6 +127,7 @@ WHERE abs(monto_iva - round(monto_neto * 0.19)) > 2
 ```
 | documentos_que_no_cuadran |
 | 20                        |
+1 fila.
 ```
 
 **Cambia en tu corrida** nada.
@@ -145,8 +148,9 @@ ORDER BY committed_at
 
 ```
 | snapshot_id         | committed_at            | operation |
-| 1276068155314944172 | 2026-08-23 18:49:45.569 | append    |
-| 8948402203407673627 | 2026-08-23 18:49:48.454 | append    |
+| 2338273078586975541 | 2026-09-25 18:23:25.633 | append    |
+| 7031022045785889757 | 2026-09-25 18:23:27.479 | append    |
+2 filas.
 ```
 
 **Cambia en tu corrida** los identificadores y las horas, siempre.
@@ -165,7 +169,8 @@ CALL spark_catalog.system.rollback_to_snapshot('mi_espacio.recepcion_lab06', <TU
 
 ```
 | previous_snapshot_id | current_snapshot_id |
-| 8948402203407673627  | 1276068155314944172 |
+| 7031022045785889757  | 2338273078586975541 |
+1 fila.
 ```
 
 **Cambia en tu corrida** los dos números.
@@ -192,6 +197,7 @@ FROM recepcion_lab06
 ```
 | documentos | errores_iva | errores_suma | errores_negativos |
 | 1000       | 0           | 0            | 0                 |
+1 fila.
 ```
 
 **Cambia en tu corrida** nada.
@@ -226,8 +232,9 @@ ORDER BY type, name
 
 ```
 | name           | type   | snapshot_id         |
-| main           | BRANCH | 1276068155314944172 |
-| revision_junio | BRANCH | 1276068155314944172 |
+| main           | BRANCH | 2338273078586975541 |
+| revision_junio | BRANCH | 2338273078586975541 |
+2 filas.
 ```
 
 **Cambia en tu corrida** los identificadores.
@@ -264,6 +271,7 @@ FROM recepcion_lab06 VERSION AS OF 'revision_junio'
 ```
 | documentos | total_del_mes  |
 | 1500       | 13693496696.68 |
+1 fila.
 ```
 
 **Cambia en tu corrida** nada.
@@ -285,6 +293,7 @@ FROM recepcion_lab06
 ```
 | documentos | total_del_mes |
 | 1000       | 9117709433.18 |
+1 fila.
 ```
 
 **Cambia en tu corrida** nada.
@@ -311,6 +320,7 @@ FROM recepcion_lab06 VERSION AS OF 'revision_junio'
 ```
 | documentos | errores_iva | errores_suma | errores_negativos |
 | 1500       | 13          | 20           | 7                 |
+1 fila.
 ```
 
 **Cambia en tu corrida** nada.
@@ -334,6 +344,7 @@ WHERE abs(monto_iva - round(monto_neto * 0.19)) > 2
 ```
 | documentos_que_no_cuadran |
 | 20                        |
+1 fila.
 ```
 
 **Cambia en tu corrida** nada.
@@ -374,6 +385,7 @@ FROM recepcion_lab06
 ```
 | documentos | errores_iva | errores_suma | errores_negativos |
 | 1000       | 0           | 0            | 0                 |
+1 fila.
 ```
 
 **Cambia en tu corrida** nada.
@@ -395,6 +407,7 @@ ORDER BY type, name
 ```
 | name | type   |
 | main | BRANCH |
+1 fila.
 ```
 
 **Cambia en tu corrida** nada.
@@ -453,6 +466,7 @@ FROM recepcion_lab06 VERSION AS OF 'revision_junio_v2'
 ```
 | documentos | errores_iva | errores_suma | errores_negativos |
 | 1480       | 0           | 0            | 0                 |
+1 fila.
 ```
 
 **Cambia en tu corrida** nada.
@@ -473,7 +487,8 @@ WHERE name = 'revision_junio_v2'
 
 ```
 | snapshot_id         |
-| 5971121042725466227 |
+| 4004546388929856598 |
+1 fila.
 ```
 
 **Cambia en tu corrida** el identificador, siempre.
@@ -514,6 +529,7 @@ FROM recepcion_lab06
 ```
 | documentos | errores_iva | errores_suma | errores_negativos |
 | 1480       | 0           | 0            | 0                 |
+1 fila.
 ```
 
 **Cambia en tu corrida** nada.
@@ -563,6 +579,7 @@ FROM recepcion_lab06 VERSION AS OF 'cierre_junio_2026'
 ```
 | documentos | total_del_mes  |
 | 1480       | 13576071743.67 |
+1 fila.
 ```
 
 **Cambia en tu corrida** nada.
@@ -583,8 +600,9 @@ ORDER BY type, name
 
 ```
 | name              | type   | snapshot_id         |
-| main              | BRANCH | 5971121042725466227 |
-| cierre_junio_2026 | TAG    | 5971121042725466227 |
+| main              | BRANCH | 4004546388929856598 |
+| cierre_junio_2026 | TAG    | 4004546388929856598 |
+2 filas.
 ```
 
 **Cambia en tu corrida** los identificadores.

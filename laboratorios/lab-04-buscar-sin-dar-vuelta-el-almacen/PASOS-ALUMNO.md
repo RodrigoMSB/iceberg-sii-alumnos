@@ -75,12 +75,12 @@ LIMIT 5
 **En consola** cinco filas y diez columnas.
 
 ```
-| rut_emisor | razon_social_emisor      | tipo_dte | folio | fecha_emision | fecha_recepcion       | monto_neto | monto_iva  | monto_total | estado_sii |
-| 76114218-6 | Coihue Maquinarias SpA   | 33       | 1     | 2024-01-01    | 2024-01-01 13:46:49.0 | 1656950.00 | 314820.50  | 1971770.50  | ACEPTADO   |
-| 76169126-0 | Ulmo Maquinarias Ltda.   | 33       | 1     | 2024-01-01    | 2024-01-03 14:40:08.0 | 235404.00  | 44726.76   | 280130.76   | ACEPTADO   |
-| 76194732-K | Boldo Importadora Ltda.  | 39       | 1     | 2024-01-01    | 2024-01-02 01:42:09.0 | 113373.00  | 21540.87   | 134913.87   | ACEPTADO   |
-| 76253726-5 | Ulmo Transportes S.A.    | 33       | 4     | 2024-01-01    | 2024-01-03 13:28:12.0 | 8458882.00 | 1607187.58 | 10066069.58 | ACEPTADO   |
-| 76257050-5 | Araucaria Agricola Ltda. | 39       | 11    | 2024-01-01    | 2024-01-02 09:49:18.0 | 41107.00   | 7810.33    | 48917.33    | ACEPTADO   |
+| rut_emisor | razon_social_emisor      | tipo_dte | folio | fecha_emision | fecha_recepcion     | monto_neto | monto_iva  | monto_total | estado_sii |
+| 76114218-6 | Coihue Maquinarias SpA   | 33       | 1     | 2024-01-01    | 2024-01-01 13:46:49 | 1656950.00 | 314820.50  | 1971770.50  | ACEPTADO   |
+| 76169126-0 | Ulmo Maquinarias Ltda.   | 33       | 1     | 2024-01-01    | 2024-01-03 14:40:08 | 235404.00  | 44726.76   | 280130.76   | ACEPTADO   |
+| 76194732-K | Boldo Importadora Ltda.  | 39       | 1     | 2024-01-01    | 2024-01-02 01:42:09 | 113373.00  | 21540.87   | 134913.87   | ACEPTADO   |
+| 76253726-5 | Ulmo Transportes S.A.    | 33       | 4     | 2024-01-01    | 2024-01-03 13:28:12 | 8458882.00 | 1607187.58 | 10066069.58 | ACEPTADO   |
+| 76257050-5 | Araucaria Agricola Ltda. | 39       | 11    | 2024-01-01    | 2024-01-02 09:49:18 | 41107.00   | 7810.33    | 48917.33    | ACEPTADO   |
 5 filas.
 ```
 
@@ -101,6 +101,7 @@ SELECT count(*) AS documentos FROM documentos_sin_particion
 ```
 | documentos |
 | 30000      |
+1 fila.
 ```
 
 **Cambia en tu corrida** nada.
@@ -123,6 +124,7 @@ WHERE fecha_emision BETWEEN DATE '2024-06-01' AND DATE '2024-06-30'
 ```
 | documentos | total_junio    |
 | 2500       | 24547341762.59 |
+1 fila.
 ```
 
 **Cambia en tu corrida** nada.
@@ -134,9 +136,9 @@ WHERE fecha_emision BETWEEN DATE '2024-06-01' AND DATE '2024-06-30'
 **Se escribe**
 
 ```sql
-SELECT record_count                                AS filas,
-       readable_metrics.fecha_emision.lower_bound  AS desde,
-       readable_metrics.fecha_emision.upper_bound  AS hasta
+SELECT record_count                                     AS filas,
+       readable_metrics.fecha_emision.lower_bound      AS desde,
+       readable_metrics.fecha_emision.upper_bound      AS hasta
 FROM mi_espacio.documentos_sin_particion.files
 ORDER BY desde
 ```
@@ -171,6 +173,7 @@ WHERE readable_metrics.fecha_emision.upper_bound >= DATE '2024-06-01'
 ```
 | archivos_a_leer | filas_a_leer | bytes_a_leer |
 | 1               | 30000        | 776514       |
+1 fila.
 ```
 
 **Cambia en tu corrida** nada.
@@ -206,6 +209,7 @@ SELECT count(*) AS documentos FROM documentos_por_mes
 ```
 | documentos |
 | 30000      |
+1 fila.
 ```
 
 **Cambia en tu corrida** nada.
@@ -228,6 +232,7 @@ WHERE fecha_emision BETWEEN DATE '2024-06-01' AND DATE '2024-06-30'
 ```
 | documentos | total_junio    |
 | 2500       | 24547341762.59 |
+1 fila.
 ```
 
 **Cambia en tu corrida** nada.
@@ -252,6 +257,7 @@ WHERE readable_metrics.fecha_emision.upper_bound >= DATE '2024-06-01'
 ```
 | archivos_a_leer | filas_a_leer | bytes_a_leer |
 | 1               | 2500         | 71779        |
+1 fila.
 ```
 
 ```
@@ -274,8 +280,35 @@ DESCRIBE TABLE EXTENDED documentos_por_mes
 **En consola** 27 filas.
 
 ```
-| # Partitioning |                       |
-| Part 0         | months(fecha_emision) |
+| col_name                     | data_type                                                                         | comment |
+| rut_emisor                   | string                                                                            |         |
+| razon_social_emisor          | string                                                                            |         |
+| tipo_dte                     | int                                                                               |         |
+| folio                        | bigint                                                                            |         |
+| fecha_emision                | date                                                                              |         |
+| fecha_recepcion              | timestamp                                                                         |         |
+| monto_neto                   | decimal(18,2)                                                                     |         |
+| monto_iva                    | decimal(18,2)                                                                     |         |
+| monto_total                  | decimal(18,2)                                                                     |         |
+| estado_sii                   | string                                                                            |         |
+|                              |                                                                                   |         |
+| # Partitioning               |                                                                                   |         |
+| Part 0                       | months(fecha_emision)                                                             |         |
+|                              |                                                                                   |         |
+| # Metadata Columns           |                                                                                   |         |
+| _spec_id                     | int                                                                               |         |
+| _partition                   | struct<fecha_emision_month:int>                                                   |         |
+| _file                        | string                                                                            |         |
+| _pos                         | bigint                                                                            |         |
+| _deleted                     | boolean                                                                           |         |
+|                              |                                                                                   |         |
+| # Detailed Table Information |                                                                                   |         |
+| Name                         | spark_catalog.mi_espacio.documentos_por_mes                                       |         |
+| Location                     | hdfs://namenode:8020/warehouse/iceberg/mi_espacio.db/documentos_por_mes           |         |
+| Provider                     | iceberg                                                                           |         |
+| Owner                        | root                                                                              |         |
+| Table Properties             | [current-snapshot-id=8267141702760514426,format=iceberg/parquet,format-version=1] |         |
+27 filas.
 ```
 
 **Cambia en tu corrida** nada.
@@ -300,7 +333,16 @@ ORDER BY mes
 | mes        | documentos | archivos |
 | 2024-01-01 | 2500       | 1        |
 | 2024-02-01 | 2500       | 1        |
-…
+| 2024-03-01 | 2500       | 1        |
+| 2024-04-01 | 2500       | 1        |
+| 2024-05-01 | 2500       | 1        |
+| 2024-06-01 | 2500       | 1        |
+| 2024-07-01 | 2500       | 1        |
+| 2024-08-01 | 2500       | 1        |
+| 2024-09-01 | 2500       | 1        |
+| 2024-10-01 | 2500       | 1        |
+| 2024-11-01 | 2500       | 1        |
+| 2024-12-01 | 2500       | 1        |
 12 filas.
 ```
 
@@ -334,7 +376,35 @@ DESCRIBE TABLE EXTENDED documentos_por_mes
 **En consola** otra vez 27 filas, y la **fila 13** ahora dice.
 
 ```
-| Part 0 | days(fecha_emision) |
+| col_name                     | data_type                                                                         | comment |
+| rut_emisor                   | string                                                                            |         |
+| razon_social_emisor          | string                                                                            |         |
+| tipo_dte                     | int                                                                               |         |
+| folio                        | bigint                                                                            |         |
+| fecha_emision                | date                                                                              |         |
+| fecha_recepcion              | timestamp                                                                         |         |
+| monto_neto                   | decimal(18,2)                                                                     |         |
+| monto_iva                    | decimal(18,2)                                                                     |         |
+| monto_total                  | decimal(18,2)                                                                     |         |
+| estado_sii                   | string                                                                            |         |
+|                              |                                                                                   |         |
+| # Partitioning               |                                                                                   |         |
+| Part 0                       | days(fecha_emision)                                                               |         |
+|                              |                                                                                   |         |
+| # Metadata Columns           |                                                                                   |         |
+| _spec_id                     | int                                                                               |         |
+| _partition                   | struct<fecha_emision_month:int,fecha_emision_day:date>                            |         |
+| _file                        | string                                                                            |         |
+| _pos                         | bigint                                                                            |         |
+| _deleted                     | boolean                                                                           |         |
+|                              |                                                                                   |         |
+| # Detailed Table Information |                                                                                   |         |
+| Name                         | spark_catalog.mi_espacio.documentos_por_mes                                       |         |
+| Location                     | hdfs://namenode:8020/warehouse/iceberg/mi_espacio.db/documentos_por_mes           |         |
+| Provider                     | iceberg                                                                           |         |
+| Owner                        | root                                                                              |         |
+| Table Properties             | [current-snapshot-id=8267141702760514426,format=iceberg/parquet,format-version=1] |         |
+27 filas.
 ```
 
 **Cambia en tu corrida** nada.
@@ -398,6 +468,7 @@ WHERE fecha_emision BETWEEN DATE '2024-06-01' AND DATE '2024-06-30'
 ```
 | documentos | total_junio    |
 | 2500       | 24547341762.59 |
+1 fila.
 ```
 
 **Cambia en tu corrida** nada.
@@ -420,6 +491,7 @@ WHERE fecha_emision BETWEEN DATE '2025-01-01' AND DATE '2025-01-31'
 ```
 | documentos | total_enero_2025 |
 | 2500       | 24895193513.17   |
+1 fila.
 ```
 
 **Cambia en tu corrida** nada.
