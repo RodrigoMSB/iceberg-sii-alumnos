@@ -1,6 +1,9 @@
 numero: 12
 titulo: El panel del administrador
 subtitulo: Guía para leer mientras trabajas el cuaderno. Cada celda trae la pregunta que responde, la idea en el almacén, la sentencia explicada parte por parte, lo que sale en pantalla y cómo leerlo.
+excepcion: 1970 | definición | el cajón mensual cuenta los meses desde enero de 1970
+excepcion: 200 | conversión | 4232 filas entre 22 archivos dan menos de 200 por archivo
+excepcion: 3 | conversión | 25 archivos totales menos 22 vigentes en la celda 4.1
 ---
 
 # Introducción
@@ -343,7 +346,7 @@ Esta celda viene escrita en el cuaderno y es la única que no es SQL. Son veinti
 
 **Cómo se lee.** La tabla tiene 22 archivos, 4232 filas y pesa 208727 bytes, unos 0,21 MB.
 
-Son 22 archivos para un poco más de cuatro mil filas. En promedio, menos de doscientas filas por archivo. Es una tabla chica partida en muchos pedazos, que es justo lo que la ingesta diaria deja.
+Son 22 archivos para un poco más de cuatro mil filas. En promedio, menos de 200 filas por archivo. Es una tabla chica partida en muchos pedazos, que es justo lo que la ingesta diaria deja.
 
 ## Celda 1.2 · La misma pregunta para varias tablas
 
@@ -534,7 +537,7 @@ flecha p j
 
 **Cómo se lee.** El cajón `(648,)` tiene 2500 filas en 1 archivo. Los otros once tienen entre 90 y 188 filas.
 
-La primera columna no dice `2024-01`, dice un número. Es cuántos meses pasaron desde enero de 1970, que es como Iceberg guarda por dentro un cajón mensual. Seiscientos cuarenta y ocho meses son cincuenta y cuatro años justos, así que `648` es enero de 2024, `649` febrero y así hasta `659`, que es diciembre. Los paréntesis y la coma son la forma de escribir un grupo de valores con uno solo adentro, porque una tabla puede estar particionada por más de una columna.
+La primera columna no dice `2024-01`, dice un número. Es cuántos meses pasaron desde enero de 1970, que es como Iceberg guarda por dentro un cajón mensual. 648 meses son 54 años justos, así que `648` es enero de 2024, `649` febrero y así hasta `659`, que es diciembre. Los paréntesis y la coma son la forma de escribir un grupo de valores con uno solo adentro, porque una tabla puede estar particionada por más de una columna.
 
 El cajón `(654,)`, julio, tiene 90 filas y 1 archivo. Es el mes del borrado, y le quedó solo el papelito del 10 de julio.
 
@@ -648,7 +651,7 @@ Son de ejemplo, puestos para que se pueda conversar sobre los números de este l
 
 ### ¿Cómo se calcula el mínimo y el máximo de retención en un trabajo real?
 
-**El mínimo lo pone el negocio.** Es cuánto hacia atrás hay que poder volver. Se calcula como el tiempo que se tarda en darse cuenta de que una carga salió mala, más el tiempo en corregirla, más un margen. Si la tabla se carga cada día y los errores aparecen en una revisión semanal, un mínimo razonable son catorce días.
+**El mínimo lo pone el negocio.** Es cuánto hacia atrás hay que poder volver. Se calcula como el tiempo que se tarda en darse cuenta de que una carga salió mala, más el tiempo en corregirla, más un margen. Si la tabla se carga cada día y los errores aparecen en una revisión semanal, un mínimo razonable son 14 días.
 
 **El máximo lo pone el disco.** Cada página guarda lo que agregó. El costo de la historia es lo que agrega cada carga, por las cargas de cada día, por los días de retención. Eso se mide mirando cuánto agrega cada página en `.snapshots`.
 
@@ -662,7 +665,7 @@ Sobre todo para saber si la carga de anoche corrió. Si un proceso nocturno fall
 
 ### ¿Qué es el número de la partición, el 648?
 
-Es el mes guardado como un número, contado desde enero de 1970. Enero de 1970 es el 0, y cada mes suma uno. Enero de 2024 está cincuenta y cuatro años después, y cincuenta y cuatro por doce son 648. Por eso `648` es enero de 2024 y `659` diciembre de 2024. Iceberg lo guarda así porque un número se compara y se ordena más rápido que una fecha.
+Es el mes guardado como un número, contado desde enero de 1970. Enero de 1970 es el 0, y cada mes suma uno. Enero de 2024 está 54 años después, y 54 por 12 son 648. Por eso `648` es enero de 2024 y `659` diciembre de 2024. Iceberg lo guarda así porque un número se compara y se ordena más rápido que una fecha.
 
 ### ¿Por qué tres correcciones dejaron solo dos papelitos viejos de enero?
 
@@ -691,7 +694,7 @@ Ocho preguntas cortas que juntas dicen si una tabla está sana. Ninguna abre un 
 | 1 | Archivos y peso | 22 archivos, 4232 filas, 208727 bytes | muchos archivos para pocas filas |
 | 2 | Archivos chicos | 22 de 22, el más chico de 5887 bytes | más de la mitad bajo el umbral |
 | 3 | Páginas acumuladas | 27 páginas | más de cien, o la más vieja de hace meses |
-| 4 | Espacio de páginas viejas | 25 archivos en total contra 22 vigentes, 152322 bytes | si pasa del doble de lo vigente |
+| 4 | Espacio de páginas viejas | 3 archivos, 152322 bytes | si pasa del doble de lo vigente |
 | 5 | Particiones desparejas | enero con 2500 filas, el resto entre 90 y 188 | si una tiene diez veces la mediana |
 | 6 | Última escritura | un `delete` | si no hay ninguna hace más de lo que dice su frecuencia de carga |
 | 7 | Versiones de portada | 28 portadas, esquema 1 | si el esquema cambió y nadie avisó |

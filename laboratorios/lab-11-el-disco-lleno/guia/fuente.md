@@ -1,6 +1,9 @@
 numero: 11
 titulo: El disco lleno
 subtitulo: Guía para leer mientras trabajas el cuaderno. Cada celda trae la pregunta que responde, la idea en el almacén, la sentencia explicada parte por parte, lo que sale en pantalla y cómo leerlo. Las salidas son las de la solución ejecutada del repositorio. Los tamaños van en MB de un millón de bytes.
+excepcion: 00:00:00 | literal de la sentencia | la hora de las fechas de corte que escriben las celdas 4.1 y 5.1
+excepcion: 1.048.576 | definición | el mega de HDFS, mil veinticuatro por mil veinticuatro bytes
+excepcion: 14.302 | conversión | la resta de 790.816 menos 776.514, las salidas de las celdas 1.2 y 1.1
 ---
 
 # Introducción
@@ -220,7 +223,7 @@ flecha d u
 
 **Cómo se lee.** Tres columnas. El primer número es lo que pesan los archivos, 0,79 MB (790.816 bytes). El segundo es lo que ocupan contando las copias de respaldo que HDFS pide, 2,37 MB (2.372.448 bytes). La tercera columna es la carpeta medida.
 
-El primer número es un poco mayor que el de la celda 1.1, unos catorce mil bytes más, porque el disco cuenta también la carpeta `metadata`. El segundo es exactamente el triple del primero, porque HDFS guarda cada archivo con factor de replicación 3. En las preguntas frecuentes está explicado.
+El primer número es un poco mayor que el de la celda 1.1, 14.302 bytes más, porque el disco cuenta también la carpeta `metadata`. El segundo es exactamente el triple del primero, porque HDFS guarda cada archivo con factor de replicación 3. En las preguntas frecuentes está explicado.
 
 # Paso 2 · Cinco correcciones
 
@@ -508,7 +511,7 @@ flecha e b
 
 - `CALL spark_catalog.system.expire_snapshots(...)` llama a un procedimiento de Iceberg. `spark_catalog` es el catálogo de Spark y `system` el grupo de procedimientos de Iceberg.
 - `table => 'mi_espacio.documentos_lab11'` es la tabla, con su espacio, entre comillas. La flecha `=>` asigna un valor a cada argumento por su nombre.
-- `older_than => TIMESTAMP` es la fecha de corte, aquí el 1 de enero de 2030 a medianoche. Se botan las páginas anteriores a ese instante. La fecha es de laboratorio, en el futuro, para que toda la historia cuente como vieja y se vea el efecto completo en una sola celda. En producción, una fecha futura se lleva toda la historia de la tabla.
+- `older_than => TIMESTAMP '2030-01-01 00:00:00'` es la fecha de corte. Se botan las páginas anteriores a ese instante. La fecha es de laboratorio, en el futuro, para que toda la historia cuente como vieja y se vea el efecto completo en una sola celda. En producción, una fecha futura se lleva toda la historia de la tabla.
 - `retain_last => 1` conserva siempre al menos la última página, pase lo que pase con la fecha.
 
 ::codigo 4.1
@@ -585,7 +588,7 @@ Queda un poco más que en la primera medición por dos razones. El papelito vige
 
 - `CALL spark_catalog.system.remove_orphan_files(...)` llama al procedimiento que busca y borra archivos huérfanos.
 - `table => 'mi_espacio.documentos_lab11'` es la tabla.
-- `older_than => TIMESTAMP` recibe una fecha, aquí el 1 de septiembre de 2026 a medianoche, y solo considera archivos anteriores a ella. Protege a los archivos recién escritos, que pueden ser de una escritura que todavía no hace su commit.
+- `older_than => TIMESTAMP '2026-09-01 00:00:00'` solo considera archivos anteriores a esa fecha. Protege a los archivos recién escritos, que pueden ser de una escritura que todavía no hace su commit.
 - `dry_run => true` hace una prueba en seco. No borra nada y solo lista lo que borraría.
 
 ::codigo 5.1
@@ -625,7 +628,7 @@ Los megas de esta guía son de un millón de bytes.
 | Libreta, todos los papelitos | 4.668.576 | 4,67 |
 | Disco, después de expirar | 842.455 | 0,84 |
 
-Si le agregas `-h` a la orden, `hdfs dfs -du -s -h`, HDFS muestra los tamaños en su propia unidad, que es de mil veinticuatro por mil veinticuatro bytes, y los números salen un poco más chicos que en esta tabla.
+Si le agregas `-h` a la orden, `hdfs dfs -du -s -h`, HDFS muestra los tamaños en su propia unidad, que es de 1.048.576 bytes, y los números salen un poco más chicos que en esta tabla.
 
 ### ¿Por qué cada UPDATE copia los treinta mil documentos?
 

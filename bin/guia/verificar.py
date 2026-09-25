@@ -17,6 +17,13 @@ Revisa cuatro cosas, y sale con error si alguna falla:
 5. Cada identificador de pagina, cada hora y cada numero de filas o bytes que
    cita la prosa aparece en algun bloque de salida de la misma guia. Las horas
    que se dan en hora de Chile no se revisan, porque son una conversion.
+   Cualquier otro numero de tres cifras o mas que cite la prosa tiene que estar
+   en una salida o en el codigo de la guia.
+   Lo que no esta en ninguna salida y se cita igual (una conversion, una
+   definicion, un valor que la celda transforma) va declarado en la cabecera de
+   la fuente, una linea por cifra:
+       excepcion: 648 | valor que la celda transforma | la celda 4.2 lo convierte en fecha
+   Una excepcion que ya no se usa tambien es una falla.
 
 Ademas avisa, sin fallar, de los dos puntos y las rayas que aparezcan en la prosa.
 """
@@ -64,10 +71,10 @@ def referencias_a_otros(texto: str, propio: int) -> list[str]:
 UNIDADES = r"(?:filas?|bytes|documentos|archivos|p[aá]ginas?|papelitos|contribuyentes|registros)"
 
 
-def citas_sin_respaldo(documento: str, salidas: str) -> list[str]:
+def citas_sin_respaldo(documento: str, salidas: str, codigo: str = "") -> list[str]:
     """Numeros de la prosa que no aparecen en ninguna salida de la guia."""
     import html as _h
-    prosa = re.sub(r"<pre>.*?</pre>|<svg.*?</svg>|<style>.*?</style>|<title>.*?</title>", " ",
+    prosa = re.sub(r"<pre[^>]*>.*?</pre>|<svg.*?</svg>|<style>.*?</style>|<title>.*?</title>", " ",
                    documento, flags=re.S)
     prosa = _h.unescape(re.sub(r"<[^>]+>", " ", prosa))
     prosa = re.sub(r"\s+", " ", prosa)
@@ -86,7 +93,27 @@ def citas_sin_respaldo(documento: str, salidas: str) -> list[str]:
         if not (re.search(rf"(?<![\d.]){crudo}(?![\d])", salidas)
                 or re.search(rf"(?<![\d.]){re.escape(m.group(1))}(?![\d])", salidas)):
             fallas.append(f"'{m.group(0)}'")
+    # Cualquier otro numero de tres cifras o mas: en una salida o en el codigo.
+    ya = {f.split(" ", 1)[-1].strip("'") for f in fallas}
+    respaldo = salidas + "\n" + codigo
+    for m in re.finditer(r"(?<![\w.,:/-])(\d{1,3}(?:\.\d{3})+(?:,\d+)?|\d{3,}(?:,\d+)?)(?![\w:/-]|\.\d)", prosa):
+        cifra = m.group(1)
+        if any(cifra in y for y in ya):
+            continue
+        crudo = cifra.replace(".", "").replace(",", ".")
+        if (re.search(rf"(?<![\d]){re.escape(cifra)}(?![\d])", respaldo)
+                or re.search(rf"(?<![\d]){re.escape(crudo)}(?![\d])", respaldo)):
+            continue
+        fallas.append(f"'{cifra}'")
     return fallas
+
+
+def excepciones_de(g) -> dict[str, str]:
+    """Las excepciones declaradas en la cabecera de la fuente: cifra -> razon."""
+    cabecera = g.fuente.read_text(encoding="utf-8").partition("\n---\n")[0]
+    return {partes[0].strip(): " | ".join(p.strip() for p in partes[1:])
+            for linea in cabecera.splitlines() if linea.startswith("excepcion:")
+            for partes in [linea.split(":", 1)[1].split("|")]}
 
 
 def verificar(carpeta: Path) -> tuple[list[str], list[str]]:
@@ -112,7 +139,7 @@ def verificar(carpeta: Path) -> tuple[list[str], list[str]]:
     import html as _h
     bloques: list[list] = []
     for clase, et, cuerpo in re.findall(
-            r'<div class="(codigo[^"]*)" data-celda="([\d.]+)">(?:<div class="etiqueta">[^<]*</div>)?<pre>(.*?)</pre>',
+            r'<div class="(codigo[^"]*)" data-celda="([\d.]+)">(?:<div class="etiqueta">[^<]*</div>)?<pre[^>]*>(.*?)</pre>',
             documento, re.S):
         cuerpo = _h.unescape(cuerpo)
         if "continua" in clase and bloques and bloques[-1][1] == et:
@@ -128,8 +155,20 @@ def verificar(carpeta: Path) -> tuple[list[str], list[str]]:
 
     # 5. Lo que cita la prosa tiene que estar en alguna salida de la guia.
     salidas = "\n".join(generar.salida_de_celda(g.celdas[et]) for et in g.usadas_salida)
-    for f in citas_sin_respaldo(documento, salidas):
-        fallas.append(f"la prosa cita {f} y no esta en ninguna salida de la guia")
+    codigo = "\n".join(generar._texto(g.celdas[et]["source"]) for et in g.usadas_codigo)
+    codigo += "\n" + "\n".join(re.findall(r"<pre[^>]*>(.*?)</pre>", documento, re.S))
+    excepciones = excepciones_de(g)
+    usadas = set()
+    for f in citas_sin_respaldo(documento, salidas, codigo):
+        cifra = re.sub(r"^(identificador|hora) ", "", f).strip("'")
+        clave = next((e for e in excepciones if e == cifra or e == cifra.split(" ")[0]), None)
+        if clave:
+            usadas.add(clave)
+            continue
+        fallas.append(f"la prosa cita {f} y no esta en ninguna salida ni excepcion de la guia")
+    for e in excepciones:
+        if e not in usadas:
+            fallas.append(f"la excepcion '{e}' ya no se usa en la prosa")
 
     # 3. Palabras y referencias.
     for patron, nombre in PROHIBIDAS:
@@ -142,7 +181,7 @@ def verificar(carpeta: Path) -> tuple[list[str], list[str]]:
             fallas.append(f"referencia a otro laboratorio: ...{h!r}")
 
     # Avisos de estilo: dos puntos y rayas en la prosa, fuera del codigo.
-    prosa = re.sub(r"<pre>.*?</pre>", "", documento, flags=re.S)
+    prosa = re.sub(r"<pre[^>]*>.*?</pre>", "", documento, flags=re.S)
     prosa = re.sub(r"<code>.*?</code>|<svg.*?</svg>|<style>.*?</style>|<table.*?</table>", "", prosa, flags=re.S)
     prosa = re.sub(r"<[^>]+>", " ", prosa)
     avisos = []

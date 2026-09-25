@@ -1,6 +1,9 @@
 numero: 04
 titulo: Buscar sin dar vuelta el almacén
 subtitulo: Guía para leer mientras trabajas el cuaderno. Cada celda trae la pregunta que responde, la idea en el almacén, la sentencia explicada parte por parte, lo que sale en pantalla y cómo leerlo. Las salidas son las de la solución ejecutada del repositorio.
+excepcion: 648 | valor que la celda transforma | la celda 4.2 muestra el número del cajón de enero de 2024 convertido en fecha con add_months
+excepcion: 653 | valor que la celda transforma | la celda 4.2 muestra el número del cajón de junio de 2024 convertido en fecha con add_months
+excepcion: 2026 | conversión | el año del aviso de Spark, que la salida escribe como 26 en 26/09/25
 ---
 
 # Introducción

@@ -1,6 +1,7 @@
 numero: 13
 titulo: Ordenar sin particionar
 subtitulo: Guía para leer mientras trabajas el cuaderno. Cada celda trae la pregunta que responde, la idea en el almacén, la sentencia explicada parte por parte, lo que sale en pantalla y cómo leerlo.
+excepcion: 250000 | literal de la sentencia | target-file-size-bytes de las celdas 1.1 y 5.1, que la salida no repite
 ---
 
 # Introducción
@@ -228,7 +229,7 @@ flecha r b3
 - `strategy => 'sort'` pide reescribir ordenando.
 - `sort_order => 'fecha_emision ASC NULLS LAST'` es el orden, por fecha de emisión de menor a mayor, con las fechas vacías al final. `ASC` es ascendente.
 - `options => map(...)` son opciones en pares nombre y valor. `map` arma esos pares.
-- `'target-file-size-bytes', '250000'` pide que cada papelito pese cerca de `250000`, contado en bytes, que son 0,25 MB. Es chico a propósito, para que salgan varios.
+- `'target-file-size-bytes', '250000'` pide papelitos de unos `250000` bytes, que son 0,25 MB. Es chico a propósito, para que salgan varios.
 - `'min-input-files', '1'` permite reescribir aunque haya un solo papelito. Por defecto el procedimiento no toca tablas con tan pocos archivos.
 - `'rewrite-all', 'true'` pide reescribir todos los papelitos, aunque ya tengan buen tamaño.
 

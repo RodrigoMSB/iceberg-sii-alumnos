@@ -1,6 +1,7 @@
 numero: 05
 titulo: La columna que no existía
 subtitulo: Guía para leer mientras trabajas el cuaderno. Cada celda trae la pregunta que responde, la idea en el almacén, la sentencia explicada parte por parte, lo que sale en pantalla y cómo leerlo. Las salidas son las de la solución ejecutada del repositorio.
+excepcion: 32.500 | conversión | la suma de los seis conteos de la celda 4.4, igual a los 30000 de 2024 más los 2500 de 2026 de la celda 3.2
 ---
 
 # Introducción
@@ -450,7 +451,7 @@ Iceberg no se confunde porque cada archivo de datos guarda sus columnas con el n
 
 ::salida 4.4
 
-**Cómo se lee.** Seis tipos de documento, todos en su lugar. 33 es factura afecta, 34 factura exenta, 39 boleta, 52 guía de despacho, 56 nota de débito y 61 nota de crédito. Sumados dan los treinta y dos mil quinientos documentos de la tabla.
+**Cómo se lee.** Seis tipos de documento, todos en su lugar. 33 es factura afecta, 34 factura exenta, 39 boleta, 52 guía de despacho, 56 nota de débito y 61 nota de crédito. Sumados dan los 32.500 documentos de la tabla.
 
 Al revés no se puede. Pasar de `bigint` a `int` podría no caber, y el motor lo rechaza con el mensaje `bigint cannot be cast to int`.
 

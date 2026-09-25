@@ -336,24 +336,47 @@ def _partir_bloque_largo(elemento: str) -> tuple[str, str]:
     """Un bloque de más de una página no cabe entero junto a su título: se pegan al
     título sus primeras líneas y el resto sigue como continuación del mismo bloque."""
     m = re.fullmatch(r'<div class="(codigo[^"]*)"( data-celda="[^"]*")?>(<div class="etiqueta">.*?</div>)'
-                     r"<pre>(.*)</pre></div>", elemento, re.S)
+                     r"<pre([^>]*)>(.*)</pre></div>", elemento, re.S)
     if not m:
         return elemento, ""
-    lineas = m.group(4).split("\n")
+    estilo, cuerpo = m.group(4), m.group(5)
+    lineas = cuerpo.split("\n")
     if len(lineas) <= LINEAS_LARGO:
         return elemento, ""
     clase, celda, etiqueta = m.group(1), m.group(2) or "", m.group(3)
     cabeza = "\n".join(lineas[:LINEAS_JUNTO])
     resto = "\n".join(lineas[LINEAS_JUNTO:])
-    return (f'<div class="{clase} partido"{celda}>{etiqueta}<pre>{cabeza}</pre></div>',
-            f'<div class="{clase} continua"{celda}><pre>{resto}</pre></div>')
+    return (f'<div class="{clase} partido"{celda}>{etiqueta}<pre{estilo}>{cabeza}</pre></div>',
+            f'<div class="{clase} continua"{celda}><pre{estilo}>{resto}</pre></div>')
 
 
-def bloque_codigo(etiqueta: str, cuerpo: str, clase: str = "codigo", celda: str = "") -> str:
+# Caracteres que caben en una línea de un bloque, con la letra de siempre.
+LETRA_PT = 8.2
+CABEN = 96
+LETRA_MINIMA_PT = 4.0
+
+
+def letra_de_tabla(celda: dict) -> float | None:
+    """Si la celda muestra una tabla más ancha que el bloque, la letra con que cada fila
+    cabe en una línea y las columnas quedan alineadas. Nunca menos de 4 puntos: una fila
+    que no cabe ni así se parte, y las demás siguen alineadas."""
+    ancho = 0
+    for o in celda.get("outputs", []):
+        h = _texto(o.get("data", {}).get("text/html", ""))
+        if "<table" in h:
+            ancho = max([ancho] + [len(l) for l in _tabla_html_a_texto(h).splitlines()])
+    if ancho <= CABEN:
+        return None
+    return max(LETRA_MINIMA_PT, round(LETRA_PT * CABEN / ancho, 2))
+
+
+def bloque_codigo(etiqueta: str, cuerpo: str, clase: str = "codigo", celda: str = "",
+                  letra: float | None = None) -> str:
     marca = f' data-celda="{celda}"' if celda else ""
+    estilo = f' style="font-size:{letra}pt"' if letra else ""
     return (
         f'<div class="{clase}"{marca}><div class="etiqueta">{html.escape(etiqueta)}</div>'
-        f"<pre>{html.escape(cuerpo)}</pre></div>"
+        f"<pre{estilo}>{html.escape(cuerpo)}</pre></div>"
     )
 
 
@@ -391,7 +414,7 @@ class Guia:
         s = salida_de_celda(self.celdas[et])
         if not s.strip():
             raise SystemExit(f"{self.fuente}: la celda {et} no dejo salida en la solucion")
-        return bloque_codigo("text", s, "codigo salida", celda=et)
+        return bloque_codigo("text", s, "codigo salida", celda=et, letra=letra_de_tabla(self.celdas[et]))
 
     # ---- el cuerpo
     def html_cuerpo(self) -> str:

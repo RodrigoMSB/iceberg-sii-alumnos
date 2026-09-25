@@ -1,6 +1,8 @@
 numero: 06
 titulo: Publicar solo si cuadra
 subtitulo: Guía para leer mientras trabajas el cuaderno. Cada celda trae la pregunta que responde, la idea en el almacén, la sentencia explicada parte por parte, lo que sale en pantalla y cómo leerlo.
+excepcion: 500 | conversión | el lote sospechoso trae 500 documentos, 1500 de la celda 1.2 menos 1000 de la celda 0.4
+excepcion: 480 | conversión | documentos buenos del lote, 1480 de la celda 5.6 menos 1000 de la celda 0.4
 ---
 
 # Introducción
@@ -57,7 +59,7 @@ En Iceberg la libreta aparte es una **rama**. Se crea con `CREATE BRANCH`, se es
 
 ## 6 · Los pasos
 
-- **Paso 0.** Creas la tabla `recepcion_lab06` con un lote limpio de mil documentos.
+- **Paso 0.** Creas la tabla `recepcion_lab06` con un lote limpio de 1000 documentos.
 - **Paso 1.** Cargas un lote sospechoso directo a la tabla, lo auditas, ves que no cuadra y lo deshaces volviendo a la primera página.
 - **Paso 2.** Creas la rama `revision_junio`.
 - **Paso 3.** Cargas el mismo lote en la rama y compruebas que la tabla oficial no cambió.
@@ -165,7 +167,7 @@ bin/reiniciar-lab.sh 06
 
 ::salida 0.4
 
-**Cómo se lee.** Mil documentos que suman 9.117.709.433,18 pesos. Esa es la cifra oficial.
+**Cómo se lee.** 1000 documentos que suman 9.117.709.433,18 pesos. Esa es la cifra oficial.
 
 # Paso 1 · El riesgo, mostrado
 
@@ -180,7 +182,7 @@ bin/reiniciar-lab.sh 06
 **La sentencia, parte por parte.**
 
 - `INSERT INTO recepcion_lab06` agrega filas a la tabla oficial.
-- `SELECT * FROM curso.recepcion_sospechosa` trae todas las filas del lote sospechoso, quinientos documentos que trae el ambiente.
+- `SELECT * FROM curso.recepcion_sospechosa` trae todas las filas del lote sospechoso, 500 documentos que trae el ambiente.
 
 ::codigo 1.1
 
@@ -239,7 +241,7 @@ flecha c s
 
 ::salida 1.2
 
-**Cómo se lee.** La tabla tiene 1500 documentos, los mil limpios más el lote. De ellos, 13 tienen el IVA mal, 20 tienen el total mal sumado y 7 tienen montos negativos que no deberían. Esos documentos ya están a la vista de todos.
+**Cómo se lee.** La tabla tiene 1500 documentos, los 1000 limpios más el lote. De ellos, 13 tienen el IVA mal, 20 tienen el total mal sumado y 7 tienen montos negativos que no deberían. Esos documentos ya están a la vista de todos.
 
 ## Celda 1.3 · Cuántos documentos distintos fallan
 
@@ -431,7 +433,7 @@ flecha l r
 
 ::salida 3.2
 
-**Cómo se lee.** En la rama hay 1500 documentos que suman 13.693.496.696,68 pesos. Son los mil limpios más el lote.
+**Cómo se lee.** En la rama hay 1500 documentos que suman 13.693.496.696,68 pesos. Son los 1000 limpios más el lote.
 
 ## Celda 3.3 · Leer la tabla oficial
 
@@ -571,7 +573,7 @@ flecha l r
 
 **La pregunta.** ¿Cómo se abre otra libreta aparte para el segundo camino?
 
-**Por qué ahora.** Descartar mil quinientos documentos por veinte malos no siempre conviene. El segundo camino es sanear y publicar.
+**Por qué ahora.** Descartar 1500 documentos por 20 malos no siempre conviene. El segundo camino es sanear y publicar.
 
 **En el almacén.** Es abrir otra libreta aparte, limpia.
 
@@ -632,7 +634,7 @@ flecha l r
 
 ::salida 5.6
 
-**Cómo se lee.** 1480 documentos y cero descuadres. Son los mil limpios más los 480 buenos del lote. Este lote sí pasa.
+**Cómo se lee.** 1480 documentos y cero descuadres. Son los 1000 limpios más los 480 buenos del lote. Este lote sí pasa.
 
 ## Celda 5.7 · El número de la página a publicar
 

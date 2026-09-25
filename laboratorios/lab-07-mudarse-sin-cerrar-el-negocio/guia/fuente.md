@@ -1,6 +1,7 @@
 numero: 07
 titulo: Mudarse sin cerrar el negocio
 subtitulo: Guía para leer mientras trabajas el cuaderno. Cada celda trae la pregunta que responde, la idea en el almacén, la sentencia explicada parte por parte, lo que sale en pantalla y cómo leerlo.
+excepcion: 1970 | definición | transient_lastDdlTime cuenta segundos desde el 1 de enero de 1970
 ---
 
 # Introducción

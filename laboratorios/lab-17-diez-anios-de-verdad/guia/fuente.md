@@ -1,6 +1,13 @@
 numero: 17
 titulo: Diez años de verdad
 subtitulo: Guía para leer mientras trabajas el cuaderno. Cada celda trae la pregunta que responde, la idea en el almacén, la sentencia explicada parte por parte, lo que sale en pantalla y cómo leerlo. Las salidas son las de la solución ejecutada del repositorio, y los tiempos en tu máquina van a ser otros.
+excepcion: 1.048.576 | definición | un mebibyte, la unidad M de hdfs dfs -du -h
+excepcion: 258,5 | conversión | 246.5 M de la celda 3.1 en MB de un millón de bytes
+excepcion: 238 | conversión | 227.0 M de la celda 3.2 en MB de un millón de bytes
+excepcion: 536.870.912 | valor por defecto de Iceberg o Spark | write.target-file-size-bytes, tamaño objetivo de los papelitos
+excepcion: 537 | conversión | 536.870.912 bytes en MB de un millón de bytes, redondeado
+excepcion: 120 | dato fuera de la solución | papelitos de cada libreta de diez años, contados con .files por Spark Thrift
+excepcion: 366 | dato fuera de la solución | escrituras diarias que deja bin/reponer-fragmentada.sh
 ---
 
 # Introducción
@@ -299,7 +306,7 @@ En tu máquina los tiempos van a ser otros. Lo que se repite es la proporción. 
 
 Salen dos números y la carpeta.
 
-- El primero, `246.5 M`, es lo que pesan los archivos. La `M` de HDFS es un mebibyte, 1.048.576, es decir dos elevado a veinte bytes, un poco más que un MB de un millón de bytes. Por eso 246.5 M son unos 258 millones y medio de bytes, unos 258,5 MB.
+- El primero, `246.5 M`, es lo que pesan los archivos. La `M` de HDFS es un mebibyte, 1.048.576 bytes, un poco más que un MB de un millón de bytes. Por eso 246.5 M son unos 258,5 MB.
 - El segundo, `739.4 M`, es lo que el sistema de archivos cuenta con las copias de respaldo que pide al guardar. Aquí pide tres, y 739.4 es tres veces 246.5 menos el redondeo. Como este ambiente tiene un solo servidor de datos, la copia real es una. El número que importa es el primero.
 
 ## Celda 3.2 · El peso de la libreta por mes
@@ -323,7 +330,7 @@ Salen dos números y la carpeta.
 
 **Cómo se lee.** La libreta por mes pesa 227.0 M, unos 238 MB. Es un poco menos que la revuelta.
 
-Ordenar no cuesta espacio. Son los mismos diez millones de documentos y la misma cantidad de papelitos, ciento veinte en cada una. Pesa algo menos porque las filas parecidas quedan juntas y se comprimen mejor, y los documentos del mismo mes se parecen más entre sí que documentos tomados al azar de diez años.
+Ordenar no cuesta espacio. Son los mismos diez millones de documentos y la misma cantidad de papelitos, 120 en cada una. Pesa algo menos porque las filas parecidas quedan juntas y se comprimen mejor, y los documentos del mismo mes se parecen más entre sí que documentos tomados al azar de diez años.
 
 # Paso 4 · Muchos papelitos chicos
 
@@ -331,7 +338,7 @@ Ordenar no cuesta espacio. Son los mismos diez millones de documentos y la misma
 
 **La pregunta.** ¿En cuántos papelitos está guardada la tabla fragmentada?
 
-**Por qué ahora.** Es el punto de partida de la tercera medición. Esta tabla tiene un año de documentos, un millón, cargado con una escritura por día, como lo haría una ingesta diaria. Son trescientas sesenta y seis páginas, una por cada día de 2024.
+**Por qué ahora.** Es el punto de partida de la tercera medición. Esta tabla tiene un año de documentos, un millón, cargado con una escritura por día, como lo haría una ingesta diaria. Son 366 páginas, una por cada día de 2024.
 
 **En el almacén.** Es contar los papeles sueltos que se fueron acumulando, uno o varios por día, durante un año.
 
@@ -417,7 +424,7 @@ flecha r v
 
 **rewrite_data_files** (amarillo). Es el procedimiento de Iceberg que lee los papelitos chicos y escribe papelitos grandes con el mismo contenido. No cambia ni un dato.
 
-**1 papelito** (verde). Con un millón de documentos, todo cabe en uno solo. Iceberg apunta a papelitos de hasta 512 MB, y este queda muy por debajo.
+**1 papelito** (verde). Con un millón de documentos, todo cabe en uno solo. Iceberg apunta a papelitos de hasta 536.870.912 bytes, unos 537 MB, y este queda muy por debajo.
 
 **Los viejos siguen en el disco** (gris). Pasar en limpio no borra nada. Los papelitos viejos siguen ahí mientras las páginas anteriores los nombren.
 
@@ -524,7 +531,7 @@ Porque en esta versión el motor responde el total de filas con la portada, suma
 
 ### ¿Qué es la M que muestra hdfs?
 
-Es un mebibyte, 1.048.576, es decir dos elevado a veinte bytes. El MB que usa esta guía es de un millón de bytes, así que un número en M es un poco más grande en MB. 246.5 M son unos 258,5 MB.
+Es un mebibyte, 1.048.576 bytes. El MB que usa esta guía es de un millón de bytes, así que un número en M es un poco más grande en MB. 246.5 M son unos 258,5 MB.
 
 ### ¿Por qué el segundo número de hdfs es el triple?
 
@@ -536,7 +543,7 @@ No. Particionar tiene su costo, porque crea más papelitos y cada carga chica de
 
 ### ¿Por qué la compactación dejó un solo papelito y no varios?
 
-Porque Iceberg apunta a papelitos de hasta 512 MB, y el año entero comprimido pesa unos 22,75 MB. Con una tabla más grande quedarían varios papelitos, cada uno cerca de ese tamaño.
+Porque Iceberg apunta a papelitos de hasta unos 537 MB, y el año entero comprimido pesa unos 22,75 MB. Con una tabla más grande quedarían varios papelitos, cada uno cerca de ese tamaño.
 
 ### ¿Cómo libero el espacio de los papelitos viejos?
 

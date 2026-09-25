@@ -1,5 +1,6 @@
 numero: 00
 titulo: Tu primera libreta
+excepcion: 2026 | conversión | el aviso de Spark escribe el año con dos cifras, 26, y la prosa lo da completo
 subtitulo: Guía para leer mientras trabajas el cuaderno. Cada celda trae la pregunta que responde, la idea en el almacén, la sentencia explicada parte por parte, lo que sale en pantalla y cómo leerlo. Las salidas son las de la solución ejecutada del repositorio.
 ---
 

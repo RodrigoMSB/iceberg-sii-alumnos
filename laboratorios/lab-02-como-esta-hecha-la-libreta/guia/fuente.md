@@ -390,7 +390,7 @@ Hay algo que puede sorprender. La primera carga eran tres filas y dejó dos pape
 
 ::salida 3.1
 
-**Cómo se lee.** Tres papelitos, con 1, 1 y 2 filas. Pesan 1109 bytes, 1102 bytes y 1091 bytes, poco más de un milésimo de MB cada uno.
+**Cómo se lee.** Tres papelitos, con 1, 1 y 2 filas. Pesan 1109 bytes, 1102 bytes y 1091 bytes, unos 0,0011 MB cada uno.
 
 Todos están en la carpeta `data` de la tabla. El nombre de cada uno lo arma Spark. `00000-2-` y `00000-0-`, `00001-1-` son el número de la tarea que lo escribió, y lo que sigue es un identificador al azar. Los dos que comparten identificador, `8b04d64f`, son de la misma escritura, la primera carga.
 

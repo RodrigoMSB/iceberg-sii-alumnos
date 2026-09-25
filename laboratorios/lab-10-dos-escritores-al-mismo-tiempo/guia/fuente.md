@@ -1,6 +1,8 @@
 numero: 10
 titulo: Dos escritores al mismo tiempo
 subtitulo: Guía para leer mientras trabajas el cuaderno. Cada celda trae la pregunta que responde, la idea en el almacén, la sentencia explicada parte por parte, lo que sale en pantalla y cómo leerlo. Las salidas son las de la solución ejecutada del repositorio.
+excepcion: 314 | conversión | milésimas entre las páginas de las 18:09:09.544 y las 18:09:09.858 de la celda 1.3
+excepcion: 100 | valor por defecto de Iceberg | commit.retry.min-wait-ms, la primera espera entre reintentos del commit
 ---
 
 # Introducción

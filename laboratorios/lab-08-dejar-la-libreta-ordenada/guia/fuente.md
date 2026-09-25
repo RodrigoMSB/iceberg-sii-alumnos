@@ -1,6 +1,9 @@
 numero: 08
 titulo: Dejar la libreta ordenada
 subtitulo: Guía para leer mientras trabajas el cuaderno. Cada celda trae la pregunta que responde, la idea en el almacén, la sentencia explicada parte por parte, lo que sale en pantalla y cómo leerlo.
+excepcion: 536.870.912 | valor por defecto de Iceberg | write.target-file-size-bytes, el tamaño objetivo de los archivos que escribe Iceberg
+excepcion: 537 | conversión | 536.870.912 bytes en MB de un millón de bytes, redondeado
+excepcion: 7.250 | conversión | 536.870.912 dividido por los 74031 bytes promedio de la celda 1.1, redondeado
 ---
 
 # Introducción
@@ -51,7 +54,7 @@ En Iceberg eso son tres procedimientos. `rewrite_data_files` compacta, `expire_s
 ## 6 · Los pasos
 
 - **Paso 0.** Armas la tabla `documentos_recibidos` con doce cargas, una por mes, y levantas el inventario.
-- **Paso 1.** Mides el costo, doce archivos chicos para treinta mil documentos.
+- **Paso 1.** Mides el costo, doce archivos chicos para 30000 documentos.
 - **Paso 2.** Compactas y compruebas que los datos no cambiaron.
 - **Paso 3.** Ves que compactar no liberó espacio y por qué.
 - **Paso 4.** Botas la historia vieja con `expire_snapshots` y ves que es irreversible.
@@ -424,7 +427,7 @@ En Iceberg eso son tres procedimientos. `rewrite_data_files` compacta, `expire_s
 
 **Cómo se lee.** 12 archivos para 30000 documentos, uno por carga. En promedio pesan 74031 bytes, unos 0,07 MB, y en total 888378 bytes, 0,89 MB. Un MB aquí es un millón de bytes.
 
-Iceberg apunta a archivos de 512 megas cuando escribe, que es su tamaño objetivo de fábrica, y estos son unas siete mil veces más chicos. Una tabla que recibe un lote al día junta cientos de archivos así al año.
+Iceberg apunta a archivos de 536.870.912 bytes, unos 537 MB, cuando escribe, que es su tamaño objetivo de fábrica, y estos son unas 7.250 veces más chicos. Una tabla que recibe un lote al día junta cientos de archivos así al año.
 
 ## Celda 1.2 · Uno por uno
 
@@ -498,7 +501,7 @@ flecha r v
 
 **rewrite_data_files** (amarillo). Los lee y escribe archivos grandes con el mismo contenido. No cambia ni un dato.
 
-**1 papelito** (verde). El resultado, un archivo con los treinta mil documentos.
+**1 papelito** (verde). El resultado, un archivo con los 30000 documentos.
 
 **Los 12 viejos** (gris). No se borran. Las páginas anteriores los siguen nombrando, y mientras existan se puede pedir la tabla como estaba antes.
 
@@ -538,7 +541,7 @@ flecha r v
 
 ::salida 2.2
 
-**Cómo se lee.** 1 archivo con los 30000 documentos, de 761212 bytes, 0,76 MB. El total pesa menos que los 888378 bytes de antes, porque treinta mil documentos juntos se comprimen mejor que repartidos en doce, y cada archivito arrastraba su propia cabecera.
+**Cómo se lee.** 1 archivo con los 30000 documentos, de 761212 bytes, 0,76 MB. El total pesa menos que los 888378 bytes de antes, porque 30000 documentos juntos se comprimen mejor que repartidos en doce, y cada archivito arrastraba su propia cabecera.
 
 ## Celda 2.3 · El inventario, otra vez
 
