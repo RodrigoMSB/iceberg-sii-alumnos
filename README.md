@@ -17,8 +17,8 @@ dentro de Docker, y se apaga cuando terminas.
 | **Disco libre** | **unos 10 GB** | 15 GB si vas a hacer el laboratorio 17 |
 | **Procesador** | Intel o ARM | cualquiera de los dos sirve |
 
-Funciona igual en un Mac con procesador Apple (M1 a M4), en un Mac Intel y en un PC con
-Windows o Linux.
+El ambiente se probó en un Mac con procesador Apple. En un Mac Intel o en Windows con WSL2
+debería funcionar, pero no se probó.
 
 ### Cuánta memoria le das a Docker
 
@@ -171,7 +171,7 @@ note la diferencia entre un diseño bueno y uno malo. Esos datos no vienen carga
 demoran y ocupan:
 
 ```bash
-bin/crear-bodega.sh             # unos 40 minutos, deja cerca de 500 MB en el ambiente
+bin/crear-bodega.sh             # unos 8 minutos, deja cerca de 500 MB en el ambiente
 bin/reponer-fragmentada.sh      # unos 10 minutos, para el paso 4
 ```
 
@@ -195,7 +195,7 @@ Cuatro necesitan además otra cosa:
 |---|---|
 | **07** | **obligatorio**: `bin/reiniciar-lab.sh 07` |
 | 10 | `bin/reiniciar-lab.sh 10` repone la tabla compartida |
-| 16 | `bin/origen-lab16.sh --reset` deja el origen como al principio |
+| 16 | `bin/mover-origen-lab16.sh --reset` deja el origen como al principio |
 | 17 | `bin/reponer-fragmentada.sh` vuelve a fragmentar la tabla del paso 4 |
 
 > **El 07 es el único que no se puede repetir solo volviendo a correr el cuaderno.**

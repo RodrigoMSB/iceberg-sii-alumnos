@@ -14,7 +14,7 @@
 # o para el 10 y el 16, que necesitan ademas otra cosa:
 #
 #   laboratorio 10  la tabla compartida se repone sola aqui
-#   laboratorio 16  el origen se repone con bin/origen-lab16.sh --reset
+#   laboratorio 16  el origen se repone con bin/mover-origen-lab16.sh --reset
 #   laboratorio 17  la tabla fragmentada se repone con bin/reponer-fragmentada.sh
 
 set -euo pipefail

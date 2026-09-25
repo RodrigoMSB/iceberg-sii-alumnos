@@ -15,6 +15,11 @@
 # TODO ESCUCHA EN LOCALHOST. No hay dominio, ni certificados, ni nada expuesto
 # a la red: las direcciones son 127.0.0.1 y nadie mas llega.
 
+# El nombre del proyecto va fijo. Si dependiera de la carpeta, dos clones con
+# el mismo nombre de carpeta compartirian los volumenes, y borrar-todo en uno
+# borraria los datos del otro.
+name: iceberg-sii-alumnos
+
 x-jupyter-imagen: &jupyter-imagen
   image: iceberg-alumnos/spark-jupyter:3.3.4-iceberg1.3.0
   build:
